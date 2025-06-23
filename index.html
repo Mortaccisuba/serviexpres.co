@@ -8,11 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primario: #0057B8;
-      --secundario: #0071CE;
-      --fondo: #f4f7fa;
+      --azul: #0057B8;
+      --azul-secundario: #0071CE;
       --blanco: #ffffff;
-      --gris: #333333;
     }
 
     * {
@@ -21,67 +19,69 @@
       box-sizing: border-box;
     }
 
-    body {
+    body, html {
       font-family: 'Inter', sans-serif;
-      background-color: var(--fondo);
-      color: var(--gris);
-      line-height: 1.6;
+      color: #ffffff;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.6);
+      min-height: 100%;
+      width: 100%;
+      padding: 3rem 1.5rem;
     }
 
     header {
-      background: linear-gradient(90deg, var(--primario), var(--secundario));
-      color: var(--blanco);
-      padding: 3rem 1.5rem;
       text-align: center;
+      margin-bottom: 2rem;
     }
 
     header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+      font-size: 3rem;
+      font-weight: 600;
     }
 
     header p {
       font-size: 1.2rem;
-      opacity: 0.95;
+      opacity: 0.9;
     }
 
-    main {
+    .contenido {
       max-width: 900px;
       margin: auto;
-      background-color: var(--blanco);
-      padding: 2.5rem 2rem;
-      border-radius: 12px;
-      margin-top: -40px;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+      text-align: center;
     }
 
-    h2 {
-      color: var(--primario);
-      font-size: 1.75rem;
-      margin-bottom: 1rem;
+    .contenido h2 {
+      font-size: 2rem;
+      margin: 1.5rem 0 1rem;
+      color: var(--blanco);
     }
 
-    p {
-      margin-bottom: 1rem;
+    .contenido ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 2rem;
     }
 
-    .habilidades {
-      margin: 1.5rem 0;
-    }
-
-    .habilidades li {
+    .contenido li {
       margin-bottom: 0.5rem;
     }
 
-    .contacto {
-      margin-top: 2rem;
+    .botones {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 1rem;
+      margin-top: 2rem;
     }
 
-    .contacto a {
-      background-color: var(--primario);
+    .botones a {
+      background-color: var(--azul);
       color: var(--blanco);
       text-decoration: none;
       padding: 0.8rem 1.2rem;
@@ -89,76 +89,67 @@
       transition: background-color 0.3s ease;
     }
 
-    .contacto a:hover {
-      background-color: var(--secundario);
+    .botones a:hover {
+      background-color: var(--azul-secundario);
     }
 
-    iframe {
-      width: 100%;
-      height: 450px;
+    .bot-flotante {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 360px;
+      height: 500px;
       border: none;
-      border-radius: 8px;
-      margin-top: 1.5rem;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1.5rem 1rem;
-      background-color: var(--blanco);
-      border-top: 1px solid #e1e1e1;
-      margin-top: 2rem;
-      font-size: 0.9rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      z-index: 1000;
     }
 
     @media (max-width: 600px) {
       header h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
-
-      .contacto {
-        flex-direction: column;
-      }
-
-      .contacto a {
-        width: 100%;
-        text-align: center;
+      .bot-flotante {
+        width: 90%;
+        height: 400px;
+        right: 5%;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>ServiExpres</h1>
-    <p>Transformamos procesos técnicos en soluciones inteligentes</p>
-  </header>
+  <div class="overlay">
+    <header>
+      <h1>ServiExpres</h1>
+      <p>Transformamos procesos técnicos en soluciones digitales inteligentes</p>
+    </header>
 
-  <main>
-    <h2>¿Quién soy?</h2>
-    <p>Soy Adrián, apasionado por la automatización, la infraestructura digital y el diseño web estratégico. Con una mezcla entre creatividad y lógica, construyo soluciones modernas que hacen que los negocios avancen más rápido y con más profesionalismo.</p>
+    <div class="contenido">
+      <h2>¿Quién soy?</h2>
+      <p>Soy Adrián, especialista en automatización digital, infraestructura web moderna y diseño técnico con propósito. Mi enfoque es claro: eficiencia, innovación y credibilidad para negocios modernos.</p>
 
-    <h2>Lo que hago</h2>
-    <ul class="habilidades">
-      <li>✅ Automatización de procesos con <strong>n8n</strong> y <strong>Docker</strong>.</li>
-      <li>✅ Gestión profesional de <strong>dominios, DNS</strong> y <strong>GitHub Pages</strong>.</li>
-      <li>✅ Integración de <strong>chatbots, WhatsApp, Instagram</strong> y herramientas de comunicación.</li>
-      <li>✅ Diseño de landing pages modernas con <strong>HTML y CSS</strong>.</li>
-      <li>✅ Creación de flujos de trabajo para mejorar la eficiencia del negocio.</li>
-      <li>✅ Campañas y productos digitales como <strong>plantillas financieras</strong>.</li>
-    </ul>
+      <h2>Lo que hago</h2>
+      <ul>
+        <li>✅ Automatización con n8n y Docker</li>
+        <li>✅ Configuración de dominios, DNS y GitHub Pages</li>
+        <li>✅ Integración de WhatsApp, Instagram y chatbots</li>
+        <li>✅ Landing pages profesionales con HTML + CSS</li>
+        <li>✅ Campañas de productos digitales como plantillas financieras</li>
+      </ul>
 
-    <h2>Asistente Virtual</h2>
-    <p>Habla con nuestro chatbot personalizado justo aquí:</p>
-    <iframe src="https://chat.d2.ai/embed?id=TU_ID_DEL_BOT" allow="microphone;"></iframe>
-
-    <div class="contacto">
-      <a href="https://wa.me/573232864625" target="_blank">📱 WhatsApp</a>
-      <a href="https://www.instagram.com/finazas_organizadas/" target="_blank">📸 Instagram</a>
-      <a href="mailto:Gerencia@serviexpres.co">✉️ Escríbenos</a>
+      <div class="botones">
+        <a href="https://wa.me/573232864625" target="_blank">📱 WhatsApp</a>
+        <a href="https://www.instagram.com/finazas_organizadas/" target="_blank">📸 Instagram</a>
+        <a href="mailto:Gerencia@serviexpres.co">✉️ Escríbenos</a>
+      </div>
     </div>
-  </main>
+  </div>
 
-  <footer>
-    © 2025 ServiExpres | Desarrollo web & Automatización inteligente
-  </footer>
+  <!-- Chatbot flotante -->
+  <iframe 
+    src="https://chat.d2.ai/embed?id=TU_ID_DEL_BOT"
+    class="bot-flotante"
+    allow="microphone">
+  </iframe>
 </body>
 </html>
