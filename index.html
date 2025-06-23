@@ -8,8 +8,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --azul1: #0057B8;
-      --azul2: #0071CE;
+      --azul: #0057B8;
+      --azul-secundario: #00AEEF;
       --blanco: #ffffff;
     }
 
@@ -22,17 +22,19 @@
     html, body {
       height: 100%;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(to bottom right, var(--azul1), var(--azul2));
+      background: url('https://images.unsplash.com/photo-1611224924822-5ac07446653e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
       color: var(--blanco);
     }
 
     .overlay {
-      padding: 3rem 1.5rem;
+      background: rgba(0, 0, 0, 0.7);
       min-height: 100%;
+      padding: 3rem 1.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: start;
+      justify-content: flex-start;
     }
 
     header {
@@ -47,7 +49,7 @@
 
     header p {
       font-size: 1.2rem;
-      opacity: 0.95;
+      opacity: 0.9;
     }
 
     .contenido {
@@ -56,7 +58,7 @@
     }
 
     .contenido h2 {
-      font-size: 1.9rem;
+      font-size: 2rem;
       margin-bottom: 1rem;
     }
 
@@ -94,7 +96,7 @@
 
     .botones a {
       background-color: var(--blanco);
-      color: var(--azul1);
+      color: var(--azul);
       text-decoration: none;
       padding: 0.8rem 1.3rem;
       border-radius: 6px;
@@ -104,7 +106,7 @@
 
     .botones a:hover {
       background-color: #e2ecf7;
-      color: var(--azul2);
+      color: var(--azul-secundario);
     }
 
     footer {
