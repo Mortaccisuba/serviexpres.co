@@ -218,7 +218,6 @@
     <main class="contenido">
       <h2>¿Quién soy?</h2>
       <p>Soy Adrián, un apasionado por la automatización, infraestructura web y diseño estratégico. Combino creatividad con precisión técnica para ayudar a que los negocios digitales avancen con impacto y profesionalismo.</p>
-
       <h2>Lo que hago</h2>
       <ul>
         <li>Automatización con n8n y Docker</li>
@@ -250,7 +249,6 @@
     window.addEventListener('resize', resize);
     resize();
 
-    // Nodos y líneas
     const POINTS = 45;
     const SPEED = 0.16;
     const DIST = 140;
@@ -272,7 +270,6 @@
     function animate() {
       ctx.clearRect(0, 0, w, h);
 
-      // Dibujar líneas
       for (let i = 0; i < POINTS; i++) {
         for (let j = i + 1; j < POINTS; j++) {
           const a = nodes[i];
@@ -293,7 +290,6 @@
           }
         }
       }
-      // Dibujar nodos
       for (let i = 0; i < POINTS; i++) {
         const n = nodes[i];
         ctx.save();
@@ -317,10 +313,9 @@
 
     animate();
   </script>
-  <!-- n8n Chat Script personalizado en español y nombre "Adrian" -->
+  <!-- n8n Chat Script SOLO ESTE, nombre "Adrian", idioma español -->
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat@latest/dist/chat.bundle.es.js';
-
     createChat({
       webhookUrl: 'http://localhost:5678/webhook/3a5579a6-63c5-4295-bdc1-1f1662c83657/chat',
       language: 'es',
