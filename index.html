@@ -21,20 +21,39 @@
 
     html, body {
       height: 100%;
+      width: 100%;
       font-family: 'Inter', sans-serif;
-      background: url('fondo-serviexpres.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background: #16213e;
       color: var(--blanco);
+      overflow: hidden;
+    }
+
+    body {
+      position: relative;
+      min-height: 100vh;
+      min-width: 100vw;
+    }
+
+    #lines-bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
     }
 
     .overlay {
-      background: rgba(0, 0, 0, 0.7);
-      min-height: 100%;
+      background: rgba(10, 30, 60, 0.82);
+      min-height: 100vh;
       padding: 3rem 1.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
+      position: relative;
+      z-index: 1;
     }
 
     header {
@@ -133,6 +152,8 @@
   </style>
 </head>
 <body>
+  <!-- Canvas para las líneas animadas -->
+  <canvas id="lines-bg-canvas"></canvas>
   <div class="overlay">
     <header>
       <h1>ServiExpres</h1>
@@ -163,5 +184,90 @@
       © 2025 ServiExpres | Desarrollo web & Automatización inteligente
     </footer>
   </div>
+  <script>
+    // Efecto de líneas animadas tipo red digital
+    const canvas = document.getElementById('lines-bg-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let w = window.innerWidth;
+    let h = window.innerHeight;
+
+    function resize() {
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w;
+      canvas.height = h;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Nodos y líneas
+    const POINTS = 45;
+    const SPEED = 0.16;
+    const DIST = 140;
+    const nodes = [];
+
+    function randomBetween(a, b) {
+      return a + Math.random() * (b - a);
+    }
+
+    for (let i = 0; i < POINTS; i++) {
+      nodes.push({
+        x: randomBetween(0, w),
+        y: randomBetween(0, h),
+        vx: randomBetween(-SPEED, SPEED),
+        vy: randomBetween(-SPEED, SPEED)
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, w, h);
+
+      // Dibujar líneas
+      for (let i = 0; i < POINTS; i++) {
+        for (let j = i + 1; j < POINTS; j++) {
+          const a = nodes[i];
+          const b = nodes[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < DIST) {
+            ctx.save();
+            ctx.globalAlpha = 1 - d / DIST;
+            ctx.strokeStyle = '#00AEEF';
+            ctx.lineWidth = 1.1;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+            ctx.restore();
+          }
+        }
+      }
+      // Dibujar nodos
+      for (let i = 0; i < POINTS; i++) {
+        const n = nodes[i];
+        ctx.save();
+        ctx.globalAlpha = 0.65;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, 2.7, 0, 2 * Math.PI, false);
+        ctx.fillStyle = '#00AEEF';
+        ctx.shadowColor = '#00AEEF';
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.restore();
+
+        n.x += n.vx;
+        n.y += n.vy;
+
+        if (n.x < 0 || n.x > w) n.vx = -n.vx;
+        if (n.y < 0 || n.y > h) n.vy = -n.vy;
+      }
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
