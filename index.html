@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ServiExpres | Soluciones digitales con impacto</title>
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
   <style>
     body {
@@ -149,9 +150,8 @@
 
   <section class="cta">
     <h2>¿Listo para mostrar tu negocio al mundo?</h2>
-    <p>Agenda hoy tu asesoría gratuita o escríbenos. En ServiExpres, la tecnología trabaja por ti.</p>
-    <br>
-    <a href="https://wa.me/+573232864625" target="_blank">Agendar ahora</a>
+    <p>Interactúa ahora con nuestro asistente virtual y recibe información en tiempo real.</p>
+    <!-- Aquí aparecerá el chatbot de n8n -->
   </section>
 
   <footer>
@@ -162,6 +162,15 @@
       <a href="https://www.instagram.com/finazas_organizadas/" target="_blank" style="color: #C13584; margin: 0 10px;">Instagram</a>
     </p>
   </footer>
+
+  <!-- Script del chatbot de n8n (versión local) -->
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+    createChat({
+      webhookUrl: 'http://localhost:5678/webhook/3a5579a6-63c5-4295-bdc1-1f1662c83657/chat'
+    });
+  </script>
 
 </body>
 </html>
