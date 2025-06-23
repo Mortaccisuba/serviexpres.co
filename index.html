@@ -175,33 +175,6 @@
         gap: 0.7rem;
       }
     }
-    /* OCULTA el widget de ChatBot.com/Nathan/HostGator y variantes */
-    iframe[src*="chatbot.com"],
-    iframe[src*="livechat"],
-    iframe[src*="livechatinc"],
-    iframe[src*="cdn.livechat"],
-    div[id*="chatbot"],
-    div[class*="chatbot"],
-    div[class*="livechat"],
-    div[class*="cbot"],
-    div[class*="widget"],
-    div[class*="lc-"],
-    div[id*="lc-"],
-    div[data-testid*="chat-widget"],
-    div[data-testid*="chatbot"],
-    div[style*="position: fixed"][style*="right"][style*="bottom"] {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-      pointer-events: none !important;
-      height: 0 !important;
-      width: 0 !important;
-      min-height: 0 !important;
-      min-width: 0 !important;
-      max-height: 0 !important;
-      max-width: 0 !important;
-      z-index: -9999 !important;
-    }
   </style>
 </head>
 <body>
@@ -327,78 +300,13 @@
         bubbleTextColor: '#fff',
         userBubbleBackground: '#fff',
         userBubbleTextColor: '#0057B8',
+      },
+      mobile: {
+        // Fuerza el input visible en móvil
+        alwaysShowInput: true,
+        inputPlaceholder: 'Escribe tu mensaje...'
       }
     });
   </script>
-  <!-- Script AGRESIVO para eliminar cualquier widget de chat forzado -->
-  <script>
-function killAllUnwantedChats() {
-  // Elimina cualquier iframe sospechoso
-  document.querySelectorAll('iframe').forEach(iframe => {
-    const src = (iframe.src || '').toLowerCase();
-    const html = iframe.outerHTML.toLowerCase();
-    if (
-      src.includes('chatbot.com') ||
-      src.includes('livechat') ||
-      src.includes('nathan') ||
-      src.includes('supportwidget') ||
-      html.includes('nathan') ||
-      html.includes('chatbot.com') ||
-      html.includes('livechat')
-    ) {
-      iframe.remove();
-    }
-  });
-
-  // Elimina divs y secciones con textos o clases sospechosas
-  document.querySelectorAll('div,section').forEach(el => {
-    const text = (el.innerText || '').toLowerCase();
-    const html = el.outerHTML.toLowerCase();
-    const cl = (el.className || '').toLowerCase();
-    const id = (el.id || '').toLowerCase();
-    if (
-      text.includes('my name is nathan') ||
-      text.includes('powered by n8n') ||
-      text.includes('chatbot.com') ||
-      text.includes('how can i assist you') ||
-      text.includes('start a chat') ||
-      html.includes('nathan') ||
-      html.includes('chatbot.com') ||
-      html.includes('livechat') ||
-      cl.includes('chatbot') ||
-      cl.includes('livechat') ||
-      cl.includes('supportwidget') ||
-      id.includes('chatbot') ||
-      id.includes('livechat') ||
-      id.includes('supportwidget')
-    ) {
-      el.remove();
-    }
-  });
-
-  // Elimina elementos flotantes sospechosos en la esquina inferior derecha
-  document.querySelectorAll('div,section').forEach(el => {
-    const style = window.getComputedStyle(el);
-    if (
-      style.position === 'fixed' &&
-      (style.right === '0px' || style.right === '10px' || style.right === '20px') &&
-      (style.bottom === '0px' || style.bottom === '10px' || style.bottom === '20px')
-    ) {
-      el.remove();
-    }
-  });
-
-  // Elimina elementos con z-index muy alto (típico de widgets flotantes)
-  document.querySelectorAll('div,section').forEach(el => {
-    const style = window.getComputedStyle(el);
-    if (parseInt(style.zIndex) > 1000) {
-      el.remove();
-    }
-  });
-}
-
-// Ejecuta la función cada segundo
-setInterval(killAllUnwantedChats, 1000);
-</script>
 </body>
 </html>
