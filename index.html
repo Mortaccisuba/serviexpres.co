@@ -2,226 +2,124 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ServiExpres | Soluciones digitales con impacto</title>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ServiExpres</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <style>
+    :root {
+      --primary-color: #007bff;
+      --secondary-color: #f5f7fa;
+    }
     body {
-      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      color: #1a1a1a;
+      margin: 0;
+      padding: 0;
+      background-color: var(--secondary-color);
+      color: #333;
     }
-
-    .hero {
-      background: linear-gradient(rgba(0,0,50,0.6), rgba(0,0,80,0.6)),
-                  url('https://i.imgur.com/VBuAkwu.jpg') center/cover no-repeat;
+    header {
+      background-color: var(--primary-color);
       color: white;
-      padding: 100px 20px;
+      padding: 2rem 1rem;
       text-align: center;
     }
-
-    .hero h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
+    header h1 {
+      margin: 0 0 0.5rem;
     }
-
-    .hero p {
-      font-size: 20px;
-      max-width: 800px;
-      margin: 0 auto 30px;
+    main {
+      padding: 2rem 1rem;
+      max-width: 900px;
+      margin: auto;
     }
-
-    .buttons a {
+    section {
+      margin-bottom: 3rem;
+    }
+    .cta-buttons a {
       display: inline-block;
-      background: #25D366;
+      margin: 1rem 1rem 0 0;
+      padding: 0.75rem 1.5rem;
+      background-color: var(--primary-color);
       color: white;
-      padding: 12px 24px;
-      margin: 10px;
-      border-radius: 30px;
       text-decoration: none;
-      font-weight: bold;
+      border-radius: 6px;
+      transition: background 0.3s;
     }
-
-    .buttons a.instagram {
-      background: #C13584;
+    .cta-buttons a:hover {
+      background-color: #005dc1;
     }
-
-    .section {
-      padding: 60px 20px;
-      text-align: center;
-      background: #f7f9fb;
-    }
-
-    .section h2 {
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
-
     .services {
       display: flex;
       flex-wrap: wrap;
+      gap: 1.5rem;
       justify-content: center;
-      gap: 30px;
-      margin-top: 40px;
     }
-
-    .card {
-      background: white;
-      padding: 30px;
-      width: 280px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      text-align: left;
-    }
-
-    .card h3 {
-      margin-top: 10px;
-      color: #003580;
-    }
-
-    .cta {
-      background: #003580;
-      color: white;
-      padding: 60px 20px;
-      text-align: center;
-    }
-
-    .cta a {
-      background: white;
-      color: #003580;
-      padding: 12px 30px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    footer {
-      background: #001f3f;
-      color: #fff;
-      padding: 30px 20px;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    footer a {
-      color: #1DA1F2;
-      text-decoration: underline;
-    }
-
-    .chat-box {
-      max-width: 400px;
-      margin: 30px auto 0;
-      background: white;
+    .service-box {
+      background-color: white;
+      padding: 1rem;
       border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      color: #1a1a1a;
+      box-shadow: 0 0 10px #ccc;
+      flex: 1 1 250px;
+      max-width: 300px;
     }
-
-    .chat-box h3 {
+    .service-box h3 {
       margin-top: 0;
-      color: #003580;
     }
-
-    .chat-box input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      margin-bottom: 10px;
+    footer {
+      background-color: #eaeaea;
+      color: #555;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.9rem;
     }
-
-    .chat-box button {
-      background: #003580;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .chat-box p#respuestaBot {
-      font-size: 14px;
-      margin-top: 10px;
+    @media (max-width: 600px) {
+      .cta-buttons a {
+        display: block;
+        margin: 1rem 0;
+      }
     }
   </style>
 </head>
-
 <body>
 
-  <section class="hero">
-    <h1>ServiExpres: Tu aliado en soluciones digitales</h1>
-    <p>Dominamos herramientas como GitHub Pages, n8n, Titan Mail y mucho más para ayudarte a automatizar procesos, conectar con tus clientes y mostrar una imagen profesional en línea.</p>
-    <div class="buttons">
-      <a href="https://wa.me/+573232864625" target="_blank">📲 WhatsApp</a>
-      <a href="https://www.instagram.com/finazas_organizadas/" target="_blank" class="instagram">📸 Instagram</a>
-    </div>
-    <p style="font-size: 16px; margin-top: 10px;">
-      📩 Correo: <a href="mailto:Gerencia@serviexpres.co" style="color: #fff; text-decoration: underline;">Gerencia@serviexpres.co</a>
-    </p>
-  </section>
+  <header>
+    <h1>ServiExpres</h1>
+    <p>Automatización, confianza y soluciones al instante</p>
+  </header>
 
-  <section class="section">
-    <h2>¿Qué podemos hacer por ti?</h2>
-    <div class="services">
-      <div class="card">
-        <h3>🌐 Dominio + Hosting</h3>
-        <p>Configuración completa de dominio personalizado con GitHub Pages. Tu sitio web 100 % funcional sin mensualidades.</p>
-      </div>
-      <div class="card">
-        <h3>⚙️ Automatización</h3>
-        <p>Flujos inteligentes con n8n: conecta formularios, WhatsApp, email y más sin mover un dedo.</p>
-      </div>
-      <div class="card">
-        <h3>✉️ Correo Empresarial</h3>
-        <p>Implementación de Titan Mail con tu propio dominio para que tus clientes te tomen en serio.</p>
-      </div>
-      <div class="card">
-        <h3>🎨 Identidad Visual</h3>
-        <p>Favicon, colores y diseño profesional para que tu marca hable por ti. Lo visual también es estrategia.</p>
-      </div>
-    </div>
-  </section>
+  <main>
 
-  <section class="cta">
-    <h2>¿Listo para mostrar tu negocio al mundo?</h2>
-    <p>Interactúa con nuestro asistente virtual. Estamos listos para ayudarte.</p>
-    <div class="chat-box">
-      <h3>Asistente Virtual – ServiExpres</h3>
-      <p style="font-size: 14px;">¿En qué puedo ayudarte hoy?</p>
-      <input type="text" id="mensajeUsuario" placeholder="Escribe tu pregunta..." />
-      <button onclick="enviarMensajeVirtual()">Enviar</button>
-      <p id="respuestaBot"></p>
-    </div>
-  </section>
+    <section>
+      <h2>¿Qué hacemos por ti?</h2>
+      <div class="services">
+        <div class="service-box">
+          <h3>Asistencia Empresarial</h3>
+          <p>Documentación rápida, RUT, Cámara de Comercio, y más.</p>
+        </div>
+        <div class="service-box">
+          <h3>Automatización con WhatsApp</h3>
+          <p>Integramos n8n, bots y flujos inteligentes para tu negocio.</p>
+        </div>
+        <div class="service-box">
+          <h3>Landing Pages Profesionales</h3>
+          <p>Diseño moderno, conexión con tus redes y mensajes efectivos.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Contáctanos</h2>
+      <p>Estamos listos para ayudarte. Escoge el canal que prefieras:</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/573001112223" target="_blank">WhatsApp</a>
+        <a href="https://instagram.com/serviexpres.co" target="_blank">Instagram</a>
+      </div>
+    </section>
+
+  </main>
 
   <footer>
-    <p>📩 Correo: <a href="mailto:Gerencia@serviexpres.co">Gerencia@serviexpres.co</a></p>
-    <p>© 2024 ServiExpres. Todos los derechos reservados.</p>
-    <p>
-      <a href="https://wa.me/+573232864625" target="_blank" style="color: #25D366; margin: 0 10px;">WhatsApp</a> |
-      <a href="https://www.instagram.com/finazas_organizadas/" target="_blank" style="color: #C13584; margin: 0 10px;">Instagram</a>
-    </p>
+    © 2025 ServiExpres · Cali, Colombia · Todos los derechos reservados
   </footer>
-
-  <!-- Script para enviar mensaje al webhook de n8n -->
-  <script>
-    function enviarMensajeVirtual() {
-      const mensaje = document.getElementById('mensajeUsuario').value;
-      const respuesta = document.getElementById('respuestaBot');
-
-      fetch('https://serviexpres.n8n.cloud/webhook/chat', { // Cambia esta URL por tu webhook si es diferente
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mensaje: mensaje })
-      })
-      .then(res => res.ok
-        ? respuesta.textContent = '¡Recibido! Te responderemos pronto.'
-        : respuesta.textContent = 'Hubo un error al enviar.')
-      .catch(() => respuesta.textContent = 'Error de conexión.');
-    }
-  </script>
 
 </body>
 </html>
