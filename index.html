@@ -8,8 +8,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --azul: #0057B8;
-      --azul-secundario: #0071CE;
+      --azul1: #0057B8;
+      --azul2: #0071CE;
       --blanco: #ffffff;
     }
 
@@ -19,25 +19,25 @@
       box-sizing: border-box;
     }
 
-    body, html {
-      font-family: 'Inter', sans-serif;
-      color: #ffffff;
+    html, body {
       height: 100%;
-      background: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
-      background-size: cover;
-      overflow-x: hidden;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, var(--azul1), var(--azul2));
+      color: var(--blanco);
     }
 
     .overlay {
-      background: rgba(0, 0, 0, 0.6);
-      min-height: 100%;
-      width: 100%;
       padding: 3rem 1.5rem;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
     }
 
     header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
     }
 
     header h1 {
@@ -47,29 +47,42 @@
 
     header p {
       font-size: 1.2rem;
-      opacity: 0.9;
+      opacity: 0.95;
     }
 
     .contenido {
       max-width: 900px;
-      margin: auto;
       text-align: center;
     }
 
     .contenido h2 {
-      font-size: 2rem;
-      margin: 1.5rem 0 1rem;
-      color: var(--blanco);
+      font-size: 1.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .contenido p {
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
     }
 
     .contenido ul {
       list-style: none;
       padding: 0;
-      margin-bottom: 2rem;
+      margin: 0 auto 2rem;
+      text-align: left;
+      max-width: 600px;
     }
 
     .contenido li {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.7rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .contenido li::before {
+      content: "✅";
+      position: absolute;
+      left: 0;
     }
 
     .botones {
@@ -77,32 +90,28 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 1rem;
-      margin-top: 2rem;
     }
 
     .botones a {
-      background-color: var(--azul);
-      color: var(--blanco);
+      background-color: var(--blanco);
+      color: var(--azul1);
       text-decoration: none;
-      padding: 0.8rem 1.2rem;
+      padding: 0.8rem 1.3rem;
       border-radius: 6px;
-      transition: background-color 0.3s ease;
+      font-weight: 600;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .botones a:hover {
-      background-color: var(--azul-secundario);
+      background-color: #e2ecf7;
+      color: var(--azul2);
     }
 
-    .bot-flotante {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 360px;
-      height: 500px;
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-      z-index: 1000;
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.8;
     }
 
     @media (max-width: 600px) {
@@ -110,10 +119,13 @@
         font-size: 2.2rem;
       }
 
-      .bot-flotante {
-        width: 90%;
-        height: 400px;
-        right: 5%;
+      .contenido h2 {
+        font-size: 1.5rem;
+      }
+
+      .botones a {
+        width: 100%;
+        text-align: center;
       }
     }
   </style>
@@ -127,24 +139,27 @@
 
     <div class="contenido">
       <h2>¿Quién soy?</h2>
-      <p>Soy Adrián, especialista en automatización digital, infraestructura web moderna y diseño técnico con propósito. Mi enfoque es claro: eficiencia, innovación y credibilidad para negocios modernos.</p>
- <div class="botones">
+      <p>Soy Adrián, un apasionado por la automatización, infraestructura web y diseño estratégico. Combino creatividad con precisión técnica para ayudar a que los negocios digitales avancen con impacto y profesionalismo.</p>
+
+      <h2>Lo que hago</h2>
+      <ul>
+        <li>Automatización con n8n y Docker</li>
+        <li>Configuración profesional de dominios, DNS y GitHub Pages</li>
+        <li>Integración de WhatsApp, Instagram y chatbots personalizados</li>
+        <li>Diseño de landing pages efectivas con HTML y CSS</li>
+        <li>Campañas de productos digitales como plantillas financieras</li>
+      </ul>
+
+      <div class="botones">
         <a href="https://wa.me/573232864625" target="_blank">📱 WhatsApp</a>
         <a href="https://www.instagram.com/finazas_organizadas/" target="_blank">📸 Instagram</a>
         <a href="mailto:Gerencia@serviexpres.co">✉️ Escríbenos</a>
       </div>
     </div>
+
+    <footer>
+      © 2025 ServiExpres | Desarrollo web & Automatización inteligente
+    </footer>
   </div>
-      <h2>Lo que hago</h2>
-      <ul>
-        <li>✅ Automatización con n8n y Docker</li>
-        <li>✅ Configuración de dominios, DNS y GitHub Pages</li>
-        <li>✅ Integración de WhatsApp, Instagram y chatbots</li>
-        <li>✅ Landing pages profesionales con HTML + CSS</li>
-        <li>✅ venta de productos digitales como plantillas financieras</li>
-      </ul>
-
-      
-
 </body>
 </html>
