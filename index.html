@@ -6,6 +6,8 @@
   <title>ServiExpres | Soluciones Digitales Inteligentes</title>
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- n8n Chat CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
   <style>
     :root {
       --azul: #0057B8;
@@ -314,6 +316,13 @@
     }
 
     animate();
+  </script>
+  <!-- n8n Chat Script -->
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+    createChat({
+      webhookUrl: 'http://localhost:5678/webhook/3a5579a6-63c5-4295-bdc1-1f1662c83657/chat'
+    });
   </script>
 </body>
 </html>
