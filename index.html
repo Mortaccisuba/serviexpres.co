@@ -176,15 +176,21 @@
         gap: 0.7rem;
       }
     }
-    /* OCULTA el widget de ChatBot.com/Nathan/HostGator */
+    /* OCULTA el widget de ChatBot.com/Nathan/HostGator y variantes */
     iframe[src*="chatbot.com"],
     iframe[src*="livechat"],
-    div[id*="__be"],
+    iframe[src*="livechatinc"],
+    iframe[src*="cdn.livechat"],
     div[id*="chatbot"],
     div[class*="chatbot"],
     div[class*="livechat"],
     div[class*="cbot"],
-    div[class*="chat-widget"] {
+    div[class*="widget"],
+    div[class*="lc-"],
+    div[id*="lc-"],
+    div[data-testid*="chat-widget"],
+    div[data-testid*="chatbot"],
+    div[style*="position: fixed"][style*="right"][style*="bottom"] {
       display: none !important;
       visibility: hidden !important;
       opacity: 0 !important;
@@ -324,6 +330,21 @@
         userBubbleTextColor: '#0057B8',
       }
     });
+  </script>
+  <!-- Script para eliminar chats inyectados si CSS falla -->
+  <script>
+  setInterval(() => {
+    // Elimina iframes de ChatBot.com, LiveChat, etc.
+    document.querySelectorAll(
+      'iframe[src*="chatbot.com"],iframe[src*="livechat"],iframe[src*="livechatinc"],iframe[src*="cdn.livechat"]'
+    ).forEach(e => e.remove());
+    // Elimina divs sospechosos
+    document.querySelectorAll(
+      'div[id*="chatbot"],div[class*="chatbot"],div[class*="livechat"],div[class*="cbot"],div[class*="widget"],div[class*="lc-"],div[id*="lc-"],div[data-testid*="chat-widget"],div[data-testid*="chatbot"]'
+    ).forEach(e => e.remove());
+    // Elimina divs flotantes en esquina inferior derecha
+    document.querySelectorAll('div[style*="position: fixed"][style*="right"][style*="bottom"]').forEach(e => e.remove());
+  }, 1000);
   </script>
 </body>
 </html>
