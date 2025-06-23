@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <!-- n8n Chat CSS -->
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat@latest/dist/style.css" rel="stylesheet" />
-  <!-- CSS para ocultar el chat de HostGator/ChatBot.com/Nathan -->
   <style>
     :root {
       --azul: #0057B8;
@@ -331,20 +330,75 @@
       }
     });
   </script>
-  <!-- Script para eliminar chats inyectados si CSS falla -->
+  <!-- Script AGRESIVO para eliminar cualquier widget de chat forzado -->
   <script>
-  setInterval(() => {
-    // Elimina iframes de ChatBot.com, LiveChat, etc.
-    document.querySelectorAll(
-      'iframe[src*="chatbot.com"],iframe[src*="livechat"],iframe[src*="livechatinc"],iframe[src*="cdn.livechat"]'
-    ).forEach(e => e.remove());
-    // Elimina divs sospechosos
-    document.querySelectorAll(
-      'div[id*="chatbot"],div[class*="chatbot"],div[class*="livechat"],div[class*="cbot"],div[class*="widget"],div[class*="lc-"],div[id*="lc-"],div[data-testid*="chat-widget"],div[data-testid*="chatbot"]'
-    ).forEach(e => e.remove());
-    // Elimina divs flotantes en esquina inferior derecha
-    document.querySelectorAll('div[style*="position: fixed"][style*="right"][style*="bottom"]').forEach(e => e.remove());
-  }, 1000);
-  </script>
+function killAllUnwantedChats() {
+  // Elimina cualquier iframe sospechoso
+  document.querySelectorAll('iframe').forEach(iframe => {
+    const src = (iframe.src || '').toLowerCase();
+    const html = iframe.outerHTML.toLowerCase();
+    if (
+      src.includes('chatbot.com') ||
+      src.includes('livechat') ||
+      src.includes('nathan') ||
+      src.includes('supportwidget') ||
+      html.includes('nathan') ||
+      html.includes('chatbot.com') ||
+      html.includes('livechat')
+    ) {
+      iframe.remove();
+    }
+  });
+
+  // Elimina divs y secciones con textos o clases sospechosas
+  document.querySelectorAll('div,section').forEach(el => {
+    const text = (el.innerText || '').toLowerCase();
+    const html = el.outerHTML.toLowerCase();
+    const cl = (el.className || '').toLowerCase();
+    const id = (el.id || '').toLowerCase();
+    if (
+      text.includes('my name is nathan') ||
+      text.includes('powered by n8n') ||
+      text.includes('chatbot.com') ||
+      text.includes('how can i assist you') ||
+      text.includes('start a chat') ||
+      html.includes('nathan') ||
+      html.includes('chatbot.com') ||
+      html.includes('livechat') ||
+      cl.includes('chatbot') ||
+      cl.includes('livechat') ||
+      cl.includes('supportwidget') ||
+      id.includes('chatbot') ||
+      id.includes('livechat') ||
+      id.includes('supportwidget')
+    ) {
+      el.remove();
+    }
+  });
+
+  // Elimina elementos flotantes sospechosos en la esquina inferior derecha
+  document.querySelectorAll('div,section').forEach(el => {
+    const style = window.getComputedStyle(el);
+    if (
+      style.position === 'fixed' &&
+      (style.right === '0px' || style.right === '10px' || style.right === '20px') &&
+      (style.bottom === '0px' || style.bottom === '10px' || style.bottom === '20px')
+    ) {
+      el.remove();
+    }
+  });
+
+  // Elimina elementos con z-index muy alto (típico de widgets flotantes)
+  document.querySelectorAll('div,section').forEach(el => {
+    const style = window.getComputedStyle(el);
+    if (parseInt(style.zIndex) > 1000) {
+      el.remove();
+    }
+  });
+}
+
+// Ejecuta la función cada segundo
+setInterval(killAllUnwantedChats, 1000);
+</script>
 </body>
 </html>
