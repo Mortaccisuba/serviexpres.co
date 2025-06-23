@@ -235,29 +235,23 @@
     // Efecto de líneas animadas tipo red digital
     const canvas = document.getElementById('lines-bg-canvas');
     const ctx = canvas.getContext('2d');
-
     let w = window.innerWidth;
     let h = window.innerHeight;
-
     function resize() {
       w = window.innerWidth;
       h = window.innerHeight;
       canvas.width = w;
       canvas.height = h;
     }
-
     window.addEventListener('resize', resize);
     resize();
-
     const POINTS = 45;
     const SPEED = 0.16;
     const DIST = 140;
     const nodes = [];
-
     function randomBetween(a, b) {
       return a + Math.random() * (b - a);
     }
-
     for (let i = 0; i < POINTS; i++) {
       nodes.push({
         x: randomBetween(0, w),
@@ -266,10 +260,8 @@
         vy: randomBetween(-SPEED, SPEED)
       });
     }
-
     function animate() {
       ctx.clearRect(0, 0, w, h);
-
       for (let i = 0; i < POINTS; i++) {
         for (let j = i + 1; j < POINTS; j++) {
           const a = nodes[i];
@@ -301,16 +293,13 @@
         ctx.shadowBlur = 8;
         ctx.fill();
         ctx.restore();
-
         n.x += n.vx;
         n.y += n.vy;
-
         if (n.x < 0 || n.x > w) n.vx = -n.vx;
         if (n.y < 0 || n.y > h) n.vy = -n.vy;
       }
       requestAnimationFrame(animate);
     }
-
     animate();
   </script>
   <!-- n8n Chat Script SOLO ESTE, nombre "Adrian", idioma español -->
