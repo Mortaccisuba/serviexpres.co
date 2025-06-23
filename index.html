@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ServiExpres | Soluciones digitales con impacto</title>
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
   <style>
     body {
@@ -109,6 +108,43 @@
       color: #1DA1F2;
       text-decoration: underline;
     }
+
+    .chat-box {
+      max-width: 400px;
+      margin: 30px auto 0;
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      color: #1a1a1a;
+    }
+
+    .chat-box h3 {
+      margin-top: 0;
+      color: #003580;
+    }
+
+    .chat-box input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .chat-box button {
+      background: #003580;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .chat-box p#respuestaBot {
+      font-size: 14px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 
@@ -150,8 +186,14 @@
 
   <section class="cta">
     <h2>¿Listo para mostrar tu negocio al mundo?</h2>
-    <p>Interactúa ahora con nuestro asistente virtual y recibe información en tiempo real.</p>
-    <!-- Aquí aparecerá el chatbot de n8n -->
+    <p>Interactúa con nuestro asistente virtual. Estamos listos para ayudarte.</p>
+    <div class="chat-box">
+      <h3>Asistente Virtual – ServiExpres</h3>
+      <p style="font-size: 14px;">¿En qué puedo ayudarte hoy?</p>
+      <input type="text" id="mensajeUsuario" placeholder="Escribe tu pregunta..." />
+      <button onclick="enviarMensajeVirtual()">Enviar</button>
+      <p id="respuestaBot"></p>
+    </div>
   </section>
 
   <footer>
@@ -163,13 +205,22 @@
     </p>
   </footer>
 
-  <!-- Script del chatbot de n8n (versión local) -->
-  <script type="module">
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+  <!-- Script para enviar mensaje al webhook de n8n -->
+  <script>
+    function enviarMensajeVirtual() {
+      const mensaje = document.getElementById('mensajeUsuario').value;
+      const respuesta = document.getElementById('respuestaBot');
 
-    createChat({
-      webhookUrl: 'http://localhost:5678/webhook/3a5579a6-63c5-4295-bdc1-1f1662c83657/chat'
-    });
+      fetch('https://serviexpres.n8n.cloud/webhook/chat', { // Cambia esta URL por tu webhook si es diferente
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mensaje: mensaje })
+      })
+      .then(res => res.ok
+        ? respuesta.textContent = '¡Recibido! Te responderemos pronto.'
+        : respuesta.textContent = 'Hubo un error al enviar.')
+      .catch(() => respuesta.textContent = 'Error de conexión.');
+    }
   </script>
 
 </body>
