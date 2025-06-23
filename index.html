@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <!-- n8n Chat CSS -->
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat@latest/dist/style.css" rel="stylesheet" />
+  <!-- CSS para ocultar el chat de HostGator/ChatBot.com/Nathan -->
   <style>
     :root {
       --azul: #0057B8;
@@ -15,13 +16,11 @@
       --blanco: #ffffff;
       --gris: #eef2f7;
     }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     html, body {
       height: 100%;
       width: 100%;
@@ -30,13 +29,11 @@
       color: var(--blanco);
       overflow-x: hidden;
     }
-
     body {
       position: relative;
       min-height: 100vh;
       min-width: 100vw;
     }
-
     #lines-bg-canvas {
       position: fixed;
       top: 0;
@@ -46,7 +43,6 @@
       z-index: 0;
       pointer-events: none;
     }
-
     .overlay {
       background: rgba(10, 30, 60, 0.82);
       min-height: 100vh;
@@ -58,7 +54,6 @@
       position: relative;
       z-index: 1;
     }
-
     header {
       width: 100%;
       max-width: 900px;
@@ -67,28 +62,24 @@
       margin-bottom: 1.4rem;
       padding: 0 1rem;
     }
-
     header h1 {
       font-size: 3rem;
       font-weight: 700;
       letter-spacing: 1.5px;
       margin-bottom: 0.6rem;
     }
-
     header p {
       font-size: 1.25rem;
       opacity: 0.92;
       margin-bottom: 1.2rem;
       font-weight: 400;
     }
-
     .top-botones {
       display: flex;
       justify-content: center;
       gap: 1.1rem;
       margin-bottom: 2.7rem;
     }
-
     .top-botones a {
       display: flex;
       align-items: center;
@@ -104,14 +95,12 @@
       transition: background 0.2s, color 0.2s, transform 0.2s;
       border: 2px solid var(--azul);
     }
-
     .top-botones a:hover {
       background: var(--azul-secundario);
       color: var(--blanco);
       transform: translateY(-2px) scale(1.05);
       border-color: var(--azul-secundario);
     }
-
     .contenido {
       width: 100%;
       max-width: 900px;
@@ -125,7 +114,6 @@
       flex-direction: column;
       align-items: center;
     }
-
     .contenido h2 {
       font-size: 2.1rem;
       margin-bottom: 1rem;
@@ -134,13 +122,11 @@
       letter-spacing: 0.5px;
       color: var(--azul-secundario);
     }
-
     .contenido p {
       margin-bottom: 1.5rem;
       line-height: 1.7;
       font-size: 1.1rem;
     }
-
     .contenido ul {
       list-style: none;
       padding: 0;
@@ -149,19 +135,16 @@
       max-width: 600px;
       font-size: 1.08rem;
     }
-
     .contenido li {
       margin-bottom: 0.7rem;
       position: relative;
       padding-left: 1.7rem;
     }
-
     .contenido li::before {
       content: "✅";
       position: absolute;
       left: 0;
     }
-
     footer {
       margin-top: 1.5rem;
       margin-bottom: 1.2rem;
@@ -172,7 +155,6 @@
       color: var(--gris);
       letter-spacing: 0.4px;
     }
-
     @media (max-width: 700px) {
       header h1 {
         font-size: 2.1rem;
@@ -193,6 +175,27 @@
         flex-direction: column;
         gap: 0.7rem;
       }
+    }
+    /* OCULTA el widget de ChatBot.com/Nathan/HostGator */
+    iframe[src*="chatbot.com"],
+    iframe[src*="livechat"],
+    div[id*="__be"],
+    div[id*="chatbot"],
+    div[class*="chatbot"],
+    div[class*="livechat"],
+    div[class*="cbot"],
+    div[class*="chat-widget"] {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      height: 0 !important;
+      width: 0 !important;
+      min-height: 0 !important;
+      min-width: 0 !important;
+      max-height: 0 !important;
+      max-width: 0 !important;
+      z-index: -9999 !important;
     }
   </style>
 </head>
