@@ -11,6 +11,7 @@
       --azul: #0057B8;
       --azul-secundario: #00AEEF;
       --blanco: #ffffff;
+      --gris: #eef2f7;
     }
 
     * {
@@ -25,7 +26,7 @@
       font-family: 'Inter', sans-serif;
       background: #16213e;
       color: var(--blanco);
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     body {
@@ -47,7 +48,7 @@
     .overlay {
       background: rgba(10, 30, 60, 0.82);
       min-height: 100vh;
-      padding: 3rem 1.5rem;
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -57,33 +58,85 @@
     }
 
     header {
+      width: 100%;
+      max-width: 900px;
       text-align: center;
-      margin-bottom: 2.5rem;
+      margin-top: 3rem;
+      margin-bottom: 1.4rem;
+      padding: 0 1rem;
     }
 
     header h1 {
       font-size: 3rem;
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      margin-bottom: 0.6rem;
     }
 
     header p {
-      font-size: 1.2rem;
-      opacity: 0.9;
+      font-size: 1.25rem;
+      opacity: 0.92;
+      margin-bottom: 1.2rem;
+      font-weight: 400;
+    }
+
+    .top-botones {
+      display: flex;
+      justify-content: center;
+      gap: 1.1rem;
+      margin-bottom: 2.7rem;
+    }
+
+    .top-botones a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: var(--blanco);
+      color: var(--azul);
+      text-decoration: none;
+      padding: 0.65rem 1.2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.09);
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      border: 2px solid var(--azul);
+    }
+
+    .top-botones a:hover {
+      background: var(--azul-secundario);
+      color: var(--blanco);
+      transform: translateY(-2px) scale(1.05);
+      border-color: var(--azul-secundario);
     }
 
     .contenido {
+      width: 100%;
       max-width: 900px;
-      text-align: center;
+      background: rgba(255,255,255,0.07);
+      border-radius: 24px;
+      margin-top: 1.2rem;
+      margin-bottom: 2.5rem;
+      padding: 2.5rem 2rem 2.2rem 2rem;
+      box-shadow: 0 4px 28px 0 rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .contenido h2 {
-      font-size: 2rem;
+      font-size: 2.1rem;
       margin-bottom: 1rem;
+      margin-top: 0.1rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--azul-secundario);
     }
 
     .contenido p {
       margin-bottom: 1.5rem;
       line-height: 1.7;
+      font-size: 1.1rem;
     }
 
     .contenido ul {
@@ -92,12 +145,13 @@
       margin: 0 auto 2rem;
       text-align: left;
       max-width: 600px;
+      font-size: 1.08rem;
     }
 
     .contenido li {
       margin-bottom: 0.7rem;
       position: relative;
-      padding-left: 1.5rem;
+      padding-left: 1.7rem;
     }
 
     .contenido li::before {
@@ -106,47 +160,36 @@
       left: 0;
     }
 
-    .botones {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-    }
-
-    .botones a {
-      background-color: var(--blanco);
-      color: var(--azul);
-      text-decoration: none;
-      padding: 0.8rem 1.3rem;
-      border-radius: 6px;
-      font-weight: 600;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .botones a:hover {
-      background-color: #e2ecf7;
-      color: var(--azul-secundario);
-    }
-
     footer {
-      margin-top: 3rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.2rem;
       text-align: center;
-      font-size: 0.9rem;
-      opacity: 0.8;
+      font-size: 1rem;
+      opacity: 0.9;
+      width: 100%;
+      color: var(--gris);
+      letter-spacing: 0.4px;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
       header h1 {
-        font-size: 2.2rem;
+        font-size: 2.1rem;
       }
-
       .contenido h2 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
       }
-
-      .botones a {
-        width: 100%;
-        text-align: center;
+      .contenido, header {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+    }
+    @media (max-width: 500px) {
+      .contenido {
+        padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+      }
+      .top-botones {
+        flex-direction: column;
+        gap: 0.7rem;
       }
     }
   </style>
@@ -158,9 +201,19 @@
     <header>
       <h1>ServiExpres</h1>
       <p>Transformamos procesos técnicos en soluciones digitales inteligentes</p>
+      <div class="top-botones">
+        <a href="https://wa.me/573232864625" target="_blank" title="WhatsApp">
+          <span>📱</span> WhatsApp
+        </a>
+        <a href="https://www.instagram.com/finazas_organizadas/" target="_blank" title="Instagram">
+          <span>📸</span> Instagram
+        </a>
+        <a href="mailto:Gerencia@serviexpres.co" title="Escríbenos">
+          <span>✉️</span> Correo
+        </a>
+      </div>
     </header>
-
-    <div class="contenido">
+    <main class="contenido">
       <h2>¿Quién soy?</h2>
       <p>Soy Adrián, un apasionado por la automatización, infraestructura web y diseño estratégico. Combino creatividad con precisión técnica para ayudar a que los negocios digitales avancen con impacto y profesionalismo.</p>
 
@@ -172,14 +225,7 @@
         <li>Diseño de landing pages efectivas con HTML y CSS</li>
         <li>Campañas de productos digitales como plantillas financieras</li>
       </ul>
-
-      <div class="botones">
-        <a href="https://wa.me/573232864625" target="_blank">📱 WhatsApp</a>
-        <a href="https://www.instagram.com/finazas_organizadas/" target="_blank">📸 Instagram</a>
-        <a href="mailto:Gerencia@serviexpres.co">✉️ Escríbenos</a>
-      </div>
-    </div>
-
+    </main>
     <footer>
       © 2025 ServiExpres | Desarrollo web & Automatización inteligente
     </footer>
