@@ -7,7 +7,7 @@
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <!-- n8n Chat CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat@latest/dist/style.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
   <style>
     :root {
       --azul: #0057B8;
@@ -285,27 +285,11 @@
   </script>
   <!-- n8n Chat Script SOLO ESTE, nombre "Adrian", idioma español -->
   <script type="module">
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat@latest/dist/chat.bundle.es.js';
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
     createChat({
       webhookUrl: 'http://localhost:5678/webhook/3a5579a6-63c5-4295-bdc1-1f1662c83657/chat',
-      language: 'es',
       botName: 'Adrian',
-      title: 'Chatea con Adrian 🤖',
-      description: '¡Hola! Soy Adrian. ¿En qué puedo ayudarte hoy?',
-      inputPlaceholder: 'Escribe tu mensaje...',
-      theme: {
-        color: '#0057B8',
-        headerTextColor: '#fff',
-        bubbleBackground: '#00AEEF',
-        bubbleTextColor: '#fff',
-        userBubbleBackground: '#fff',
-        userBubbleTextColor: '#0057B8',
-      },
-      mobile: {
-        // Fuerza el input visible en móvil
-        alwaysShowInput: true,
-        inputPlaceholder: 'Escribe tu mensaje...'
-      }
+      language: 'es'
     });
   </script>
 </body>
