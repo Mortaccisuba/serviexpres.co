@@ -154,6 +154,26 @@
       color: var(--gris);
       letter-spacing: 0.4px;
     }
+    /* --- Chatbot mobile fix --- */
+    .n8n-chat__footer,
+    .n8n-chat__input,
+    .n8n-chat__send {
+      display: block !important;
+      opacity: 1 !important;
+    }
+    @media (max-width: 600px) {
+      .n8n-chat__footer {
+        position: fixed !important;
+        bottom: 0;
+        width: 100vw;
+        z-index: 99999;
+        background: #fff;
+      }
+      .n8n-chat__input {
+        font-size: 1.1em !important;
+      }
+    }
+    /* --- Fin de fix --- */
     @media (max-width: 700px) {
       header h1 {
         font-size: 2.1rem;
@@ -283,13 +303,16 @@
     }
     animate();
   </script>
-  <!-- n8n Chat Script SOLO ESTE, nombre "Adrian", idioma español -->
+  <!-- n8n Chat Script Adrian en español, input SIEMPRE visible en móvil -->
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
     createChat({
       webhookUrl: 'http://localhost:5678/webhook/3a5579a6-63c5-4295-bdc1-1f1662c83657/chat',
       botName: 'Adrian',
-      language: 'es'
+      language: 'es',
+      mobile: {
+        alwaysShowInput: true
+      }
     });
   </script>
 </body>
