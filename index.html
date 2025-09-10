@@ -5,34 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ServiExpres | Soluciones Digitales Inteligentes</title>
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <!-- n8n Chat CSS -->
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
   <style>
+    /* Variables de color mejoradas para consistencia */
     :root {
-      --azul: #0057B8;
-      --azul-secundario: #00AEEF;
+      --azul-primario: #0057B8; /* Azul principal más vibrante */
+      --azul-secundario: #00AEEF; /* Azul complementario para acentos */
       --blanco: #ffffff;
-      --gris: #eef2f7;
+      --gris-claro: #eef2f7; /* Un gris más suave para texto secundario */
+      --fondo-oscuro: #16213e; /* Fondo principal */
+      --fondo-overlay: rgba(10, 30, 60, 0.88); /* Overlay más pronunciado para contraste */
     }
+
+    /* Reset básico y box-sizing */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
+    /* Estilos generales del cuerpo */
     html, body {
       height: 100%;
       width: 100%;
-      font-family: 'Inter', sans-serif;
-      background: #16213e;
+      font-family: 'Inter', sans-serif; /* Mantener Inter, más moderno */
+      background-color: var(--fondo-oscuro);
       color: var(--blanco);
-      overflow-x: hidden;
+      overflow-x: hidden; /* Evitar scroll horizontal */
+      line-height: 1.6; /* Mejorar legibilidad del texto */
     }
+
     body {
       position: relative;
       min-height: 100vh;
-      min-width: 100vw;
+      display: flex; /* Usar flexbox para centrar contenido principal */
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; /* Empieza arriba */
     }
+
+    /* Canvas para las líneas animadas */
     #lines-bg-canvas {
       position: fixed;
       top: 0;
@@ -40,159 +55,224 @@
       width: 100vw;
       height: 100vh;
       z-index: 0;
-      pointer-events: none;
+      pointer-events: none; /* No interferir con eventos del ratón */
     }
+
+    /* Contenedor principal de la overlay */
     .overlay {
-      background: rgba(10, 30, 60, 0.82);
+      background: var(--fondo-overlay);
       min-height: 100vh;
+      width: 100%;
       padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: flex-start; /* Alinear al inicio para que no se estire el header innecesariamente */
       position: relative;
       z-index: 1;
     }
+
+    /* Estilos del header */
     header {
       width: 100%;
-      max-width: 900px;
+      max-width: 900px; /* Ancho máximo para cabecera */
       text-align: center;
-      margin-top: 3rem;
-      margin-bottom: 1.4rem;
-      padding: 0 1rem;
+      margin-top: 4rem; /* Más espacio superior */
+      margin-bottom: 2.5rem; /* Más espacio inferior */
+      padding: 0 1.5rem; /* Padding horizontal */
     }
+
     header h1 {
-      font-size: 3rem;
+      font-family: 'Montserrat', sans-serif; /* Fuente más imponente para el título */
+      font-size: 3.8rem; /* Título más grande */
       font-weight: 700;
-      letter-spacing: 1.5px;
-      margin-bottom: 0.6rem;
+      letter-spacing: 2px; /* Espacio entre letras */
+      margin-bottom: 0.8rem;
+      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra sutil para el título */
     }
+
     header p {
-      font-size: 1.25rem;
-      opacity: 0.92;
-      margin-bottom: 1.2rem;
+      font-size: 1.35rem; /* Texto principal más grande */
+      opacity: 0.95; /* Opacidad un poco mayor */
+      margin-bottom: 2rem; /* Más espacio debajo del párrafo */
       font-weight: 400;
+      letter-spacing: 0.5px;
     }
+
+    /* Botones principales */
     .top-botones {
       display: flex;
       justify-content: center;
-      gap: 1.1rem;
-      margin-bottom: 2.7rem;
+      gap: 1.2rem; /* Mayor espacio entre botones */
+      margin-bottom: 3.5rem; /* Más espacio antes del contenido principal */
+      flex-wrap: wrap; /* Permitir que los botones se envuelvan en pantallas pequeñas */
     }
+
     .top-botones a {
-      display: flex;
+      display: inline-flex; /* Usa flex para alinear icono y texto */
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.7rem; /* Espacio entre icono y texto */
       background-color: var(--blanco);
-      color: var(--azul);
+      color: var(--azul-primario); /* Color del texto principal */
       text-decoration: none;
-      padding: 0.65rem 1.2rem;
-      border-radius: 50px;
+      padding: 0.75rem 1.5rem; /* Padding aumentado */
+      border-radius: 50px; /* Bordes más redondeados */
       font-weight: 600;
-      font-size: 1rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.09);
-      transition: background 0.2s, color 0.2s, transform 0.2s;
-      border: 2px solid var(--azul);
+      font-size: 1.1rem; /* Fuente de los botones un poco más grande */
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15); /* Sombra más pronunciada */
+      transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Transición más suave */
+      border: 3px solid var(--azul-primario); /* Borde más grueso */
     }
+
     .top-botones a:hover {
-      background: var(--azul-secundario);
-      color: var(--blanco);
-      transform: translateY(-2px) scale(1.05);
-      border-color: var(--azul-secundario);
+      background: var(--azul-primario); /* Fondo al pasar el ratón */
+      color: var(--blanco); /* Texto blanco al pasar el ratón */
+      transform: translateY(-3px) scale(1.06); /* Efecto de elevación más notorio */
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25); /* Sombra más marcada al pasar el ratón */
+      border-color: var(--azul-secundario); /* Cambio de borde */
     }
+
+    /* Iconos de los botones */
+    .top-botones a span {
+      font-size: 1.3rem; /* Iconos más grandes */
+    }
+
+    /* Estilos del contenido principal */
     .contenido {
       width: 100%;
-      max-width: 900px;
-      background: rgba(255,255,255,0.07);
-      border-radius: 24px;
-      margin-top: 1.2rem;
-      margin-bottom: 2.5rem;
-      padding: 2.5rem 2rem 2.2rem 2rem;
-      box-shadow: 0 4px 28px 0 rgba(0,0,0,0.12);
+      max-width: 900px; /* Ancho máximo para el contenido */
+      background: rgba(255,255,255,0.09); /* Fondo ligeramente más opaco */
+      border-radius: 32px; /* Bordes más redondeados */
+      margin-top: 1.5rem;
+      margin-bottom: 3.5rem; /* Más espacio inferior antes del footer */
+      padding: 3rem 2.5rem; /* Padding aumentado */
+      box-shadow: 0 8px 40px 0 rgba(0,0,0,0.2); /* Sombra más profunda */
       display: flex;
       flex-direction: column;
       align-items: center;
+      text-align: center; /* Centrar todo el texto dentro del contenido */
     }
+
     .contenido h2 {
-      font-size: 2.1rem;
-      margin-bottom: 1rem;
-      margin-top: 0.1rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      color: var(--azul-secundario);
+      font-family: 'Montserrat', sans-serif; /* Fuente destacada para los subtítulos */
+      font-size: 2.6rem; /* Título de sección más grande */
+      margin-bottom: 1.2rem;
+      margin-top: 0.2rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      color: var(--azul-secundario); /* Color de acento */
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
     }
+
     .contenido p {
-      margin-bottom: 1.5rem;
-      line-height: 1.7;
-      font-size: 1.1rem;
+      margin-bottom: 2rem; /* Más espacio después de párrafos */
+      font-size: 1.18rem; /* Tamaño de fuente de párrafo aumentado */
+      max-width: 650px; /* Ancho máximo para el párrafo principal */
     }
+
     .contenido ul {
       list-style: none;
       padding: 0;
-      margin: 0 auto 2rem;
-      text-align: left;
-      max-width: 600px;
-      font-size: 1.08rem;
+      margin: 0 auto 2.5rem; /* Margen inferior aumentado */
+      text-align: left; /* Alineación del texto de la lista */
+      max-width: 600px; /* Ancho máximo para la lista */
+      font-size: 1.15rem; /* Fuente de la lista aumentada */
     }
+
     .contenido li {
-      margin-bottom: 0.7rem;
+      margin-bottom: 0.9rem; /* Mayor espacio entre ítems de la lista */
       position: relative;
-      padding-left: 1.7rem;
+      padding-left: 2rem; /* Más espacio a la izquierda para el ícono */
+      display: flex; /* Usar flex para alinear ícono y texto si es necesario */
+      align-items: center; /* Centrar verticalmente */
     }
+
     .contenido li::before {
-      content: "✅";
+      content: "✨"; /* Un ícono más moderno y llamativo */
       position: absolute;
       left: 0;
+      top: 0; /* Ajuste fino para centrar el ícono */
+      color: var(--azul-secundario); /* Color del ícono */
+      font-size: 1.4rem; /* Tamaño del ícono aumentado */
+      line-height: 1; /* Ajuste para centrado vertical */
     }
+
+    /* Estilos del footer */
     footer {
-      margin-top: 1.5rem;
-      margin-bottom: 1.2rem;
+      margin-top: 2rem; /* Más espacio superior para el footer */
+      margin-bottom: 1.8rem; /* Espacio inferior */
       text-align: center;
-      font-size: 1rem;
-      opacity: 0.9;
+      font-size: 1.05rem; /* Fuente del footer un poco más grande */
+      opacity: 0.95; /* Opacidad mayor */
       width: 100%;
-      color: var(--gris);
-      letter-spacing: 0.4px;
+      color: var(--gris-claro); /* Gris más suave */
+      letter-spacing: 0.5px;
     }
-    /* --- Chatbot mobile fix --- */
+
+    /* --- Chatbot Styles --- */
+    /* Fijo para que no se pierda en scroll */
     .n8n-chat__footer,
     .n8n-chat__input,
     .n8n-chat__send {
-      display: block !important;
-      opacity: 1 !important;
+      display: block !important; /* Asegurar que sean visibles */
+      opacity: 1 !important; /* Asegurar opacidad completa */
     }
-    @media (max-width: 600px) {
+
+    /* Ajustes específicos para móviles */
+    @media (max-width: 768px) { /* Ajuste para tabletas y móviles */
       .n8n-chat__footer {
-        position: fixed !important;
+        position: fixed !important; /* Fijar pie de chat en móvil */
         bottom: 0;
         width: 100vw;
         z-index: 99999;
-        background: #fff;
+        background: #fff; /* Fondo blanco para el footer del chat */
       }
       .n8n-chat__input {
-        font-size: 1.1em !important;
+        font-size: 1.1em !important; /* Fuente mayor para input */
       }
-    }
-    /* --- Fin de fix --- */
-    @media (max-width: 700px) {
+      /* Ajustes generales de layout para móviles */
+      header {
+        margin-top: 3rem;
+        padding: 0 1rem;
+      }
       header h1 {
-        font-size: 2.1rem;
+        font-size: 2.6rem; /* Título más pequeño en móvil */
       }
-      .contenido h2 {
-        font-size: 1.3rem;
-      }
-      .contenido, header {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-      }
-    }
-    @media (max-width: 500px) {
-      .contenido {
-        padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+      header p {
+        font-size: 1.1rem; /* Texto principal más pequeño */
       }
       .top-botones {
-        flex-direction: column;
-        gap: 0.7rem;
+        flex-direction: column; /* Botones apilados */
+        gap: 0.8rem; /* Menos espacio entre botones apilados */
+        margin-bottom: 2.5rem; /* Menos espacio */
+      }
+      .top-botones a {
+        width: 90%; /* Botones más anchos en móvil */
+        margin: 0 auto; /* Centrar botones */
+        padding: 0.8rem 1.5rem; /* Padding ajustado */
+        font-size: 1rem; /* Fuente de botón más pequeña */
+      }
+      .contenido {
+        padding: 2rem 1rem; /* Padding reducido */
+        margin-top: 1rem;
+        margin-bottom: 2.5rem;
+        border-radius: 24px; /* Bordes menos redondeados en móvil */
+      }
+      .contenido h2 {
+        font-size: 1.8rem; /* Título de sección más pequeño */
+      }
+      .contenido p, .contenido ul {
+        font-size: 1.05rem; /* Texto de contenido más pequeño */
+      }
+      .contenido li {
+        padding-left: 1.8rem; /* Espacio reducido para ícono */
+      }
+      .contenido li::before {
+        font-size: 1.2rem; /* Ícono de lista más pequeño */
+      }
+      footer {
+        font-size: 0.95rem; /* Fuente de footer más pequeña */
+        margin-top: 1.5rem;
       }
     }
   </style>
@@ -205,39 +285,43 @@
       <h1>ServiExpres</h1>
       <p>Transformamos procesos técnicos en soluciones digitales inteligentes</p>
       <div class="top-botones">
-        <a href="https://wa.me/573232864625" target="_blank" title="WhatsApp">
+        <a href="https://wa.me/573232864625" target="_blank" title="Chatea por WhatsApp">
           <span>📱</span> WhatsApp
         </a>
-        <a href="https://www.instagram.com/finazas_organizadas/" target="_blank" title="Instagram">
+        <a href="https://www.instagram.com/finazas_organizadas/" target="_blank" title="Síguenos en Instagram">
           <span>📸</span> Instagram
         </a>
-        <a href="mailto:Gerencia@serviexpres.co" title="Escríbenos">
+        <a href="mailto:Gerencia@serviexpres.co" title="Envíanos un correo electrónico">
           <span>✉️</span> Correo
         </a>
       </div>
     </header>
+
     <main class="contenido">
       <h2>¿Quién soy?</h2>
-      <p>Soy Adrián, un apasionado por la automatización, infraestructura web y diseño estratégico. Combino creatividad con precisión técnica para ayudar a que los negocios digitales avancen con impacto y profesionalismo.</p>
-      <h2>Lo que hago</h2>
+      <p>Soy Adrián, un apasionado por la automatización, infraestructura web y diseño estratégico. Mi objetivo es combinar creatividad con precisión técnica para impulsar tu negocio digital, asegurando un impacto profesional y efectivo.</p>
+      <h2>Mis Servicios</h2>
       <ul>
-        <li>Automatización con n8n y Docker</li>
-        <li>Configuración profesional de dominios, DNS y GitHub Pages</li>
-        <li>Integración de WhatsApp, Instagram y chatbots personalizados</li>
-        <li>Diseño de landing pages efectivas con HTML y CSS</li>
-        <li>Campañas de productos digitales como plantillas financieras</li>
+        <li>Automatización de flujos de trabajo con n8n y Docker</li>
+        <li>Configuración profesional de dominios, DNS y despliegue en GitHub Pages</li>
+        <li>Integración de WhatsApp Business API, Instagram y chatbots personalizados</li>
+        <li>Diseño y optimización de landing pages efectivas (HTML/CSS/JS)</li>
+        <li>Creación y promoción de productos digitales (ej. plantillas financieras)</li>
       </ul>
     </main>
+
     <footer>
-      © 2025 ServiExpres | Desarrollo web & Automatización inteligente
+      © 2025 ServiExpres | Desarrollo Web & Automatización Inteligente
     </footer>
   </div>
+
+  <!-- Script para el efecto de líneas animadas -->
   <script>
-    // Efecto de líneas animadas tipo red digital
     const canvas = document.getElementById('lines-bg-canvas');
     const ctx = canvas.getContext('2d');
     let w = window.innerWidth;
     let h = window.innerHeight;
+
     function resize() {
       w = window.innerWidth;
       h = window.innerHeight;
@@ -246,13 +330,17 @@
     }
     window.addEventListener('resize', resize);
     resize();
-    const POINTS = 45;
-    const SPEED = 0.16;
-    const DIST = 140;
+
+    const POINTS = 60; // Más puntos para una red más densa
+    const SPEED = 0.2; // Velocidad ligeramente aumentada
+    const DIST = 150; // Distancia máxima para trazar líneas
     const nodes = [];
+
     function randomBetween(a, b) {
       return a + Math.random() * (b - a);
     }
+
+    // Inicialización de nodos
     for (let i = 0; i < POINTS; i++) {
       nodes.push({
         x: randomBetween(0, w),
@@ -261,8 +349,12 @@
         vy: randomBetween(-SPEED, SPEED)
       });
     }
+
+    // Función de animación
     function animate() {
-      ctx.clearRect(0, 0, w, h);
+      ctx.clearRect(0, 0, w, h); // Limpia el canvas
+
+      // Dibujar líneas entre nodos cercanos
       for (let i = 0; i < POINTS; i++) {
         for (let j = i + 1; j < POINTS; j++) {
           const a = nodes[i];
@@ -270,11 +362,12 @@
           const dx = a.x - b.x;
           const dy = a.y - b.y;
           const d = Math.sqrt(dx * dx + dy * dy);
+
           if (d < DIST) {
             ctx.save();
-            ctx.globalAlpha = 1 - d / DIST;
-            ctx.strokeStyle = '#00AEEF';
-            ctx.lineWidth = 1.1;
+            ctx.globalAlpha = 1 - d / DIST; // Transparencia basada en la distancia
+            ctx.strokeStyle = 'rgba(0, 174, 239, 0.6)'; // Color de línea azul semitransparente
+            ctx.lineWidth = 1.2; // Grosor de línea
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
@@ -283,38 +376,45 @@
           }
         }
       }
+
+      // Dibujar los nodos (puntos)
       for (let i = 0; i < POINTS; i++) {
         const n = nodes[i];
         ctx.save();
-        ctx.globalAlpha = 0.65;
+        ctx.globalAlpha = 0.75; // Opacidad de los puntos
         ctx.beginPath();
-        ctx.arc(n.x, n.y, 2.7, 0, 2 * Math.PI, false);
-        ctx.fillStyle = '#00AEEF';
-        ctx.shadowColor = '#00AEEF';
-        ctx.shadowBlur = 8;
+        ctx.arc(n.x, n.y, 3.5, 0, 2 * Math.PI, false); // Puntos más grandes
+        ctx.fillStyle = '#00AEEF'; // Color de los puntos
+        ctx.shadowColor = '#00AEEF'; // Sombra de los puntos
+        ctx.shadowBlur = 10; // Desenfoque de sombra
         ctx.fill();
         ctx.restore();
+
+        // Mover los nodos y hacer que reboten en los bordes
         n.x += n.vx;
         n.y += n.vy;
+
         if (n.x < 0 || n.x > w) n.vx = -n.vx;
         if (n.y < 0 || n.y > h) n.vy = -n.vy;
       }
-      requestAnimationFrame(animate);
+      requestAnimationFrame(animate); // Solicita el próximo frame de animación
     }
     animate();
   </script>
-  <!-- n8n Chat Script Adrian en español, input SIEMPRE visible en móvil -->
+
+  <!-- n8n Chat Script -->
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
     createChat({
+      // Asegúrate de que esta URL sea correcta y accesible
       webhookUrl: 'https://22f73fca39f3.ngrok-free.app/webhook/3a5579a6-63c5-4295-bdc1-1f1662c83657/chat',
       botName: 'Adrian',
-      language: 'es',
+      language: 'es', // Español
       title: 'Chatea con Adrian 🤖',
-      description: '¡Hola! Soy Adrian. ¿En qué puedo ayudarte hoy?',
-      inputPlaceholder: 'Escribe tu mensaje...',
+      description: '¡Hola! Soy Adrián. ¿En qué puedo ayudarte hoy?',
+      inputPlaceholder: 'Escribe tu mensaje aquí...', // Placeholder más descriptivo
       mobile: {
-        alwaysShowInput: true
+        alwaysShowInput: true // Siempre mostrar el input en móvil (como pediste)
       }
     });
   </script>
