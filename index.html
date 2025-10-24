@@ -6,8 +6,6 @@
   <title>ServiExpres | Soluciones Digitales Inteligentes</title>
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <!-- n8n Chat CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
   <style>
     :root {
       --azul: #0057B8;
@@ -154,26 +152,6 @@
       color: var(--gris);
       letter-spacing: 0.4px;
     }
-    /* --- Chatbot mobile fix --- */
-    .n8n-chat__footer,
-    .n8n-chat__input,
-    .n8n-chat__send {
-      display: block !important;
-      opacity: 1 !important;
-    }
-    @media (max-width: 600px) {
-      .n8n-chat__footer {
-        position: fixed !important;
-        bottom: 0;
-        width: 100vw;
-        z-index: 99999;
-        background: #fff;
-      }
-      .n8n-chat__input {
-        font-size: 1.1em !important;
-      }
-    }
-    /* --- Fin de fix --- */
     @media (max-width: 700px) {
       header h1 {
         font-size: 2.1rem;
@@ -302,21 +280,6 @@
       requestAnimationFrame(animate);
     }
     animate();
-  </script>
-  <!-- n8n Chat Script Adrian en español, input SIEMPRE visible en móvil -->
-  <script type="module">
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-    createChat({
-      webhookUrl: 'https://22f73fca39f3.ngrok-free.app/webhook/3a5579a6-63c5-4295-bdc1-1f1662c83657/chat',
-      botName: 'Adrian',
-      language: 'es',
-      title: 'Chatea con Adrian 🤖',
-      description: '¡Hola! Soy Adrian. ¿En qué puedo ayudarte hoy?',
-      inputPlaceholder: 'Escribe tu mensaje...',
-      mobile: {
-        alwaysShowInput: true
-      }
-    });
   </script>
 </body>
 </html>
