@@ -35,13 +35,14 @@
       justify-content: flex-start;
       position: relative;
       z-index: 1;
+      padding-bottom: 4rem;
     }
 
     header { width: 100%; max-width: 900px; text-align: center; margin-top: 3rem; margin-bottom: 1.4rem; padding: 0 1rem; }
     header h1 { font-size: 3rem; font-weight: 700; letter-spacing: 1.5px; margin-bottom: 0.6rem; }
     header p { font-size: 1.25rem; opacity: 0.92; margin-bottom: 1.2rem; font-weight: 400; }
 
-    .top-botones { display: flex; justify-content: center; gap: 1.1rem; margin-bottom: 2.7rem; }
+    .top-botones { display: flex; justify-content: center; gap: 1.1rem; margin-bottom: 2.7rem; flex-wrap: wrap; }
     .top-botones a {
       display: flex; align-items: center; gap: 0.5rem;
       background-color: var(--blanco); color: var(--azul);
@@ -182,12 +183,12 @@
     animate();
   </script>
 
-  <!-- n8n Chat: inicialización del widget (botName: "Adrian") -->
+  <!-- n8n Chat: inicialización del widget -->
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-    // URL pública de tu webhook en Render (he usado tu dominio y el ID que proporcionaste).
-    // IMPORTANTE: la página debe servirse por HTTPS para que esto no sea bloqueado como mixed content.
+    // URL pública de tu webhook en Render (asegúrate de que esta URL sea exactamente la que genera tu nodo Webhook)
+    // IMPORTANTE: usa https si tu sitio está servido por HTTPS
     const webhookUrl = 'https://n8n-tx1r.onrender.com/webhook/12413bce-ca60-4ac6-907d-6765da64c11c/chat';
 
     createChat({
