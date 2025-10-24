@@ -1,21 +1,249 @@
-<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-<script type="module">
-	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ServiExpres | Soluciones Digitales Inteligentes</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
-	createChat({
-		// Mantengo la URL que proporcionaste (si vas a desplegar en producción recuerda usar https si tu página usa https)
-		webhookUrl: 'http://localhost:5678/webhook/12413bce-ca60-4ac6-907d-6765da64c11c/chat',
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-		// Configuración en español y nombre del bot "Adrian"
-		botName: 'Adrian',
-		language: 'es',
-		title: 'Chatea con Adrian 🤖',
-		description: '¡Hola! Soy Adrian. ¿En qué puedo ayudarte hoy?',
-		inputPlaceholder: 'Escribe tu mensaje...',
+  <!-- n8n Chat CSS (necesario para el widget) -->
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
-		// Opciones para móvil (input siempre visible)
-		mobile: {
-			alwaysShowInput: true
-		}
-	});
-</script>
+  <style>
+    :root {
+      --azul: #0057B8;
+      --azul-secundario: #00AEEF;
+      --blanco: #ffffff;
+      --gris: #eef2f7;
+      --warning-bg: #ffefc2;
+      --warning-text: #6a4b00;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; width: 100%; font-family: 'Inter', sans-serif; background: #16213e; color: var(--blanco); overflow-x: hidden; }
+    body { position: relative; min-height: 100vh; min-width: 100vw; }
+
+    /* Banner de alertas (visible si hay problema con el webhook) */
+    #chat-warning {
+      display: none;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 1rem;
+      z-index: 999999;
+      background: var(--warning-bg);
+      color: var(--warning-text);
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.16);
+      font-size: 0.95rem;
+      max-width: calc(100% - 2rem);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* Canvas fondo */
+    #lines-bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+
+    .overlay {
+      background: rgba(10, 30, 60, 0.82);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+      z-index: 1;
+      padding-bottom: 4rem;
+    }
+
+    header { width: 100%; max-width: 900px; text-align: center; margin-top: 3rem; margin-bottom: 1.4rem; padding: 0 1rem; }
+    header h1 { font-size: 3rem; font-weight: 700; letter-spacing: 1.5px; margin-bottom: 0.6rem; }
+    header p { font-size: 1.25rem; opacity: 0.92; margin-bottom: 1.2rem; font-weight: 400; }
+
+    .top-botones { display: flex; justify-content: center; gap: 1.1rem; margin-bottom: 2.7rem; flex-wrap: wrap; }
+    .top-botones a {
+      display: flex; align-items: center; gap: 0.5rem;
+      background-color: var(--blanco); color: var(--azul);
+      text-decoration: none; padding: 0.65rem 1.2rem; border-radius: 50px;
+      font-weight: 600; font-size: 1rem; box-shadow: 0 2px 12px rgba(0,0,0,0.09);
+      transition: background 0.2s, color 0.2s, transform 0.2s; border: 2px solid var(--azul);
+    }
+    .top-botones a:hover { background: var(--azul-secundario); color: var(--blanco); transform: translateY(-2px) scale(1.05); border-color: var(--azul-secundario); }
+
+    .contenido {
+      width: 100%; max-width: 900px; background: rgba(255,255,255,0.07);
+      border-radius: 24px; margin-top: 1.2rem; margin-bottom: 2.5rem;
+      padding: 2.5rem 2rem 2.2rem 2rem; box-shadow: 0 4px 28px 0 rgba(0,0,0,0.12);
+      display: flex; flex-direction: column; align-items: center;
+    }
+
+    .contenido h2 { font-size: 2.1rem; margin-bottom: 1rem; margin-top: 0.1rem; font-weight: 600; letter-spacing: 0.5px; color: var(--azul-secundario); }
+    .contenido p { margin-bottom: 1.5rem; line-height: 1.7; font-size: 1.1rem; }
+    .contenido ul { list-style: none; padding: 0; margin: 0 auto 2rem; text-align: left; max-width: 600px; font-size: 1.08rem; }
+    .contenido li { margin-bottom: 0.7rem; position: relative; padding-left: 1.7rem; }
+    .contenido li::before { content: "✅"; position: absolute; left: 0; }
+
+    footer { margin-top: 1.5rem; margin-bottom: 1.2rem; text-align: center; font-size: 1rem; opacity: 0.9; width: 100%; color: var(--gris); letter-spacing: 0.4px; }
+
+    /* --- Chatbot mobile fix --- (mantener para que input siempre sea visible en móviles) */
+    .n8n-chat__footer, .n8n-chat__input, .n8n-chat__send { display: block !important; opacity: 1 !important; }
+    @media (max-width: 600px) {
+      .n8n-chat__footer { position: fixed !important; bottom: 0; width: 100vw; z-index: 99999; background: #fff; }
+      .n8n-chat__input { font-size: 1.1em !important; }
+    }
+
+    @media (max-width: 700px) {
+      header h1 { font-size: 2.1rem; }
+      .contenido h2 { font-size: 1.3rem; }
+      .contenido, header { padding-left: 0.5rem; padding-right: 0.5rem; }
+    }
+    @media (max-width: 500px) {
+      .contenido { padding: 1.2rem 0.5rem 1.2rem 0.5rem; }
+      .top-botones { flex-direction: column; gap: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="chat-warning" role="status" aria-live="polite"></div>
+
+  <!-- Canvas para las líneas animadas -->
+  <canvas id="lines-bg-canvas"></canvas>
+
+  <div class="overlay">
+    <header>
+      <h1>ServiExpres</h1>
+      <p>Transformamos procesos técnicos en soluciones digitales inteligentes</p>
+      <div class="top-botones">
+        <a href="https://wa.me/573232864625" target="_blank" rel="noopener" title="WhatsApp"><span>📱</span> WhatsApp</a>
+        <a href="https://www.instagram.com/finazas_organizadas/" target="_blank" rel="noopener" title="Instagram"><span>📸</span> Instagram</a>
+        <a href="mailto:Gerencia@serviexpres.co" title="Escríbenos"><span>✉️</span> Correo</a>
+      </div>
+    </header>
+
+    <main class="contenido">
+      <h2>¿Quién soy?</h2>
+      <p>Soy Adrián, un apasionado por la automatización, infraestructura web y diseño estratégico. Combino creatividad con precisión técnica para ayudar a que los negocios digitales avancen con impacto y profesionalismo.</p>
+
+      <h2>Lo que hago</h2>
+      <ul>
+        <li>Automatización con n8n y Docker</li>
+        <li>Configuración profesional de dominios, DNS y GitHub Pages</li>
+        <li>Integración de WhatsApp, Instagram y chatbots personalizados</li>
+        <li>Diseño de landing pages efectivas con HTML y CSS</li>
+        <li>Campañas de productos digitales como plantillas financieras</li>
+      </ul>
+    </main>
+
+    <footer>© 2025 ServiExpres | Desarrollo web & Automatización inteligente</footer>
+  </div>
+
+  <script>
+    // Efecto de líneas animadas tipo red digital
+    const canvas = document.getElementById('lines-bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let w = window.innerWidth;
+    let h = window.innerHeight;
+    function resize() { w = window.innerWidth; h = window.innerHeight; canvas.width = w; canvas.height = h; }
+    window.addEventListener('resize', resize);
+    resize();
+    const POINTS = 45, SPEED = 0.16, DIST = 140, nodes = [];
+    function randomBetween(a,b){ return a + Math.random()*(b-a); }
+    for(let i=0;i<POINTS;i++){ nodes.push({ x: randomBetween(0,w), y: randomBetween(0,h), vx: randomBetween(-SPEED,SPEED), vy: randomBetween(-SPEED,SPEED) }); }
+    function animate(){
+      ctx.clearRect(0,0,w,h);
+      for(let i=0;i<POINTS;i++){
+        for(let j=i+1;j<POINTS;j++){
+          const a=nodes[i], b=nodes[j];
+          const dx=a.x-b.x, dy=a.y-b.y, d=Math.sqrt(dx*dx+dy*dy);
+          if(d < DIST){
+            ctx.save(); ctx.globalAlpha = 1 - d / DIST; ctx.strokeStyle = '#00AEEF'; ctx.lineWidth = 1.1;
+            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); ctx.restore();
+          }
+        }
+      }
+      for(let i=0;i<POINTS;i++){
+        const n=nodes[i];
+        ctx.save(); ctx.globalAlpha=0.65; ctx.beginPath(); ctx.arc(n.x,n.y,2.7,0,2*Math.PI,false); ctx.fillStyle='#00AEEF'; ctx.shadowColor='#00AEEF'; ctx.shadowBlur=8; ctx.fill(); ctx.restore();
+        n.x += n.vx; n.y += n.vy;
+        if(n.x < 0 || n.x > w) n.vx = -n.vx;
+        if(n.y < 0 || n.y > h) n.vy = -n.vy;
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+
+  <!-- n8n Chat: inicialización del widget (con comprobaciones y mensajes en español) -->
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+    // --- ********* CONFIGURA AQUÍ TU WEBHOOK ********* ---
+    // El valor que me diste (local): http://localhost:5678/webhook/29d89778-b129-4332-a8d8-4f3473a4516e/chat
+    // Si despliegas la página en producción (HTTPS) reemplaza por la URL pública HTTPS que te da n8n en Render.
+    const webhookUrl = 'http://localhost:5678/webhook/29d89778-b129-4332-a8d8-4f3473a4516e/chat';
+    // ***************************************************
+
+    const warningEl = document.getElementById('chat-warning');
+
+    function showWarning(message) {
+      warningEl.textContent = message;
+      warningEl.style.display = 'block';
+    }
+
+    function hideWarning() {
+      warningEl.style.display = 'none';
+    }
+
+    (async () => {
+      // 1) Verificación básica de protocolo para evitar mixed-content
+      if (location.protocol === 'https:' && webhookUrl.startsWith('http:')) {
+        const msg = 'Error: la URL del webhook usa HTTP mientras la página está en HTTPS. Debes usar la URL pública HTTPS de tu n8n (Render) para que el chat funcione.';
+        console.error(msg);
+        showWarning(msg);
+        // No intentamos inicializar el widget para evitar bloqueo por mixed content.
+        return;
+      }
+
+      // 2) Intentar comprobar alcanzabilidad (OPTIONS)
+      let reachable = false;
+      try {
+        const res = await fetch(webhookUrl, { method: 'OPTIONS' });
+        console.log('Comprobación OPTIONS al webhook:', res.status, res.statusText);
+        // Si el servidor responde con 2xx/3xx lo consideramos alcanzable.
+        if (res.status >= 200 && res.status < 400) reachable = true;
+      } catch (err) {
+        // Fallo al comprobar: puede ser CORS o servidor inaccesible; lo apuntamos en consola.
+        console.warn('No se pudo realizar OPTIONS al webhook (puede ser CORS o el servidor no está accesible desde el navegador):', err);
+      }
+
+      // 3) Inicializar createChat de todos modos (la librería maneja la comunicación),
+      //    pero informamos al usuario en la página si la comprobación falló.
+      if (!reachable) {
+        showWarning('Atención: no se pudo verificar el webhook desde el navegador. Si el chat no funciona revisa la URL del webhook, CORS y que el workflow esté activo en n8n.');
+      } else {
+        hideWarning();
+      }
+
+      try {
+        createChat({
+          webhookUrl,
+          botName: 'Adrian',           // nombre del bot
+          language: 'es',              // interfaz en español
+          title: 'Chatea con Adrian 🤖',
+          description: '¡Hola! Soy Adrian. ¿En qué puedo ayudarte hoy?',
+          inputPlaceholder: 'Escribe tu mensaje...',
+          mobile: { alwaysShowInput: true }
+        });
+        console.log('Widget n8n Chat inicializado con webhook:', webhookUrl);
+      } catch (err) {
+        const msg = 'Error al inicializar el widget de chat: ' + (err && err.message ? err.message : String(err));
+        console.error(msg, err);
+        showWarning('No se pudo iniciar el chat: revisa consola para más detalles.');
+      }
+    })();
+  </script>
+</body>
+</html>
