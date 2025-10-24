@@ -182,24 +182,20 @@
     animate();
   </script>
 
-  <!-- n8n Chat: inicialización del widget -->
+  <!-- n8n Chat: inicialización del widget (botName: "Adrian") -->
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-    // He usado la información que me diste (ID del webhook).
-    // Si tu n8n está desplegado en Render en: https://n8n-tx1r.onrender.com
-    // y tu Webhook ID es 12413bce-ca60-4ac6-907d-6765da64c11c,
-    // la URL pública final (IMPORTANTE: debe ser https si tu sitio usa https)
-    // queda así:
+    // URL pública de tu webhook en Render (he usado tu dominio y el ID que proporcionaste).
+    // IMPORTANTE: la página debe servirse por HTTPS para que esto no sea bloqueado como mixed content.
     const webhookUrl = 'https://n8n-tx1r.onrender.com/webhook/12413bce-ca60-4ac6-907d-6765da64c11c/chat';
 
-    // Inicializa el chat widget
     createChat({
       webhookUrl,
-      botName: 'Adrián',
+      botName: 'Adrian',
       language: 'es',
-      title: 'Chatea con Adrián 🤖',
-      description: '¡Hola! Soy Adrián. ¿En qué puedo ayudarte hoy?',
+      title: 'Chatea con Adrian 🤖',
+      description: '¡Hola! Soy Adrian. ¿En qué puedo ayudarte hoy?',
       inputPlaceholder: 'Escribe tu mensaje...',
       mobile: { alwaysShowInput: true }
     });
