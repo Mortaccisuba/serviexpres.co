@@ -6,6 +6,8 @@
   <title>ServiExpres | Soluciones Digitales Inteligentes</title>
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- n8n Chat CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
   <style>
     :root {
       --azul: #0057B8;
@@ -152,6 +154,26 @@
       color: var(--gris);
       letter-spacing: 0.4px;
     }
+    /* --- Chatbot mobile fix --- */
+    .n8n-chat__footer,
+    .n8n-chat__input,
+    .n8n-chat__send {
+      display: block !important;
+      opacity: 1 !important;
+    }
+    @media (max-width: 600px) {
+      .n8n-chat__footer {
+        position: fixed !important;
+        bottom: 0;
+        width: 100vw;
+        z-index: 99999;
+        background: #fff;
+      }
+      .n8n-chat__input {
+        font-size: 1.1em !important;
+      }
+    }
+    /* --- Fin de fix --- */
     @media (max-width: 700px) {
       header h1 {
         font-size: 2.1rem;
@@ -210,6 +232,7 @@
       © 2025 ServiExpres | Desarrollo web & Automatización inteligente
     </footer>
   </div>
+
   <script>
     // Efecto de líneas animadas tipo red digital
     const canvas = document.getElementById('lines-bg-canvas');
@@ -280,6 +303,15 @@
       requestAnimationFrame(animate);
     }
     animate();
+  </script>
+
+  <!-- n8n Chat: añadido según tu snippet -->
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+    createChat({
+      webhookUrl: 'http://localhost:5678/webhook/12413bce-ca60-4ac6-907d-6765da64c11c/chat'
+    });
   </script>
 </body>
 </html>
