@@ -12,84 +12,41 @@
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
   <style>
-    :root {
-      --azul: #0057B8;
-      --azul-sec: #00AEEF;
-      --blanco: #ffffff;
-      --gris: #eef2f7;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; width: 100%; font-family: 'Inter', sans-serif; background: #16213e; color: var(--blanco); }
-    body { min-height: 100vh; min-width: 100vw; position: relative; }
+    :root { --azul:#0057B8; --azul-sec:#00AEEF; --blanco:#ffffff; --gris:#eef2f7; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;width:100%;font-family:'Inter',sans-serif;background:#16213e;color:var(--blanco)}
+    body{min-height:100vh;min-width:100vw;position:relative}
 
-    /* Aviso visible */
-    #chat-warning {
-      display: none;
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 1rem;
-      z-index: 99999;
-      background: #fff4c2;
-      color: #6a4b00;
-      padding: .8rem 1rem;
-      border-radius: 8px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
-      max-width: calc(100% - 2rem);
-      font-size: .95rem;
-      line-height: 1.25;
-    }
+    #lines-bg-canvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
+    .overlay{background:rgba(10,30,60,0.82);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding-bottom:4rem;position:relative;z-index:1}
 
-    /* Canvas fondo */
-    #lines-bg-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+    header{width:100%;max-width:900px;text-align:center;margin-top:3rem;padding:0 1rem}
+    header h1{font-size:2.6rem;font-weight:700;margin-bottom:.4rem}
+    header p{font-size:1.05rem;opacity:.95;margin-bottom:1rem}
 
-    .overlay {
-      background: rgba(10,30,60,0.82);
-      min-height: 100vh;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      padding-bottom: 4rem;
-      position: relative;
-      z-index: 1;
-    }
+    .top-botones{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+    .top-botones a{display:inline-flex;align-items:center;gap:.5rem;background:var(--blanco);color:var(--azul);padding:.55rem 1rem;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid var(--azul);box-shadow:0 3px 14px rgba(0,0,0,0.08)}
+    .top-botones a:hover{background:var(--azul-sec);color:#fff}
 
-    header { width:100%; max-width:900px; text-align:center; margin-top:3rem; padding: 0 1rem; }
-    header h1 { font-size: 2.6rem; font-weight:700; margin-bottom:.4rem; }
-    header p { font-size:1.05rem; opacity:.95; margin-bottom:1rem; }
+    .contenido{width:100%;max-width:900px;background:rgba(255,255,255,0.06);border-radius:18px;padding:2rem;margin-bottom:2.4rem;box-shadow:0 6px 30px rgba(0,0,0,0.18);display:flex;flex-direction:column;align-items:center}
+    .contenido h2{color:var(--azul-sec);font-size:1.8rem;margin-bottom:.8rem}
+    .contenido p{line-height:1.6;margin-bottom:1rem;color:rgba(255,255,255,0.95)}
+    .contenido ul{list-style:none;padding:0;max-width:640px;text-align:left;font-size:1.02rem}
+    .contenido li{padding-left:1.6rem;margin-bottom:.65rem;position:relative}
+    .contenido li::before{content:"✅";position:absolute;left:0}
 
-    .top-botones { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem; }
-    .top-botones a {
-      display:inline-flex; align-items:center; gap:.5rem;
-      background: var(--blanco); color: var(--azul);
-      padding:.55rem 1rem; border-radius:999px; font-weight:600; text-decoration:none;
-      border:2px solid var(--azul); box-shadow: 0 3px 14px rgba(0,0,0,0.08);
-    }
-    .top-botones a:hover { background: var(--azul-sec); color:#fff; transform: translateY(-2px); border-color:var(--azul-sec); }
+    footer{width:100%;text-align:center;color:var(--gris);font-size:.95rem;margin-bottom:1rem}
 
-    .contenido {
-      width:100%; max-width:900px; background: rgba(255,255,255,0.06); border-radius:18px;
-      padding: 2rem; margin-bottom:2.4rem; box-shadow: 0 6px 30px rgba(0,0,0,0.18);
-      display:flex; flex-direction:column; align-items:center;
-    }
-    .contenido h2 { color: var(--azul-sec); font-size:1.8rem; margin-bottom:.8rem; }
-    .contenido p { line-height:1.6; margin-bottom:1rem; color: rgba(255,255,255,0.95); }
-    .contenido ul { list-style:none; padding:0; max-width:640px; text-align:left; font-size:1.02rem; }
-    .contenido li { padding-left:1.6rem; margin-bottom:.65rem; position:relative; }
-    .contenido li::before { content: "✅"; position:absolute; left:0; }
+    /* Widget mobile fix */
+    .n8n-chat__footer,.n8n-chat__input,.n8n-chat__send{display:block!important;opacity:1!important}
+    @media(max-width:600px){ .n8n-chat__footer{position:fixed!important;bottom:0;width:100vw;z-index:999999;background:#fff} .n8n-chat__input{font-size:1.05rem!important} }
 
-    footer { width:100%; text-align:center; color:var(--gris); font-size:.95rem; margin-bottom:1rem; }
-
-    /* Forzar input visible en móvil (n8n widget fixes) */
-    .n8n-chat__footer, .n8n-chat__input, .n8n-chat__send { display:block !important; opacity:1 !important; }
-    @media(max-width:600px) {
-      .n8n-chat__footer { position: fixed !important; bottom: 0; width: 100vw; z-index: 999999; background: #fff; }
-      .n8n-chat__input { font-size: 1.05rem !important; }
-    }
+    /* Mensajes de estado */
+    #chat-status{display:none;position:fixed;left:50%;transform:translateX(-50%);top:1rem;z-index:999999;background:#fff4c2;color:#6a4b00;padding:.8rem 1rem;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,0.18);max-width:calc(100% - 2rem);font-size:.95rem;line-height:1.2}
   </style>
 </head>
 <body>
-  <div id="chat-warning" role="status" aria-live="polite"></div>
+  <div id="chat-status" role="status" aria-live="polite"></div>
 
   <canvas id="lines-bg-canvas"></canvas>
 
@@ -123,7 +80,7 @@
   </div>
 
   <script>
-    // Fondo animado (líneas)
+    // Fondo animado
     const canvas = document.getElementById('lines-bg-canvas');
     const ctx = canvas.getContext('2d');
     let w = window.innerWidth, h = window.innerHeight;
@@ -138,18 +95,14 @@
       ctx.clearRect(0,0,w,h);
       for(let i=0;i<POINTS;i++){
         for(let j=i+1;j<POINTS;j++){
-          const a=nodes[i], b=nodes[j];
-          const dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
-          if(d < DIST){
-            ctx.save(); ctx.globalAlpha = 1 - d / DIST; ctx.strokeStyle = '#00AEEF'; ctx.lineWidth = 1.1;
-            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); ctx.restore();
-          }
+          const a = nodes[i], b = nodes[j];
+          const dx = a.x - b.x, dy = a.y - b.y, d = Math.hypot(dx,dy);
+          if(d < DIST){ ctx.save(); ctx.globalAlpha = 1 - d / DIST; ctx.strokeStyle = '#00AEEF'; ctx.lineWidth = 1.1; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); ctx.restore(); }
         }
       }
       for(let i=0;i<POINTS;i++){
         const n = nodes[i];
-        ctx.save(); ctx.globalAlpha=0.65; ctx.beginPath(); ctx.arc(n.x,n.y,2.7,0,Math.PI*2); ctx.fillStyle='#00AEEF';
-        ctx.shadowColor='#00AEEF'; ctx.shadowBlur = 8; ctx.fill(); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.65; ctx.beginPath(); ctx.arc(n.x,n.y,2.7,0,Math.PI*2); ctx.fillStyle = '#00AEEF'; ctx.shadowColor = '#00AEEF'; ctx.shadowBlur = 8; ctx.fill(); ctx.restore();
         n.x += n.vx; n.y += n.vy;
         if(n.x < 0 || n.x > w) n.vx = -n.vx;
         if(n.y < 0 || n.y > h) n.vy = -n.vy;
@@ -159,38 +112,50 @@
     animate();
   </script>
 
-  <!-- n8n Chat: widget en español, botName = "Adrian", webhook local -->
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-    // USAR EXACTAMENTE esta URL (la proporcionaste):
-    const webhookUrl = 'http://localhost:5678/webhook/29d89778-b129-4332-a8d8-4f3473a4516e/chat';
+    // ---------- CONFIGURA AQUÍ ----------
+    // Opción A (Producción): usar la URL pública HTTPS de n8n en Render
+    const webhookUrlRender = 'https://n8n-tx1r.onrender.com/webhook/29d89778-b129-4332-a8d8-4f3473a4516e/chat';
+    // Opción B (Local testing): usar n8n local
+    const webhookUrlLocal = 'http://localhost:5678/webhook/29d89778-b129-4332-a8d8-4f3473a4516e/chat';
+    // Selecciona la que corresponda a tu entorno:
+    // Si la página la sirves por HTTPS en producción usa webhookUrlRender.
+    // Si pruebas en local y sirves la página por HTTP usa webhookUrlLocal.
+    const webhookUrl = (location.protocol === 'https:') ? webhookUrlRender : webhookUrlLocal;
+    // ------------------------------------
 
-    const warning = document.getElementById('chat-warning');
-    function showWarning(msg){ warning.innerHTML = msg; warning.style.display = 'block'; }
-    function hideWarning(){ warning.style.display = 'none'; }
+    const statusEl = document.getElementById('chat-status');
+    function showStatus(msg){ statusEl.innerHTML = msg; statusEl.style.display = 'block'; }
+    function hideStatus(){ statusEl.style.display = 'none'; }
 
     (async () => {
-      // Evitar mixed content cuando la página esté en HTTPS
+      // 1) Evitar mixed content: si página HTTPS y webhook HTTP -> avisar y parar
       if (location.protocol === 'https:' && webhookUrl.startsWith('http:')) {
-        showWarning('<strong>ERROR:</strong> la URL del webhook usa <code>http</code> mientras la página está en <code>https</code>. ' +
-                    'Para producción usa la URL pública HTTPS que te da n8n en Render o expos tu n8n local con HTTPS (ngrok).');
+        showStatus('<strong>ERROR:</strong> la URL del webhook usa <code>http</code> mientras la página está en <code>https</code>. ' +
+                   'Usa la URL pública HTTPS de n8n en Render o expón tu n8n local con HTTPS (ngrok).');
         console.error('Mixed content: webhook is http while page is https');
         return;
       }
 
-      // Intento de petición OPTIONS (puede fallar por CORS aunque el endpoint funcione)
+      // 2) Intentar comprobación OPTIONS/preflight (suelta aviso si no es alcanzable)
+      let reachable = false;
       try {
         const res = await fetch(webhookUrl, { method: 'OPTIONS' });
-        console.log('Preflight OPTIONS status:', res.status, res.statusText);
-        if (!(res.status >= 200 && res.status < 400)) {
-          showWarning('Aviso: la comprobación previa (OPTIONS) devolvió estado ' + res.status + '. Si el chat no funciona revisa la consola y CORS.');
-        }
+        console.log('OPTIONS status:', res.status, res.statusText);
+        if (res.status >= 200 && res.status < 400) reachable = true;
       } catch (err) {
-        console.warn('OPTIONS fallo (posible CORS o endpoint no accesible desde navegador):', err);
-        showWarning('Aviso: no se pudo verificar el webhook desde este navegador. Revisa la consola (F12 → Network/Console), CORS y que el workflow esté activo.');
+        console.warn('OPTIONS check failed (possible CORS or endpoint not accessible):', err);
       }
 
+      if (!reachable) {
+        showStatus('Aviso: no se pudo verificar el webhook desde este navegador. Si el chat no funciona revisa la consola (F12 → Network/Console), CORS, autenticación y que el workflow esté activo en n8n.');
+      } else {
+        hideStatus();
+      }
+
+      // 3) Inicializar widget (la librería maneja la comunicación internamente)
       try {
         createChat({
           webhookUrl,
@@ -201,11 +166,20 @@
           inputPlaceholder: 'Escribe tu mensaje...',
           mobile: { alwaysShowInput: true }
         });
-        console.log('n8n chat widget inicializado con webhook:', webhookUrl);
+        console.log('n8n Chat widget inicializado con webhook:', webhookUrl);
       } catch (err) {
         console.error('Error inicializando createChat:', err);
-        showWarning('No se pudo inicializar el chat. Revisa la consola para más detalles.');
+        showStatus('No se pudo inicializar el chat. Mira la consola para más detalles.');
       }
+
+      // 4) (Opcional) Prueba rápida POST desde el navegador (no para producción)
+      // -> Si quieres descomenta y úsala temporalmente para comprobar que POST tiene respuesta:
+      /*
+      try {
+        const r = await fetch(webhookUrl, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({test:'ping'}) });
+        console.log('POST test status:', r.status, await r.text());
+      } catch(e) { console.warn('POST test failed:', e); }
+      */
     })();
   </script>
 </body>
