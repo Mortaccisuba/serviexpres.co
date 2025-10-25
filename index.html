@@ -12,138 +12,143 @@
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
   <style>
-    :root { --azul:#0057B8; --azul-sec:#00AEEF; --blanco:#ffffff; --gris:#eef2f7; }
+    :root{
+      --bg: #16213e;
+      --card: rgba(255,255,255,0.07);
+      --accent: #00AEEF;
+      --white: #ffffff;
+      --muted: rgba(255,255,255,0.85);
+    }
+
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;width:100%;font-family:'Inter',sans-serif;background:#16213e;color:var(--blanco)}
-    body{min-height:100vh;min-width:100vw;position:relative}
+    html,body{height:100%;width:100%;font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; background:var(--bg); color:var(--white); -webkit-font-smoothing:antialiased}
 
-    #lines-bg-canvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
-    .overlay{background:rgba(10,30,60,0.82);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding-bottom:4rem;position:relative;z-index:1}
+    header { padding: 28px 16px 6px; text-align:center; }
+    header h1 { font-size:1.9rem; margin-bottom:6px; }
+    header p { color:var(--muted); margin-bottom:6px; }
 
-    header{width:100%;max-width:900px;text-align:center;margin-top:3rem;padding:0 1rem}
-    header h1{font-size:2.6rem;font-weight:700;margin-bottom:.4rem}
-    header p{font-size:1.05rem;opacity:.95;margin-bottom:1rem}
+    main { max-width: 920px; margin: 18px auto; padding: 16px; display: grid; grid-template-columns: 1fr 380px; gap: 20px; align-items:start; width: calc(100% - 32px); }
+    .left { background: var(--card); border-radius: 18px; padding: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.28); }
+    .right { min-height: 140px; display:flex; align-items:center; justify-content:center; }
 
-    .top-botones{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
-    .top-botones a{display:inline-flex;align-items:center;gap:.5rem;background:var(--blanco);color:var(--azul);padding:.55rem 1rem;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid var(--azul);box-shadow:0 3px 14px rgba(0,0,0,0.08)}
-    .top-botones a:hover{background:var(--azul-sec);color:#fff}
+    .intro { line-height:1.6; color:var(--muted); margin-bottom: 12px; }
+    .list { margin-top: 12px; }
+    .list li { margin-bottom: 8px; padding-left: 20px; position: relative; color:var(--muted); }
+    .list li::before { content: "✅"; position: absolute; left: 0; top: 0; }
 
-    .contenido{width:100%;max-width:900px;background:rgba(255,255,255,0.06);border-radius:18px;padding:2rem;margin-bottom:2.4rem;box-shadow:0 6px 30px rgba(0,0,0,0.18);display:flex;flex-direction:column;align-items:center}
-    .contenido h2{color:var(--azul-sec);font-size:1.8rem;margin-bottom:.8rem}
-    .contenido p{line-height:1.6;margin-bottom:1rem;color:rgba(255,255,255,0.95)}
-    .contenido ul{list-style:none;padding:0;max-width:640px;text-align:left;font-size:1.02rem}
-    .contenido li{padding-left:1.6rem;margin-bottom:.65rem;position:relative}
-    .contenido li::before{content:"✅";position:absolute;left:0}
+    footer { text-align:center; color: rgba(255,255,255,0.7); margin: 18px 0 40px; font-size:0.95rem; }
 
-    footer{width:100%;text-align:center;color:var(--gris);font-size:.95rem;margin-bottom:1rem}
+    /* Card for chat container (the widget will inject itself) */
+    .chat-card { border-radius: 14px; overflow: hidden; position: relative; background: transparent; min-height: 320px; display:flex; align-items:flex-end; }
 
-    /* Widget mobile fix */
-    .n8n-chat__footer,.n8n-chat__input,.n8n-chat__send{display:block!important;opacity:1!important}
-    @media(max-width:600px){ .n8n-chat__footer{position:fixed!important;bottom:0;width:100vw;z-index:999999;background:#fff} .n8n-chat__input{font-size:1.05rem!important} }
+    /* Mobile adjustments: stack columns */
+    @media (max-width: 880px) {
+      main { grid-template-columns: 1fr; }
+      .right { order: -1; }
+    }
 
-    /* Estado visible */
-    #chat-status{display:none;position:fixed;left:50%;transform:translateX(-50%);top:1rem;z-index:999999;background:#fff4c2;color:#6a4b00;padding:.8rem 1rem;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,0.18);max-width:calc(100% - 2rem);font-size:.95rem;line-height:1.2}
+    /* Force chat input visible on mobile (n8n widget classes) */
+    .n8n-chat__footer, .n8n-chat__input, .n8n-chat__send { display:block !important; opacity:1 !important; }
+
+    @media (max-width:600px) {
+      .n8n-chat__footer { position: fixed !important; bottom: 0; width: 100vw; z-index: 99999; background: #fff; }
+      .n8n-chat__input { font-size: 1.05rem !important; }
+    }
+
+    /* Visible status / error box */
+    #chat-status {
+      display:none;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 14px;
+      z-index: 200000;
+      background: #fff4c2;
+      color: #6a4b00;
+      padding: 10px 14px;
+      border-radius: 8px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      max-width: calc(100% - 32px);
+      font-size: 0.95rem;
+      line-height: 1.2;
+    }
+
+    .muted-small { color: rgba(255,255,255,0.72); font-size:0.92rem; }
   </style>
 </head>
 <body>
   <div id="chat-status" role="status" aria-live="polite"></div>
 
-  <canvas id="lines-bg-canvas"></canvas>
+  <header>
+    <h1>Chatea con Adrian 🤖</h1>
+    <p class="muted-small">Soporte y automatización — disponible 24/7</p>
+  </header>
 
-  <div class="overlay">
-    <header>
-      <h1>ServiExpres</h1>
-      <p>Transformamos procesos técnicos en soluciones digitales inteligentes</p>
+  <main>
+    <section class="left" aria-labelledby="intro-heading">
+      <h2 id="intro-heading" style="color:var(--accent);margin-bottom:10px">Hola — soy Adrian</h2>
+      <p class="intro">Transformamos procesos técnicos en soluciones digitales inteligentes. Soy Adrian, apasionado por la automatización, la infraestructura web y el diseño estratégico. Usa el chat para hacer consultas o pedir ayuda.</p>
 
-      <div class="top-botones" aria-hidden="false">
-        <a href="https://wa.me/573232864625" target="_blank" rel="noopener">📱 WhatsApp</a>
-        <a href="https://www.instagram.com/finazas_organizadas/" target="_blank" rel="noopener">📸 Instagram</a>
-        <a href="mailto:Gerencia@serviexpres.co">✉️ Correo</a>
-      </div>
-    </header>
-
-    <main class="contenido" role="main">
-      <h2>¿Quién soy?</h2>
-      <p>Soy Adrián, un apasionado por la automatización, infraestructura web y diseño estratégico. Combino creatividad con precisión técnica para ayudar a que los negocios digitales avancen con impacto y profesionalismo.</p>
-
-      <h2>Lo que hago</h2>
-      <ul>
-        <li>Automatización con n8n y Docker</li>
-        <li>Configuración profesional de dominios, DNS y GitHub Pages</li>
-        <li>Integración de WhatsApp, Instagram y chatbots personalizados</li>
-        <li>Diseño de landing pages efectivas con HTML y CSS</li>
-        <li>Campañas de productos digitales como plantillas financieras</li>
+      <ul class="list" aria-hidden="false">
+        <li>Integración con n8n y flujos automatizados</li>
+        <li>Soporte para dominios, DNS y despliegues</li>
+        <li>Conexión con APIs, WhatsApp e Instagram</li>
       </ul>
-    </main>
 
-    <footer>© 2025 ServiExpres | Desarrollo web & Automatización inteligente</footer>
-  </div>
+      <div style="margin-top:16px;color:var(--muted);font-size:0.95rem">
+        Consejo: si el chat no responde, revisa la consola (F12 → Console / Network). Si ves errores CORS o "No 'Access-Control-Allow-Origin'" necesitas habilitar CORS en el endpoint o usar un proxy HTTPS.
+      </div>
+    </section>
 
-  <script>
-    // Fondo animado (líneas)
-    const canvas = document.getElementById('lines-bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let w = window.innerWidth, h = window.innerHeight;
-    function resize(){ w = window.innerWidth; h = window.innerHeight; canvas.width = w; canvas.height = h; }
-    window.addEventListener('resize', resize);
-    resize();
-    const POINTS = 45, SPEED = 0.16, DIST = 140;
-    const nodes = [];
-    function rand(a,b){ return a + Math.random()*(b-a); }
-    for(let i=0;i<POINTS;i++) nodes.push({ x: rand(0,w), y: rand(0,h), vx: rand(-SPEED,SPEED), vy: rand(-SPEED,SPEED) });
-    function animate(){
-      ctx.clearRect(0,0,w,h);
-      for(let i=0;i<POINTS;i++){
-        for(let j=i+1;j<POINTS;j++){
-          const a = nodes[i], b = nodes[j];
-          const dx = a.x - b.x, dy = a.y - b.y, d = Math.hypot(dx,dy);
-          if(d < DIST){ ctx.save(); ctx.globalAlpha = 1 - d / DIST; ctx.strokeStyle = '#00AEEF'; ctx.lineWidth = 1.1; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); ctx.restore(); }
-        }
-      }
-      for(let i=0;i<POINTS;i++){
-        const n = nodes[i];
-        ctx.save(); ctx.globalAlpha = 0.65; ctx.beginPath(); ctx.arc(n.x,n.y,2.7,0,Math.PI*2); ctx.fillStyle = '#00AEEF'; ctx.shadowColor = '#00AEEF'; ctx.shadowBlur = 8; ctx.fill(); ctx.restore();
-        n.x += n.vx; n.y += n.vy;
-        if(n.x < 0 || n.x > w) n.vx = -n.vx;
-        if(n.y < 0 || n.y > h) n.vy = -n.vy;
-      }
-      requestAnimationFrame(animate);
-    }
-    animate();
-  </script>
+    <aside class="right">
+      <!-- Aquí se mostrará el widget de n8n chat -->
+      <div class="chat-card" id="chat-root" aria-label="Chat con Adrian"></div>
+    </aside>
+  </main>
+
+  <footer>© 2025 ServiExpres | Desarrollo web & Automatización inteligente</footer>
 
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-    // WEBHOOK configurado con tu dominio público en Render (HTTPS)
+    // Webhook público en Render (asegúrate que es exactamente la URL que copia el nodo Webhook en n8n)
     const webhookUrl = 'https://n8n-tx1r.onrender.com/webhook/29d89778-b129-4332-a8d8-4f3473a4516e/chat';
 
     const statusEl = document.getElementById('chat-status');
-    function showStatus(msg){ statusEl.innerHTML = msg; statusEl.style.display = 'block'; }
-    function hideStatus(){ statusEl.style.display = 'none'; }
+
+    function showStatus(html){
+      statusEl.innerHTML = html;
+      statusEl.style.display = 'block';
+    }
+    function hideStatus(){
+      statusEl.style.display = 'none';
+    }
 
     (async () => {
-      // Evitar mixed content (si tu página está en https, el webhook debe ser https)
+      // Evitar mixed content (si la página se sirve por https, el webhook debe ser https)
       if (location.protocol === 'https:' && webhookUrl.startsWith('http:')) {
-        showStatus('<strong>ERROR:</strong> la URL del webhook usa http mientras la página está en https. Usa la URL pública HTTPS de tu n8n.');
+        showStatus('<strong>ERROR:</strong> la URL del webhook usa HTTP mientras la página está en HTTPS. Usa la URL pública HTTPS del nodo Webhook en n8n.');
+        console.error('Mixed content: webhook is http while page is https');
         return;
       }
 
-      // Intento de comprobación OPTIONS (no determinante si el endpoint no soporta OPTIONS, pero útil para CORS)
+      // Intento de comprobación OPTIONS para detectar CORS temprano (no definitivo si el servidor no soporta OPTIONS)
       try {
         const res = await fetch(webhookUrl, { method: 'OPTIONS' });
-        console.log('OPTIONS status:', res.status, res.statusText);
-        if (!(res.status >= 200 && res.status < 400)) {
-          showStatus('Aviso: la comprobación OPTIONS no devolvió 2xx/3xx. Si el chat no funciona revisa la consola (F12 → Network) y confirma CORS/autenticación/workflow activo.');
+        console.log('Preflight OPTIONS:', res.status, res.statusText);
+        // si la respuesta no incluye Access-Control-Allow-Origin, el navegador fallará en la preflight al usar el widget
+        const acao = res.headers.get('access-control-allow-origin');
+        if (!acao) {
+          showStatus('Aviso: el endpoint del webhook no devuelve Access-Control-Allow-Origin. Si el chat no funciona, agrega CORS o usa un proxy que inyecte esa cabecera.');
         } else {
           hideStatus();
         }
       } catch (err) {
-        console.warn('OPTIONS check failed:', err);
-        showStatus('Aviso: no se pudo verificar el webhook desde este navegador. Revisa la consola (F12 → Network/Console) para detalles (posible CORS o endpoint inaccesible).');
+        console.warn('OPTIONS check failed (posible CORS o endpoint inaccesible):', err);
+        showStatus('Aviso: no se pudo verificar el webhook desde el navegador. Revisa la consola (F12 → Network/Console) para ver el error exacto.');
       }
 
-      // Inicializa el widget n8n Chat
+      // Inicializa el widget n8n Chat dentro del contenedor (el widget inyecta su UI en el body)
       try {
         createChat({
           webhookUrl,
@@ -154,10 +159,10 @@
           inputPlaceholder: 'Escribe tu mensaje...',
           mobile: { alwaysShowInput: true }
         });
-        console.log('n8n Chat widget inicializado con webhook:', webhookUrl);
+        console.log('Widget n8n Chat inicializado con webhook:', webhookUrl);
       } catch (err) {
         console.error('Error inicializando createChat:', err);
-        showStatus('No se pudo inicializar el chat. Revisa la consola para más detalles.');
+        showStatus('No se pudo inicializar el chat. Mira la consola (F12) para más detalles.');
       }
     })();
   </script>
