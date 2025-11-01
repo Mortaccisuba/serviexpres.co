@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ServiExpres | Chatea con Adrian</title>
 
-  <!-- Fuente -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- n8n Chat CSS -->
   <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
   <style>
@@ -55,14 +53,14 @@
       <h1>ServiExpres</h1>
       <p>Transformamos procesos técnicos en soluciones digitales inteligentes</p>
 
-      <div class="top-botones" aria-hidden="false">
-        <a href="https://wa.me/573232864625" target="_blank" rel="noopener">📱 WhatsApp</a>
-        <a href="https://www.instagram.com/finazas_organizadas/" target="_blank" rel="noopener">📸 Instagram</a>
+      <div class="top-botones">
+        <a href="https://wa.me/573232864625" target="_blank" rel="noopener noreferrer">📱 WhatsApp</a>
+        <a href="https://www.instagram.com/finazas_organizadas/" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
         <a href="mailto:Gerencia@serviexpres.co">✉️ Correo</a>
       </div>
     </header>
 
-    <main class="contenido" role="main">
+    <main class="contenido">
       <h2>¿Quién soy?</h2>
       <p>Soy Adrián, un apasionado por la automatización, infraestructura web y diseño estratégico. Combino creatividad con precisión técnica para ayudar a que los negocios digitales avancen con impacto y profesionalismo.</p>
 
@@ -115,8 +113,8 @@
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-    // WEBHOOK configurado con tu dominio público en Azure (HTTPS)
-    const webhookUrl = 'myn8ndesplegadoenservidor-adddbbbyb5dgbvdc.mexicocentral-01.azurewebsites.net//webhook//chat';
+    // CORREGIDO: URL actualizada y barras dobles (//) eliminadas
+    const webhookUrl = 'https://myn8ndesplegadoenservidor-adddbbbyb5dgbvdc.mexicocentral-01.azurewebsites.net/webhook/dd0cdceb-5a9a-450a-82bf-82d0a1a915a6/chat';
 
     const statusEl = document.getElementById('chat-status');
     function showStatus(msg){ statusEl.innerHTML = msg; statusEl.style.display = 'block'; }
@@ -124,7 +122,7 @@
 
     (async () => {
       // Evitar mixed content (si tu página está en https, el webhook debe ser https)
-      if (location.protocol === 'https:' && webhookUrl.startsWith('http:')) {
+      if (location.protocol === 'https: Myn8ndesplegadoenservidor-adddbbbyb5dgbvdc.mexicocentral-01.azurewebsites.net' && webhookUrl.startsWith('http:')) {
         showStatus('<strong>ERROR:</strong> la URL del webhook usa http mientras la página está en https. Usa la URL pública HTTPS de tu n8n.');
         return;
       }
@@ -163,4 +161,3 @@
   </script>
 </body>
 </html>
-
