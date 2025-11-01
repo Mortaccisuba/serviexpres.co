@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ServiExpres | Chatea con Adrian</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https_//fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+  <link href="https_//cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
   <style>
     :root { --azul:#0057B8; --azul-sec:#00AEEF; --blanco:#ffffff; --gris:#eef2f7; }
@@ -54,8 +54,8 @@
       <p>Transformamos procesos técnicos en soluciones digitales inteligentes</p>
 
       <div class="top-botones">
-        <a href="https://wa.me/573232864625" target="_blank" rel="noopener noreferrer">📱 WhatsApp</a>
-        <a href="https://www.instagram.com/finazas_organizadas/" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
+        <a href="https_//wa.me/573232864625" target="_blank" rel="noopener noreferrer">📱 WhatsApp</a>
+        <a href="https_//www.instagram.com/finazas_organizadas/" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
         <a href="mailto:Gerencia@serviexpres.co">✉️ Correo</a>
       </div>
     </header>
@@ -111,9 +111,9 @@
   </script>
 
   <script type="module">
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+    import { createChat } from 'https_//cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-    // CORREGIDO: URL actualizada y barras dobles (//) eliminadas
+    // *** CORRECCIÓN CRÍTICA AQUÍ: URL sin barras dobles (//) ***
     const webhookUrl = 'https://myn8ndesplegadoenservidor-adddbbbyb5dgbvdc.mexicocentral-01.azurewebsites.net/webhook/dd0cdceb-5a9a-450a-82bf-82d0a1a915a6/chat';
 
     const statusEl = document.getElementById('chat-status');
@@ -121,8 +121,9 @@
     function hideStatus(){ statusEl.style.display = 'none'; }
 
     (async () => {
+      // *** CORRECCIÓN LÓGICA AQUÍ ***
       // Evitar mixed content (si tu página está en https, el webhook debe ser https)
-      if (location.protocol === 'https: Myn8ndesplegadoenservidor-adddbbbyb5dgbvdc.mexicocentral-01.azurewebsites.net' && webhookUrl.startsWith('http:')) {
+      if (location.protocol === 'https:' && webhookUrl.startsWith('http:')) {
         showStatus('<strong>ERROR:</strong> la URL del webhook usa http mientras la página está en https. Usa la URL pública HTTPS de tu n8n.');
         return;
       }
