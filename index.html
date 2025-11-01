@@ -43,10 +43,13 @@
 
     /* Estado visible */
     #chat-status{display:none;position:fixed;left:50%;transform:translateX(-50%);top:1rem;z-index:999999;background:#fff4c2;color:#6a4b00;padding:.8rem 1rem;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,0.18);max-width:calc(100% - 2rem);font-size:.95rem;line-height:1.2}
+    /* Mensajes de error (rojo) */
+    #chat-error{display:none;position:fixed;left:50%;transform:translateX(-50%);top:4.5rem;z-index:999999;background:#ffe6e6;color:#6a0000;padding:.8rem 1rem;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,0.18);max-width:calc(100% - 2rem);font-size:.95rem;line-height:1.2}
   </style>
 </head>
 <body>
   <div id="chat-status" role="status" aria-live="polite"></div>
+  <div id="chat-error" role="alert"></div>
 
   <canvas id="lines-bg-canvas"></canvas>
 
@@ -115,38 +118,90 @@
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-    // WEBHOOK configurado con tu dominio público en Azure (HTTPS)
+    // ---------- CONFIG ----------
+    // URL pública de tu webhook en n8n (confirmada por ti)
     const webhookUrl = 'https://myn8ndesplegadoenservidor-adddbbbyb5dgbvdc.mexicocentral-01.azurewebsites.net/webhook/8c38e2c0-3ddc-4acc-ac2b-5b1dc603f538/chat';
 
+    // Si quieres usar un proxy en tu propio dominio (recomendado si
+    // sigues teniendo problemas CORS), p.ej. /api/n8n-proxy
+    // deja en blanco para no usar proxy:
+    const proxyUrl = ''; // Ej: '/api/n8n-proxy'  <- si lo configuras en tu servidor
+
+    // ---------- UI helpers ----------
     const statusEl = document.getElementById('chat-status');
+    const errorEl = document.getElementById('chat-error');
     function showStatus(msg){ statusEl.innerHTML = msg; statusEl.style.display = 'block'; }
     function hideStatus(){ statusEl.style.display = 'none'; }
+    function showError(msg){ errorEl.innerHTML = msg; errorEl.style.display = 'block'; }
+    function hideError(){ errorEl.style.display = 'none'; }
+
+    // Comprueba si un fetch OPTIONS responde correctamente con CORS
+    async function checkOptions(url){
+      try {
+        const res = await fetch(url, { method: 'OPTIONS', mode: 'cors' });
+        console.log('OPTIONS status:', res.status, res.statusText, res.headers);
+        return res;
+      } catch (err) {
+        console.warn('OPTIONS check failed:', err);
+        return null;
+      }
+    }
 
     (async () => {
-      // Evitar mixed content (si tu página está en https, el webhook debe ser https)
+      hideStatus(); hideError();
+
+      // Evitar mixed content (si la página está en https, el webhook debe ser https)
       if (location.protocol === 'https:' && webhookUrl.startsWith('http:')) {
-        showStatus('<strong>ERROR:</strong> la URL del webhook usa http mientras la página está en https. Usa la URL pública HTTPS de tu n8n.');
+        showError('<strong>ERROR:</strong> el webhook usa HTTP, pero la página está en HTTPS. Usa la URL pública HTTPS de tu n8n.');
         return;
       }
 
-      // Intento de comprobación OPTIONS (no determinante si el endpoint no soporta OPTIONS, pero útil para CORS)
-      try {
-        const res = await fetch(webhookUrl, { method: 'OPTIONS' });
-        console.log('OPTIONS status:', res.status, res.statusText);
-        if (!(res.status >= 200 && res.status < 400)) {
-          showStatus('Aviso: la comprobación OPTIONS no devolvió 2xx/3xx. Si el chat no funciona revisa la consola (F12 → Network) y confirma CORS/autenticación/workflow activo.');
+      showStatus('Verificando webhook y CORS...');
+
+      // 1) Intento de OPTIONS directo a n8n
+      const opts = await checkOptions(webhookUrl);
+
+      if (opts && (opts.status >= 200 && opts.status < 400)) {
+        // Si OPTIONS responde bien (200/204), proceed
+        hideStatus();
+      } else {
+        // OPTIONS falló o devolvió 404 — intentamos fallback:
+        console.warn('La comprobación OPTIONS no devolvió 2xx/3xx. Respuesta:', opts);
+        // 2) Si el usuario tiene proxy configurado en el cliente, usarlo (misma origen)
+        if (proxyUrl) {
+          showStatus('Usando proxy en el mismo origen para evitar CORS...');
         } else {
-          hideStatus();
+          showStatus('No se pudo verificar CORS. Si el chat no responde correctamente, crea un proxy en tu propio dominio (recomendado) o habilita CORS en Azure App Service para tu n8n.');
         }
-      } catch (err) {
-        console.warn('OPTIONS check failed:', err);
-        showStatus('Aviso: no se pudo verificar el webhook desde este navegador. Revisa la consola (F12 → Network/Console) para detalles (posible CORS o endpoint inaccesible).');
       }
 
-      // Inicializa el widget n8n Chat
+      // Decide qué URL pasar al widget: si definiste proxyUrl la usamos, sino la webhookUrl
+      const webhookToUse = (proxyUrl && proxyUrl.trim().length > 0) ? proxyUrl.trim() : webhookUrl;
+
+      // Instrucciones si detectamos que OPTIONS devuelve 404: damos mensajes útiles
+      if (!opts || !(opts.status >= 200 && opts.status < 400)) {
+        // Si no hay proxy y OPTIONS falla, mostramos instrucciones útiles.
+        if (!proxyUrl) {
+          showError(`<strong>Atención - CORS:</strong> tu servidor n8n respondió <code>OPTIONS 404</code> o no respondió al preflight. 
+            El widget n8n realiza solicitudes que requieren que el servidor permita CORS (respondiendo con <code>Access-Control-Allow-Origin</code>).
+            Soluciones posibles:
+            <ul>
+              <li>Habilitar CORS en Azure App Service: Configuración → CORS → agregar <code>https://serviexpres.co</code> y reiniciar la App.</li>
+              <li>Establecer variables de entorno en n8n (y reiniciar): <code>N8N_ENDPOINT_WEBHOOK_ALLOW_CORS=true</code> y/o <code>N8N_DEFAULT_HEADERS</code> con los <code>Access-Control-Allow-*</code>.</li>
+              <li>Crear un endpoint proxy en tu dominio (recomendado si no puedes cambiar n8n): ver ejemplo abajo.</li>
+            </ul>
+            Si quieres, te doy el ejemplo de proxy listo para poner en tu servidor (Node/Express).`);
+        } else {
+          // Usuario tiene proxy definido; el widget usará proxyToUse por lo que puede evitar CORS.
+          hideError();
+          hideStatus();
+        }
+      }
+
+      // Inicializa el widget n8n Chat con la URL seleccionada (webhookToUse).
       try {
         createChat({
-          webhookUrl,
+          webhookUrl: webhookToUse,
           botName: 'Adrian',
           language: 'es',
           title: 'Chatea con Adrian 🤖',
@@ -154,12 +209,59 @@
           inputPlaceholder: 'Escribe tu mensaje...',
           mobile: { alwaysShowInput: true }
         });
-        console.log('n8n Chat widget inicializado con webhook:', webhookUrl);
+        console.log('n8n Chat widget inicializado con webhook:', webhookToUse);
+
+        // Si usamos el webhook directo (sin proxy) y OPTIONS falló, avisamos en consola:
+        if (webhookToUse === webhookUrl && (!opts || !(opts.status >= 200 && opts.status < 400))) {
+          console.warn('Advertencia: el servidor n8n no respondió OK a OPTIONS. Es posible que el chat falle al enviar mensajes si el servidor no permite CORS.');
+        }
       } catch (err) {
         console.error('Error inicializando createChat:', err);
-        showStatus('No se pudo inicializar el chat. Revisa la consola para más detalles.');
+        showError('No se pudo inicializar el chat. Revisa la consola para más detalles.');
       }
     })();
   </script>
+
+  <!--
+    ---------- OPCIONAL: ejemplo de proxy Node.js (Express) ----------
+    Si no puedes lograr que n8n responda con Access-Control-Allow-Origin,
+    despliega este proxy en tu propio dominio (p.e. https://serviexpres.co/api/n8n-proxy)
+    y luego pon `const proxyUrl = '/api/n8n-proxy';` arriba.
+
+    // Ejemplo (server.js):
+    const express = require('express');
+    const fetch = require('node-fetch'); // o native fetch en Node 18+
+    const app = express();
+    app.use(express.json());
+    const TARGET = 'https://myn8ndesplegadoenservidor-adddbbbyb5dgbvdc.mexicocentral-01.azurewebsites.net';
+    const WEBHOOK_PATH = '/webhook/8c38e2c0-3ddc-4acc-ac2b-5b1dc603f538/chat';
+
+    app.options('/api/n8n-proxy', (req, res) => {
+      res.header('Access-Control-Allow-Origin', 'https://serviexpres.co');
+      res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'Content-Type');
+      return res.sendStatus(204);
+    });
+
+    app.post('/api/n8n-proxy', async (req, res) => {
+      try {
+        const r = await fetch(TARGET + WEBHOOK_PATH, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(req.body)
+        });
+        const text = await r.text();
+        res.status(r.status).send(text);
+      } catch (err) {
+        console.error('proxy error', err);
+        res.status(500).send('proxy error');
+      }
+    });
+
+    app.listen(3000, () => console.log('proxy running'));
+
+    Luego en HTML: const proxyUrl = '/api/n8n-proxy';
+  -->
+
 </body>
 </html>
