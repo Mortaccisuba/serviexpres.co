@@ -1,164 +1,808 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ServiExpres | Chatea con Adrian</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Negocio de Postres | Kit PRO (+100 Recetas)</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Markdown Parser for AI responses -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-
-  <style>
-    :root { --azul:#0057B8; --azul-sec:#00AEEF; --blanco:#ffffff; --gris:#eef2f7; }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;width:100%;font-family:'Inter',sans-serif;background:#16213e;color:var(--blanco)}
-    body{min-height:100vh;min-width:100vw;position:relative}
-
-    #lines-bg-canvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
-    .overlay{background:rgba(10,30,60,0.82);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding-bottom:4rem;position:relative;z-index:1}
-
-    header{width:100%;max-width:900px;text-align:center;margin-top:3rem;padding:0 1rem}
-    header h1{font-size:2.6rem;font-weight:700;margin-bottom:.4rem}
-    header p{font-size:1.05rem;opacity:.95;margin-bottom:1rem}
-
-    .top-botones{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
-    .top-botones a{display:inline-flex;align-items:center;gap:.5rem;background:var(--blanco);color:var(--azul);padding:.55rem 1rem;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid var(--azul);box-shadow:0 3px 14px rgba(0,0,0,0.08)}
-    .top-botones a:hover{background:var(--azul-sec);color:#fff}
-
-    .contenido{width:100%;max-width:900px;background:rgba(255,255,255,0.06);border-radius:18px;padding:2rem;margin-bottom:2.4rem;box-shadow:0 6px 30px rgba(0,0,0,0.18);display:flex;flex-direction:column;align-items:center}
-    .contenido h2{color:var(--azul-sec);font-size:1.8rem;margin-bottom:.8rem}
-    .contenido p{line-height:1.6;margin-bottom:1rem;color:rgba(255,255,255,0.95)}
-    .contenido ul{list-style:none;padding:0;max-width:640px;text-align:left;font-size:1.02rem}
-    .contenido li{padding-left:1.6rem;margin-bottom:.65rem;position:relative}
-    .contenido li::before{content:"✅";position:absolute;left:0}
-
-    footer{width:100%;text-align:center;color:var(--gris);font-size:.95rem;margin-bottom:1rem}
-
-    /* Widget mobile fix */
-    .n8n-chat__footer,.n8n-chat__input,.n8n-chat__send{display:block!important;opacity:1!important}
-    @media(max-width:600px){ .n8n-chat__footer{position:fixed!important;bottom:0;width:100vw;z-index:999999;background:#fff} .n8n-chat__input{font-size:1.05rem!important} }
-
-    /* Estado visible */
-    #chat-status{display:none;position:fixed;left:50%;transform:translateX(-50%);top:1rem;z-index:999999;background:#fff4c2;color:#6a4b00;padding:.8rem 1rem;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,0.18);max-width:calc(100% - 2rem);font-size:.95rem;line-height:1.2}
-  </style>
+    <style>
+        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        .brand-font { font-family: 'Pacifico', cursive; }
+        .gradient-bg { background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%); }
+        .card-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .recipe-card { transition: all 0.3s ease; }
+        .recipe-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #FF9A9E; border-radius: 4px; }
+        
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .image-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+        }
+        
+        /* AI Loading Animation */
+        .typing-indicator span {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #EC4899; /* Pink-500 */
+            border-radius: 50%;
+            animation: typing 1s infinite;
+            margin: 0 2px;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+    </style>
 </head>
-<body>
-  <div id="chat-status" role="status" aria-live="polite"></div>
+<body class="bg-gray-50 text-gray-800">
 
-  <canvas id="lines-bg-canvas"></canvas>
+    <!-- NAVIGATION -->
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <i class="fas fa-cookie-bite text-pink-500 text-2xl mr-2"></i>
+                    <span class="brand-font text-2xl text-gray-800 hidden sm:block">Tu Negocio de Postres <span class="text-xs font-sans text-white bg-gradient-to-r from-pink-500 to-purple-500 px-2 py-1 rounded-full ml-2 shadow-sm"><i class="fas fa-magic mr-1"></i>AI</span></span>
+                    <span class="brand-font text-xl text-gray-800 sm:hidden">Tu Negocio</span>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Currency Selector -->
+                    <div class="flex items-center bg-gray-100 rounded-lg px-2 py-1 border border-gray-200">
+                        <span class="text-xs text-gray-500 mr-2 font-bold"><i class="fas fa-coins"></i> Moneda:</span>
+                        <input type="text" id="currency-input" value="COP $" class="bg-transparent border-none w-16 text-sm font-bold text-gray-700 focus:outline-none text-right uppercase" onchange="updateCurrency(this.value)" placeholder="USD $">
+                    </div>
 
-  <div class="overlay">
-    <header>
-      <h1>ServiExpres</h1>
-      <p>Transformamos procesos técnicos en soluciones digitales inteligentes</p>
+                    <div class="hidden md:flex items-center space-x-6 ml-4">
+                        <a href="#recetas" class="text-gray-600 hover:text-pink-500 font-medium">Recetas</a>
+                        <a href="#calculadora" class="text-gray-600 hover:text-pink-500 font-medium">Calculadora</a>
+                        <a href="#marketing" class="text-gray-600 hover:text-pink-500 font-medium">Marketing</a>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <div class="flex items-center md:hidden ml-2">
+                        <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-gray-600">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-2 shadow-lg">
+            <a href="#recetas" class="block py-2 text-gray-600">Recetas</a>
+            <a href="#calculadora" class="block py-2 text-gray-600">Calculadora</a>
+            <a href="#marketing" class="block py-2 text-gray-600">Marketing</a>
+        </div>
+    </nav>
 
-      <div class="top-botones">
-        <a href="https://wa.me/573232864625" target="_blank" rel="noopener noreferrer">📱 WhatsApp</a>
-        <a href="https://www.instagram.com/finazas_organizadas/" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
-        <a href="mailto:Gerencia@serviexpres.co">✉️ Correo</a>
-      </div>
-    </header>
+    <!-- HERO SECTION -->
+    <section class="pt-28 pb-16 gradient-bg relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" style="background-image: radial-gradient(#fff 2px, transparent 2px); background-size: 30px 30px;"></div>
+        <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+            <span class="inline-block px-4 py-1 rounded-full bg-white text-pink-600 text-sm font-bold mb-4 shadow-sm animate-pulse">
+                ✨ Nuevo: Asistente IA Integrado
+            </span>
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                Tu Imperio de Postres<br>
+                <span class="text-pink-600 brand-font">Potenciado por IA</span>
+            </h1>
+            <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+                Accede a recetas rentables, calcula costos y <strong>genera tu marketing automáticamente</strong> con inteligencia artificial.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#recetas" class="bg-pink-600 text-white px-8 py-4 rounded-full font-bold shadow-lg hover:bg-pink-700 transition transform hover:scale-105">
+                    <i class="fas fa-search mr-2"></i> Explorar Menú
+                </a>
+            </div>
+        </div>
+    </section>
 
-    <main class="contenido">
-      <h2>¿Quién soy?</h2>
-      <p>Soy Adrián, un apasionado por la automatización, infraestructura web y diseño estratégico. Combino creatividad con precisión técnica para ayudar a que los negocios digitales avancen con impacto y profesionalismo.</p>
+    <!-- MAIN CONTENT -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
 
-      <h2>Lo que hago</h2>
-      <ul>
-        <li>Automatización con n8n y Docker</li>
-        <li>Configuración profesional de dominios, DNS y GitHub Pages</li>
-        <li>Integración de WhatsApp, Instagram y chatbots personalizados</li>
-        <li>Diseño de landing pages efectivas con HTML y CSS</li>
-        <li>Campañas de productos digitales como plantillas financieras</li>
-      </ul>
+        <!-- 1. RECIPE DATABASE SECTION -->
+        <section id="recetas" class="scroll-mt-24">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-8 border-b pb-4">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900"><i class="fas fa-book-open text-pink-500 mr-2"></i> Catálogo de Recetas</h2>
+                    <p class="text-gray-600 mt-1">Explora nuestra colección visual de postres sin horno.</p>
+                </div>
+                <div class="mt-4 md:mt-0 text-right">
+                    <span class="text-sm font-bold text-gray-500 uppercase">Total Recetas</span>
+                    <div class="text-3xl font-bold text-pink-600" id="recipe-count">0</div>
+                </div>
+            </div>
+
+            <!-- Search & Filter Toolkit -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-8 sticky top-20 z-40">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="relative flex-1">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        <input type="text" id="search-input" placeholder="Buscar (ej. Oreo, Limón, Chocolate)..." class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-pink-500 outline-none" oninput="filterRecipes()">
+                    </div>
+                    <select id="category-filter" class="p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 outline-none bg-white" onchange="filterRecipes()">
+                        <option value="all">Todas las Categorías</option>
+                        <option value="Cheesecake">Cheesecakes</option>
+                        <option value="Tres Leches">Tres Leches</option>
+                        <option value="Carlota">Carlotas</option>
+                        <option value="Mousse">Mousses</option>
+                        <option value="Trufas">Trufas</option>
+                        <option value="Gelatina">Gelatinas</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Grid Container -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="recipe-grid">
+                <!-- Recipes will be injected here via JS -->
+            </div>
+            
+            <div class="mt-8 text-center">
+                <button onclick="loadMoreRecipes()" id="load-more-btn" class="bg-gray-100 text-gray-600 px-6 py-2 rounded-full hover:bg-gray-200 transition hidden">
+                    Cargar más recetas
+                </button>
+            </div>
+        </section>
+
+        <!-- 2. SMART CALCULATOR -->
+        <section id="calculadora" class="scroll-mt-24">
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+                <div class="bg-gray-900 p-6 text-white flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold"><i class="fas fa-calculator text-green-400 mr-2"></i> Calculadora de Rentabilidad</h2>
+                        <p class="text-gray-400 text-sm">Moneda actual: <span class="currency-display font-mono text-yellow-400">COP $</span></p>
+                    </div>
+                    <button onclick="clearCalculator()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded text-red-300">Borrar Todo</button>
+                </div>
+
+                <div class="p-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Calculator Inputs -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="font-bold text-blue-900">Insumos de la Receta</h3>
+                                <span class="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">Autoguardado activado</span>
+                            </div>
+                            <div id="ingredients-list" class="space-y-3">
+                                <!-- Dynamic Rows -->
+                            </div>
+                            <button onclick="addIngredientRow()" class="mt-4 text-sm flex items-center text-blue-700 font-bold hover:underline">
+                                <i class="fas fa-plus-circle mr-1"></i> Agregar ingrediente
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Unidades que rinde</label>
+                                <input type="number" id="yield-units" value="10" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none font-bold text-lg" oninput="calculateTotal()">
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Margen Deseado (%)</label>
+                                <input type="number" id="profit-margin" value="40" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none font-bold text-lg" oninput="calculateTotal()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Panel -->
+                    <div class="bg-gray-900 rounded-2xl p-6 text-white flex flex-col justify-center space-y-6 shadow-lg relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fas fa-coins text-9xl"></i></div>
+                        <div class="relative z-10">
+                            <div class="text-gray-400 text-sm mb-1">Costo Total Producción</div>
+                            <div class="text-2xl font-mono" id="display-total-cost">0.00</div>
+                        </div>
+                        <div class="relative z-10 border-t border-gray-700 pt-4">
+                            <div class="text-gray-400 text-sm mb-1">Costo por Unidad</div>
+                            <div class="text-2xl font-mono text-yellow-400" id="display-unit-cost">0.00</div>
+                        </div>
+                        <div class="relative z-10 border-t border-gray-700 pt-4 bg-gray-800 -mx-6 px-6 pb-6 -mb-6 mt-2">
+                            <div class="text-green-400 text-sm font-bold uppercase mb-1 mt-4">Precio Sugerido</div>
+                            <div class="text-5xl font-bold font-mono text-white" id="display-sell-price">0.00</div>
+                            <div class="text-xs text-gray-500 mt-2 flex justify-between">
+                                <span>Ganancia neta: <span id="display-profit" class="text-green-400">0.00</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. MARKETING GENERATOR (AI ENHANCED) -->
+        <section id="marketing" class="scroll-mt-24">
+            <div class="text-center mb-10">
+                <span class="bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-2 inline-block">POWERED BY GEMINI AI ✨</span>
+                <h2 class="text-3xl font-bold text-gray-900"><i class="fas fa-bullhorn text-pink-500 mr-2"></i> Generador de Marketing IA</h2>
+                <p class="text-gray-600 mt-2">Crea textos únicos y persuasivos para tus redes sociales al instante.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Caption Generator -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                    <h3 class="font-bold text-gray-800 mb-4">📝 Creador de Contenido Inteligente</h3>
+                    
+                    <div class="space-y-4 mb-4">
+                        <div>
+                            <label class="text-xs font-bold text-gray-500">Producto</label>
+                            <input type="text" id="mkt-product" placeholder="Ej. Cheesecake de Oreo" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="text-xs font-bold text-gray-500">Precio</label>
+                            <div class="relative">
+                                <input type="number" id="mkt-price" placeholder="5000" class="w-full p-2 border rounded pl-16">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 text-sm currency-display">COP $</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-xs font-bold text-gray-500">Objetivo del Post (Vibe)</label>
+                            <select id="mkt-vibe" class="w-full p-2 border rounded">
+                                <option value="urgencia">🚨 Crear Urgencia (Pocas unidades)</option>
+                                <option value="antojo">🤤 Despertar Antojo (Sensorial)</option>
+                                <option value="elegante">✨ Elegante / Gourmet</option>
+                                <option value="divertido">🤪 Divertido / Meme</option>
+                                <option value="promocion">🏷️ Oferta de Descuento</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-2 mb-4">
+                        <button onclick="generateStaticCaption()" class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg font-bold hover:bg-gray-300 text-sm">
+                            Básico (Plantilla)
+                        </button>
+                        <button onclick="generateAICaption()" class="flex-1 bg-gradient-to-r from-pink-600 to-purple-600 text-white py-2 rounded-lg font-bold hover:opacity-90 shadow-lg text-sm flex items-center justify-center">
+                            <i class="fas fa-magic mr-2"></i> Crear con IA
+                        </button>
+                    </div>
+                    
+                    <!-- AI Output Area -->
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 relative group min-h-[150px]">
+                        <div id="ai-loading" class="hidden absolute inset-0 bg-gray-50/90 flex flex-col items-center justify-center z-10 rounded-lg">
+                            <div class="typing-indicator mb-2"><span></span><span></span><span></span></div>
+                            <span class="text-xs text-pink-500 font-bold animate-pulse">La IA está escribiendo...</span>
+                        </div>
+                        
+                        <div id="mkt-output" class="text-sm text-gray-700 italic whitespace-pre-line">
+                            Tu copy generado por inteligencia artificial aparecerá aquí...
+                        </div>
+                        
+                        <button onclick="copyToClipboard('mkt-output')" class="absolute top-2 right-2 bg-white p-1 rounded border shadow text-xs text-gray-500 hover:text-pink-600" title="Copiar">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Visual Templates Preview -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                    <h3 class="font-bold text-gray-800 mb-4">🎨 Ideas Visuales (Canva Style)</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="aspect-square bg-pink-100 rounded-lg flex flex-col items-center justify-center p-2 text-center border-2 border-pink-200 border-dashed relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1563729768647-d3c1a7a4a2b1?auto=format&fit=crop&w=400&q=80" class="absolute inset-0 w-full h-full object-cover opacity-20">
+                            <div class="relative z-10">
+                                <span class="text-2xl mb-1">🤤</span>
+                                <span class="font-brand-font text-pink-600 text-xl block">Menú</span>
+                                <span class="text-xs text-gray-600 font-bold bg-white/80 px-2 rounded">Cheesecake $5k</span>
+                            </div>
+                        </div>
+                        <div class="aspect-square bg-yellow-50 rounded-lg flex flex-col items-center justify-center p-2 text-center border-2 border-yellow-200 border-dashed relative overflow-hidden">
+                            <div class="absolute inset-0 bg-yellow-400 opacity-10"></div>
+                            <span class="text-2xl mb-1">⚡</span>
+                            <span class="font-bold text-yellow-600 text-lg">PROMO</span>
+                            <span class="text-xs text-gray-600">2x1 HOY</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-4 bg-purple-50 rounded-lg border border-purple-100">
+                        <p class="text-xs text-purple-800">
+                            <strong>Tip Pro:</strong> Usa el texto generado por la IA en la descripción y una de estas ideas visuales para tus Historias.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <footer>© 2025 ServiExpres | Desarrollo web & Automatización inteligente</footer>
-  </div>
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white py-12 mt-12 border-t-4 border-pink-500">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="brand-font text-3xl text-pink-400 mb-4">Tu Negocio de Postres</h2>
+            <div class="flex justify-center space-x-4 mb-8">
+                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram text-2xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook text-2xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-whatsapp text-2xl"></i></a>
+            </div>
+            <p class="text-gray-500 text-sm">
+                &copy; 2023 Kit Emprendedor PRO. Todos los derechos reservados.<br>
+                Configurado para: <span class="currency-display font-bold">COP $</span>
+            </p>
+        </div>
+    </footer>
 
-  <script>
-    // Fondo animado (líneas)
-    const canvas = document.getElementById('lines-bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let w = window.innerWidth, h = window.innerHeight;
-    function resize(){ w = window.innerWidth; h = window.innerHeight; canvas.width = w; canvas.height = h; }
-    window.addEventListener('resize', resize);
-    resize();
-    const POINTS = 45, SPEED = 0.16, DIST = 140;
-    const nodes = [];
-    function rand(a,b){ return a + Math.random()*(b-a); }
-    for(let i=0;i<POINTS;i++) nodes.push({ x: rand(0,w), y: rand(0,h), vx: rand(-SPEED,SPEED), vy: rand(-SPEED,SPEED) });
-    function animate(){
-      ctx.clearRect(0,0,w,h);
-      for(let i=0;i<POINTS;i++){
-        for(let j=i+1;j<POINTS;j++){
-          const a = nodes[i], b = nodes[j];
-          const dx = a.x - b.x, dy = a.y - b.y, d = Math.hypot(dx,dy);
-          if(d < DIST){ ctx.save(); ctx.globalAlpha = 1 - d / DIST; ctx.strokeStyle = '#00AEEF'; ctx.lineWidth = 1.1; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); ctx.restore(); }
+    <!-- RECIPE MODAL -->
+    <div id="recipe-modal" class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl flex flex-col">
+            <button onclick="closeRecipeModal()" class="absolute top-4 right-4 bg-white/80 p-2 rounded-full hover:bg-white transition z-10 shadow-md text-gray-800">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div id="modal-content" class="animate-fade-in overflow-y-auto flex-grow">
+                <!-- Content injected via JS -->
+            </div>
+            
+            <!-- AI Chef Chat Section (Fixed at bottom of modal) -->
+            <div class="border-t border-gray-200 bg-gray-50 p-4 rounded-b-2xl">
+                <div class="flex items-center mb-2">
+                    <span class="bg-purple-100 text-purple-700 p-1 rounded-full mr-2"><i class="fas fa-robot"></i></span>
+                    <h5 class="text-sm font-bold text-gray-700">Chef IA: Consultas & Personalización</h5>
+                </div>
+                
+                <div id="chef-chat-response" class="text-sm text-gray-600 bg-white p-3 rounded-lg border border-gray-200 mb-3 hidden max-h-32 overflow-y-auto"></div>
+                
+                <div class="flex gap-2">
+                    <input type="text" id="chef-chat-input" placeholder="Pregunta: ¿Cómo hacerlo vegano? ¿Sustitutos?" class="flex-1 p-2 text-sm border rounded-lg focus:outline-none focus:border-pink-500">
+                    <button onclick="askAIChef()" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-purple-700 transition">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div id="chef-loading" class="hidden mt-2 text-xs text-purple-600 font-bold flex items-center">
+                    <div class="typing-indicator mr-2"><span></span><span></span><span></span></div>
+                    El Chef está pensando...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- API & AI CONFIGURATION ---
+        const apiKey = ""; // System provides key automatically
+
+        async function callGemini(prompt, systemInstruction = "") {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: { parts: [{ text: systemInstruction }] }
+            };
+
+            let delay = 1000;
+            for (let i = 0; i < 3; i++) { // Retry up to 3 times
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "Lo siento, no pude generar una respuesta en este momento.";
+                } catch (e) {
+                    await new Promise(r => setTimeout(r, delay));
+                    delay *= 2;
+                }
+            }
+            return "Error de conexión con la IA. Por favor intenta de nuevo.";
         }
-      }
-      for(let i=0;i<POINTS;i++){
-        const n = nodes[i];
-        ctx.save(); ctx.globalAlpha = 0.65; ctx.beginPath(); ctx.arc(n.x,n.y,2.7,0,Math.PI*2); ctx.fillStyle = '#00AEEF'; ctx.shadowColor = '#00AEEF'; ctx.shadowBlur = 8; ctx.fill(); ctx.restore();
-        n.x += n.vx; n.y += n.vy;
-        if(n.x < 0 || n.x > w) n.vx = -n.vx;
-        if(n.y < 0 || n.y > h) n.vy = -n.vy;
-      }
-      requestAnimationFrame(animate);
-    }
-    animate();
-  </script>
 
-  <script type="module">
-    // --- CORREGIDO ---
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+        // --- GLOBAL SETTINGS ---
+        let currentCurrency = localStorage.getItem('userCurrency') || 'COP $';
+        let currentRecipeContext = ""; // Stores title of opened recipe for AI context
 
-    // Esta URL ya estaba bien, la mantenemos
-    const webhookUrl = 'https://myn8ndesplegadoenservidor-adddbbbyb5dgbvdc.mexicocentral-01.azurewebsites.net/webhook/dd0cdceb-5a9a-450a-82bf-82d0a1a915a6/chat';
-
-    const statusEl = document.getElementById('chat-status');
-    function showStatus(msg){ statusEl.innerHTML = msg; statusEl.style.display = 'block'; }
-    function hideStatus(){ statusEl.style.display = 'none'; }
-
-    (async () => {
-      // Esta lógica ya estaba bien
-      if (location.protocol === 'https:' && webhookUrl.startsWith('http:')) {
-        showStatus('<strong>ERROR:</strong> la URL del webhook usa http mientras la página está en https. Usa la URL pública HTTPS de tu n8n.');
-        return;
-      }
-
-      // Intento de comprobación OPTIONS
-      try {
-        const res = await fetch(webhookUrl, { method: 'OPTIONS' });
-        console.log('OPTIONS status:', res.status, res.statusText);
-        if (!(res.status >= 200 && res.status < 400)) {
-          showStatus('Aviso: la comprobación OPTIONS no devolvió 2xx/3xx. Si el chat no funciona revisa la consola (F12 → Network) y confirma CORS/autenticación/workflow activo.');
-        } else {
-          hideStatus();
+        function updateCurrency(val) {
+            currentCurrency = val;
+            localStorage.setItem('userCurrency', val);
+            document.querySelectorAll('.currency-display').forEach(el => el.innerText = currentCurrency);
+            document.getElementById('currency-input').value = currentCurrency;
+            calculateTotal();
         }
-      } catch (err) {
-        console.warn('OPTIONS check failed:', err);
-        showStatus('Aviso: no se pudo verificar el webhook desde este navegador. Revisa la consola (F12 → Network/Console) para detalles (posible CORS o endpoint inaccesible).');
-      }
 
-      // Inicializa el widget n8n Chat
-      try {
-        createChat({
-          webhookUrl,
-          botName: 'Adrian',
-          language: 'es',
-          title: 'Chatea con Adrian 🤖',
-          description: '¡Hola! Soy Adrian. ¿En qué puedo ayudarte hoy?',
-          inputPlaceholder: 'Escribe tu mensaje...',
-          mobile: { alwaysShowInput: true }
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCurrency(currentCurrency);
+            generateRecipes();
+            initCalculator();
         });
-        console.log('n8n Chat widget inicializado con webhook:', webhookUrl);
-      } catch (err) {
-        console.error('Error inicializando createChat:', err);
-        showStatus('No se pudo inicializar el chat. Revisa la consola para más detalles.');
-      }
-    })();
-  </script>
+
+
+        // --- AI FEATURES LOGIC ---
+
+        // 1. Marketing AI
+        async function generateAICaption() {
+            const product = document.getElementById('mkt-product').value || 'Postre Delicioso';
+            const price = document.getElementById('mkt-price').value || '0';
+            const vibe = document.getElementById('mkt-vibe').value;
+            const currency = currentCurrency;
+
+            const loading = document.getElementById('ai-loading');
+            const output = document.getElementById('mkt-output');
+            
+            loading.classList.remove('hidden');
+            output.innerText = "";
+
+            const prompt = `Escribe un caption para Instagram/WhatsApp vendiendo el siguiente producto: "${product}". 
+            Precio: ${currency} ${price}.
+            Estilo/Vibe: ${vibe}.
+            Incluye emojis, saltos de línea y hashtags relevantes. Hazlo atractivo para clientes de repostería casera.`;
+
+            const system = "Eres un experto en marketing digital para pequeños negocios de comida. Escribes textos persuasivos, cortos y visualmente atractivos.";
+
+            const result = await callGemini(prompt, system);
+            
+            loading.classList.add('hidden');
+            output.innerText = result;
+            output.classList.remove('italic', 'text-gray-700');
+            output.classList.add('text-gray-900');
+        }
+
+        function generateStaticCaption() {
+            // Fallback for non-AI generation
+            const product = document.getElementById('mkt-product').value || '[Producto]';
+            const price = `${currentCurrency} ${document.getElementById('mkt-price').value || '0'}`;
+            const type = document.getElementById('mkt-vibe').value;
+            
+            let text = "";
+            if(type === 'urgencia') text = `🚨 ¡ÚLTIMAS UNIDADES! 🚨\n\nNo te quedes sin probar nuestro delicioso ${product}. Solo nos quedan unos pocos disponibles.\n\n👉 Precio: ${price}\n🛵 ¡Pide antes de que vuelen!`;
+            else if (type === 'antojo') text = `✨ El antojo perfecto sí existe ✨\n\nImagínate esto: Una tarde relax y nuestro ${product} en tu mano. Cremoso, delicioso y hecho con amor.\n\nDate el gusto por solo ${price}.`;
+            else text = `🔥 ¡OFERTA ESPECIAL! 🔥\n\nHoy tenemos ${product} a un precio increíble. La mejor calidad al mejor precio.\n\n💰 Lévatelo por: ${price}`;
+
+            const output = document.getElementById('mkt-output');
+            output.innerText = text;
+            output.classList.remove('italic', 'text-gray-700');
+            output.classList.add('text-gray-900');
+        }
+
+        // 2. Chef AI
+        async function askAIChef() {
+            const input = document.getElementById('chef-chat-input');
+            const question = input.value;
+            if (!question.trim()) return;
+
+            const responseBox = document.getElementById('chef-chat-response');
+            const loading = document.getElementById('chef-loading');
+            
+            loading.classList.remove('hidden');
+            responseBox.classList.add('hidden');
+
+            const prompt = `El usuario tiene una duda sobre la receta "${currentRecipeContext}". Pregunta: "${question}". Responde brevemente como un chef profesional y amable. Da soluciones prácticas.`;
+            
+            const answer = await callGemini(prompt, "Eres un Chef Pastelero experto ayudando a emprendedores principiantes.");
+            
+            loading.classList.add('hidden');
+            responseBox.innerHTML = `<strong>Tú:</strong> ${question}<br><br><strong>👨‍🍳 Chef IA:</strong> ${marked.parse(answer)}`;
+            responseBox.classList.remove('hidden');
+            input.value = "";
+        }
+
+
+        // --- CORE APP LOGIC (Recipies, Calc, etc) ---
+        // (Similar to previous version but integrated with new UI)
+
+        const categoryImages = {
+            'Cheesecake': 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80',
+            'Tres Leches': 'https://images.unsplash.com/photo-1563729768647-d3c1a7a4a2b1?auto=format&fit=crop&w=800&q=80',
+            'Carlota': 'https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=800&q=80',
+            'Mousse': 'https://images.unsplash.com/photo-1541783245831-57d6fb98f440?auto=format&fit=crop&w=800&q=80',
+            'Trufas': 'https://images.unsplash.com/photo-1599599810769-bcde5a823097?auto=format&fit=crop&w=800&q=80',
+            'Gelatina': 'https://images.unsplash.com/photo-1562688647-3b2d1804f5b7?auto=format&fit=crop&w=800&q=80',
+            'Especial': 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&fit=crop&w=800&q=80'
+        };
+
+        const flavorImages = {
+            'Oreo': 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80',
+            'Fresa': 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80',
+            'Limón': 'https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=800&q=80',
+            'Chocolate': 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80',
+            'Café': 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&fit=crop&w=800&q=80',
+            'Frutos Rojos': 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80',
+            'Mango': 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=800&q=80',
+            'Maracuyá': 'https://images.unsplash.com/photo-1517427294546-5aa121638908?auto=format&fit=crop&w=800&q=80',
+        };
+
+        function getRecipeImage(category, flavor) {
+            if(flavorImages[flavor] && (category === 'Cheesecake' || category === 'Mousse' || flavor === 'Frutos Rojos')) {
+                return flavorImages[flavor];
+            }
+            return categoryImages[category] || categoryImages['Cheesecake'];
+        }
+
+        const baseRecipes = {
+            'Cheesecake': {
+                desc: 'Cremoso, sin horno y fácil de vender en vasitos.',
+                baseIngredients: ['Galletas molidas', 'Mantequilla', 'Queso crema', 'Leche condensada', 'Grenetina (opcional)'],
+                baseSteps: ['Mezcla galleta con mantequilla para la base.', 'Bate queso crema con leche condensada.', 'Añade el saborizante específico.', 'Sirve en vasitos y refrigera 4 horas.']
+            },
+            'Tres Leches': {
+                desc: 'El clásico favorito, muy húmedo y rentable.',
+                baseIngredients: ['Bizcocho vainilla', 'Leche evaporada', 'Leche condensada', 'Media crema', 'Chantilly'],
+                baseSteps: ['Corta el bizcocho en cubos.', 'Mezcla las tres leches con el saborizante.', 'Intercala capas de pan mojado y chantilly.', 'Decora al gusto.']
+            },
+            'Carlota': {
+                desc: 'Postre de galletas marías y crema de limón.',
+                baseIngredients: ['Galletas Marías', 'Leche evaporada', 'Leche condensada', 'Jugo de limón', 'Queso crema'],
+                baseSteps: ['Licúa las leches con el limón y el sabor extra.', 'Pon una base de galletas.', 'Cubre con mezcla.', 'Repite capas hasta llenar.']
+            },
+            'Mousse': {
+                desc: 'Textura aireada y ligera, ideal para verano.',
+                baseIngredients: ['Crema para batir', 'Azúcar glass', 'Claras de huevo (pasteurizadas) o Grenetina'],
+                baseSteps: ['Monta la crema a punto de nieve.', 'Incorpora el saborizante con movimientos envolventes.', 'Sirve y refrigera.']
+            },
+            'Trufas': {
+                desc: 'Pequeños bocados de ganache, margen muy alto.',
+                baseIngredients: ['Chocolate cobertura', 'Crema de leche', 'Mantequilla'],
+                baseSteps: ['Calienta la crema y viértela sobre el chocolate.', 'Mezcla hasta fundir (ganache).', 'Refrigera hasta endurecer.', 'Forma bolitas y revuelca en el topping.']
+            },
+            'Gelatina': {
+                desc: 'Gourmet, encapsulada o cremosa.',
+                baseIngredients: ['Agua/Leche', 'Grenetina', 'Azúcar'],
+                baseSteps: ['Hidrata la grenetina.', 'Calienta el líquido base y disuelve azúcar.', 'Añade sabor y grenetina.', 'Cuaja en moldes.']
+            }
+        };
+
+        const flavors = [
+            { name: 'Oreo', addIng: 'Galletas Oreo troceadas', addStep: 'Incorpora trozos de galleta a la mezcla.' },
+            { name: 'Fresa', addIng: 'Mermelada de fresa, Fresas frescas', addStep: 'Añade la mermelada a la mezcla y decora con fresa.' },
+            { name: 'Limón', addIng: 'Jugo de limón extra, Ralladura', addStep: 'Intensifica con ralladura fresca.' },
+            { name: 'Maracuyá', addIng: 'Pulpa de maracuyá', addStep: 'Usa pulpa concentrada para la mezcla y semillas para decorar.' },
+            { name: 'Chocolate', addIng: 'Cocoa en polvo, Chocolate derretido', addStep: 'Mezcla chocolate fundido tibio.' },
+            { name: 'Café', addIng: 'Café soluble disuelto', addStep: 'Disuelve café en un poco de agua caliente y añade.' },
+            { name: 'Dulce de Leche', addIng: 'Dulce de leche / Cajeta', addStep: 'Sustituye parte del azúcar por dulce de leche.' },
+            { name: 'Mango', addIng: 'Pulpa de mango', addStep: 'Licúa mango fresco con la mezcla base.' },
+            { name: 'Coco', addIng: 'Crema de coco, Coco rallado', addStep: 'Añade coco rallado para textura.' },
+            { name: 'Nutella', addIng: 'Crema de avellanas', addStep: 'Mezcla generosamente la crema de avellanas.' },
+            { name: 'Frutos Rojos', addIng: 'Mix de berries congelados', addStep: 'Haz una reducción de frutos rojos para vetear.' },
+            { name: 'Baileys', addIng: 'Crema irlandesa', addStep: 'Añade un chorrito de licor al final.' },
+        ];
+
+        let allRecipes = [];
+
+        function generateRecipes() {
+            let idCounter = 1;
+            for (const [baseName, baseData] of Object.entries(baseRecipes)) {
+                flavors.forEach(flavor => {
+                    const img = getRecipeImage(baseName, flavor.name);
+                    allRecipes.push({
+                        id: idCounter++,
+                        category: baseName,
+                        title: `${baseName} de ${flavor.name}`,
+                        flavor: flavor.name,
+                        tags: [baseName, flavor.name],
+                        desc: baseData.desc,
+                        ingredients: [...baseData.baseIngredients, flavor.addIng],
+                        steps: [...baseData.baseSteps, flavor.addStep],
+                        image: img
+                    });
+                });
+            }
+            
+            allRecipes.push({
+                id: idCounter++,
+                category: 'Especial',
+                title: 'Tiramisú Económico',
+                flavor: 'Café',
+                tags: ['Clásico', 'Especial'],
+                desc: 'La versión rentable del clásico italiano.',
+                ingredients: ['Queso crema', 'Crema para batir', 'Soletas/Vainillas', 'Café fuerte', 'Cocoa'],
+                steps: ['Bate queso con crema.', 'Moja soletas en café.', 'Arma capas.', 'Espolvorea cocoa.'],
+                image: categoryImages['Especial']
+            });
+
+            document.getElementById('recipe-count').innerText = allRecipes.length;
+            renderRecipes(allRecipes.slice(0, 12));
+        }
+
+        function renderRecipes(recipes) {
+            const grid = document.getElementById('recipe-grid');
+            grid.innerHTML = recipes.map(r => `
+                <div class="recipe-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden cursor-pointer flex flex-col h-full fade-in group" onclick="openRecipeModal(${r.id})">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="${r.image}" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-110" alt="${r.title}">
+                        <div class="absolute inset-0 image-overlay opacity-50 group-hover:opacity-30 transition"></div>
+                        <span class="absolute top-2 right-2 bg-white/90 text-gray-800 text-xs px-2 py-1 rounded-full font-bold shadow-sm backdrop-blur-sm">
+                            <i class="fas fa-dollar-sign text-green-600"></i> Rentable
+                        </span>
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow justify-between relative">
+                        <div class="absolute -top-4 left-4 bg-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                            ${r.category}
+                        </div>
+                        <div class="mt-2">
+                            <h3 class="font-bold text-lg leading-tight text-gray-900 mb-1">${r.title}</h3>
+                            <p class="text-xs text-gray-500 line-clamp-2">${r.desc}</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-gray-100 flex justify-between items-center">
+                            <span class="text-xs text-pink-600 font-bold hover:underline">Ver receta completa</span>
+                            <i class="fas fa-arrow-right text-pink-400 text-xs group-hover:translate-x-1 transition"></i>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            const btn = document.getElementById('load-more-btn');
+            if(recipes.length < allRecipes.length && document.getElementById('search-input').value === '' && document.getElementById('category-filter').value === 'all') {
+                btn.classList.remove('hidden');
+            } else {
+                btn.classList.add('hidden');
+            }
+        }
+
+        function filterRecipes() {
+            const search = document.getElementById('search-input').value.toLowerCase();
+            const cat = document.getElementById('category-filter').value;
+            
+            const filtered = allRecipes.filter(r => {
+                const matchesSearch = r.title.toLowerCase().includes(search) || r.flavor.toLowerCase().includes(search);
+                const matchesCat = cat === 'all' || r.category === cat;
+                return matchesSearch && matchesCat;
+            });
+
+            if(search || cat !== 'all') {
+                renderRecipes(filtered);
+            } else {
+                renderRecipes(allRecipes.slice(0, 12));
+            }
+        }
+
+        function loadMoreRecipes() {
+            renderRecipes(allRecipes);
+            document.getElementById('load-more-btn').classList.add('hidden');
+        }
+
+        function openRecipeModal(id) {
+            const recipe = allRecipes.find(r => r.id === id);
+            if(!recipe) return;
+
+            currentRecipeContext = recipe.title; // Set context for AI Chef
+            
+            // Clear previous AI chat
+            document.getElementById('chef-chat-response').classList.add('hidden');
+            document.getElementById('chef-chat-input').value = "";
+
+            const modal = document.getElementById('recipe-modal');
+            const content = document.getElementById('modal-content');
+
+            content.innerHTML = `
+                <div class="relative h-64 sm:h-80">
+                    <img src="${recipe.image}" class="w-full h-full object-cover" alt="${recipe.title}">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end">
+                        <div class="p-6 text-white w-full">
+                            <span class="bg-pink-600 text-white text-xs font-bold px-2 py-1 rounded mb-2 inline-block">${recipe.category}</span>
+                            <h2 class="text-3xl sm:text-4xl font-brand-font drop-shadow-lg">${recipe.title}</h2>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-6 sm:p-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="flex items-center text-pink-600 font-bold mb-4 border-b pb-2">
+                                <i class="fas fa-shopping-basket mr-2"></i> Ingredientes
+                            </h4>
+                            <ul class="space-y-3 text-gray-700 text-sm">
+                                ${recipe.ingredients.map(i => `<li class="flex items-start bg-gray-50 p-2 rounded"><i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i> ${i}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="flex items-center text-pink-600 font-bold mb-4 border-b pb-2">
+                                <i class="fas fa-list-ol mr-2"></i> Procedimiento
+                            </h4>
+                            <ol class="space-y-4 text-gray-700 text-sm list-decimal pl-4">
+                                ${recipe.steps.map(s => `<li>${s}</li>`).join('')}
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="mt-8 p-4 bg-yellow-50 rounded-xl border border-yellow-200 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4">
+                        <div class="bg-yellow-100 p-3 rounded-full text-yellow-600"><i class="fas fa-lightbulb text-xl"></i></div>
+                        <div>
+                            <h5 class="font-bold text-yellow-800 text-sm">Tip de Venta</h5>
+                            <p class="text-sm text-yellow-800 italic mt-1">Este postre se vende mejor en paquetes de 2 o 4 unidades.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            modal.classList.remove('hidden');
+        }
+
+        function closeRecipeModal() {
+            document.getElementById('recipe-modal').classList.add('hidden');
+        }
+
+        function initCalculator() {
+            const savedData = localStorage.getItem('dessertCalcData');
+            if(savedData) {
+                const data = JSON.parse(savedData);
+                document.getElementById('ingredients-list').innerHTML = data.html;
+                document.getElementById('yield-units').value = data.yield;
+                document.getElementById('profit-margin').value = data.margin;
+                calculateTotal();
+            } else {
+                addIngredientRow('Leche', 2500);
+                addIngredientRow('Galletas', 4000);
+            }
+        }
+
+        function addIngredientRow(name = '', price = '') {
+            const container = document.getElementById('ingredients-list');
+            const div = document.createElement('div');
+            div.className = 'flex space-x-2 items-center ingredient-row fade-in';
+            div.innerHTML = `
+                <input type="text" value="${name}" placeholder="Ingrediente" class="flex-1 p-2 border rounded-lg text-sm bg-white focus:ring-2 focus:ring-pink-500 outline-none" oninput="calculateTotal()">
+                <div class="relative w-28">
+                    <span class="absolute left-2 top-2 text-gray-400 text-xs currency-display">${currentCurrency}</span>
+                    <input type="number" value="${price}" placeholder="0" class="w-full pl-8 p-2 border rounded-lg text-sm ingredient-cost focus:ring-2 focus:ring-pink-500 outline-none" oninput="calculateTotal()">
+                </div>
+                <button onclick="removeRow(this)" class="text-gray-300 hover:text-red-500 transition px-2"><i class="fas fa-times"></i></button>
+            `;
+            container.appendChild(div);
+            calculateTotal();
+        }
+
+        function removeRow(btn) {
+            btn.parentElement.remove();
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            const rows = document.querySelectorAll('.ingredient-row');
+            let totalCost = 0;
+            
+            rows.forEach(row => {
+                const price = parseFloat(row.querySelector('.ingredient-cost').value) || 0;
+                totalCost += price;
+                row.querySelector('.currency-display').innerText = currentCurrency;
+            });
+
+            const yieldUnits = parseFloat(document.getElementById('yield-units').value) || 1;
+            const margin = parseFloat(document.getElementById('profit-margin').value) || 0;
+
+            const unitCost = totalCost / yieldUnits;
+            const sellPrice = unitCost * (1 + (margin / 100));
+            const profit = sellPrice - unitCost;
+
+            document.getElementById('display-total-cost').innerText = `${currentCurrency} ${totalCost.toLocaleString('es-CO', {maximumFractionDigits: 2})}`;
+            document.getElementById('display-unit-cost').innerText = `${currentCurrency} ${unitCost.toLocaleString('es-CO', {maximumFractionDigits: 2})}`;
+            document.getElementById('display-sell-price').innerText = `${currentCurrency} ${sellPrice.toLocaleString('es-CO', {maximumFractionDigits: 2})}`;
+            document.getElementById('display-profit').innerText = `${currentCurrency} ${profit.toLocaleString('es-CO', {maximumFractionDigits: 2})}`;
+
+            localStorage.setItem('dessertCalcData', JSON.stringify({
+                html: document.getElementById('ingredients-list').innerHTML,
+                yield: yieldUnits,
+                margin: margin
+            }));
+        }
+
+        function clearCalculator() {
+            localStorage.removeItem('dessertCalcData');
+            document.getElementById('ingredients-list').innerHTML = '';
+            addIngredientRow();
+            calculateTotal();
+        }
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('¡Texto copiado! Listo para pegar en Instagram/WhatsApp.');
+            });
+        }
+
+    </script>
 </body>
 </html>
