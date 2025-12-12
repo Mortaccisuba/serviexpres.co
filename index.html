@@ -1,808 +1,375 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Negocio de Postres | Kit PRO (+100 Recetas)</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Markdown Parser for AI responses -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-    <style>
-        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
-        .brand-font { font-family: 'Pacifico', cursive; }
-        .gradient-bg { background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%); }
-        .card-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
-        .recipe-card { transition: all 0.3s ease; }
-        .recipe-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #FF9A9E; border-radius: 4px; }
-        
-        .fade-in { animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .image-overlay {
-            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+<html class="scroll-smooth" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Negocio de Postres - Guía para Mujeres Emprendedoras</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "base-cream": "#FFFDD0",
+                        "accent-gold": "#D4AF37",
+                        "cta-pink": "#F88379",
+                        "cta-pink-dark": "#E0655B",
+                        "text-main": "#4A3B32", // Deep warm brown
+                        "text-body": "#6D5E56",
+                        "surface": "#FFFFFF",
+                    },
+                    fontFamily: {
+                        "serif": ["Playfair Display", "serif"],
+                        "sans": ["Montserrat", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(212, 175, 55, 0.15)',
+                        'glow': '0 0 20px rgba(248, 131, 121, 0.4)'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slight': 'bounce 2s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'bg-pan': 'bg-pan 15s ease infinite',
+                    },
+                    keyframes: {
+                        float: {
+                          '0%, 100%': { transform: 'translateY(0)' },
+                          '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'bg-pan': {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        }
+                    }
+                },
+            },
         }
-        
-        /* AI Loading Animation */
-        .typing-indicator span {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background-color: #EC4899; /* Pink-500 */
-            border-radius: 50%;
-            animation: typing 1s infinite;
-            margin: 0 2px;
+    </script>
+<style type="text/tailwindcss">
+        .parallax-bg {
+            background-image: radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 20%),
+                              radial-gradient(circle at 80% 80%, rgba(248, 131, 121, 0.05) 0%, transparent 20%);
+            background-size: 50% 50%;
+            background-repeat: repeat;
+            animation: bg-pan 30s ease infinite alternate;
         }
-        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes typing {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 0;
+            pointer-events: none;
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-
-    <!-- NAVIGATION -->
-    <nav class="bg-white shadow-md fixed w-full z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <i class="fas fa-cookie-bite text-pink-500 text-2xl mr-2"></i>
-                    <span class="brand-font text-2xl text-gray-800 hidden sm:block">Tu Negocio de Postres <span class="text-xs font-sans text-white bg-gradient-to-r from-pink-500 to-purple-500 px-2 py-1 rounded-full ml-2 shadow-sm"><i class="fas fa-magic mr-1"></i>AI</span></span>
-                    <span class="brand-font text-xl text-gray-800 sm:hidden">Tu Negocio</span>
-                </div>
-                
-                <div class="flex items-center space-x-4">
-                    <!-- Currency Selector -->
-                    <div class="flex items-center bg-gray-100 rounded-lg px-2 py-1 border border-gray-200">
-                        <span class="text-xs text-gray-500 mr-2 font-bold"><i class="fas fa-coins"></i> Moneda:</span>
-                        <input type="text" id="currency-input" value="COP $" class="bg-transparent border-none w-16 text-sm font-bold text-gray-700 focus:outline-none text-right uppercase" onchange="updateCurrency(this.value)" placeholder="USD $">
-                    </div>
-
-                    <div class="hidden md:flex items-center space-x-6 ml-4">
-                        <a href="#recetas" class="text-gray-600 hover:text-pink-500 font-medium">Recetas</a>
-                        <a href="#calculadora" class="text-gray-600 hover:text-pink-500 font-medium">Calculadora</a>
-                        <a href="#marketing" class="text-gray-600 hover:text-pink-500 font-medium">Marketing</a>
-                    </div>
-                    
-                    <!-- Mobile Menu Button -->
-                    <div class="flex items-center md:hidden ml-2">
-                        <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-gray-600">
-                            <i class="fas fa-bars text-xl"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-2 shadow-lg">
-            <a href="#recetas" class="block py-2 text-gray-600">Recetas</a>
-            <a href="#calculadora" class="block py-2 text-gray-600">Calculadora</a>
-            <a href="#marketing" class="block py-2 text-gray-600">Marketing</a>
-        </div>
-    </nav>
-
-    <!-- HERO SECTION -->
-    <section class="pt-28 pb-16 gradient-bg relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" style="background-image: radial-gradient(#fff 2px, transparent 2px); background-size: 30px 30px;"></div>
-        <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
-            <span class="inline-block px-4 py-1 rounded-full bg-white text-pink-600 text-sm font-bold mb-4 shadow-sm animate-pulse">
-                ✨ Nuevo: Asistente IA Integrado
-            </span>
-            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                Tu Imperio de Postres<br>
-                <span class="text-pink-600 brand-font">Potenciado por IA</span>
-            </h1>
-            <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
-                Accede a recetas rentables, calcula costos y <strong>genera tu marketing automáticamente</strong> con inteligencia artificial.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#recetas" class="bg-pink-600 text-white px-8 py-4 rounded-full font-bold shadow-lg hover:bg-pink-700 transition transform hover:scale-105">
-                    <i class="fas fa-search mr-2"></i> Explorar Menú
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- MAIN CONTENT -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
-
-        <!-- 1. RECIPE DATABASE SECTION -->
-        <section id="recetas" class="scroll-mt-24">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-8 border-b pb-4">
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-900"><i class="fas fa-book-open text-pink-500 mr-2"></i> Catálogo de Recetas</h2>
-                    <p class="text-gray-600 mt-1">Explora nuestra colección visual de postres sin horno.</p>
-                </div>
-                <div class="mt-4 md:mt-0 text-right">
-                    <span class="text-sm font-bold text-gray-500 uppercase">Total Recetas</span>
-                    <div class="text-3xl font-bold text-pink-600" id="recipe-count">0</div>
-                </div>
-            </div>
-
-            <!-- Search & Filter Toolkit -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-8 sticky top-20 z-40">
-                <div class="flex flex-col md:flex-row gap-4">
-                    <div class="relative flex-1">
-                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
-                        <input type="text" id="search-input" placeholder="Buscar (ej. Oreo, Limón, Chocolate)..." class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-pink-500 outline-none" oninput="filterRecipes()">
-                    </div>
-                    <select id="category-filter" class="p-2 border rounded-lg focus:ring-2 focus:ring-pink-500 outline-none bg-white" onchange="filterRecipes()">
-                        <option value="all">Todas las Categorías</option>
-                        <option value="Cheesecake">Cheesecakes</option>
-                        <option value="Tres Leches">Tres Leches</option>
-                        <option value="Carlota">Carlotas</option>
-                        <option value="Mousse">Mousses</option>
-                        <option value="Trufas">Trufas</option>
-                        <option value="Gelatina">Gelatinas</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Grid Container -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="recipe-grid">
-                <!-- Recipes will be injected here via JS -->
-            </div>
-            
-            <div class="mt-8 text-center">
-                <button onclick="loadMoreRecipes()" id="load-more-btn" class="bg-gray-100 text-gray-600 px-6 py-2 rounded-full hover:bg-gray-200 transition hidden">
-                    Cargar más recetas
-                </button>
-            </div>
-        </section>
-
-        <!-- 2. SMART CALCULATOR -->
-        <section id="calculadora" class="scroll-mt-24">
-            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-                <div class="bg-gray-900 p-6 text-white flex justify-between items-center">
-                    <div>
-                        <h2 class="text-2xl font-bold"><i class="fas fa-calculator text-green-400 mr-2"></i> Calculadora de Rentabilidad</h2>
-                        <p class="text-gray-400 text-sm">Moneda actual: <span class="currency-display font-mono text-yellow-400">COP $</span></p>
-                    </div>
-                    <button onclick="clearCalculator()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded text-red-300">Borrar Todo</button>
-                </div>
-
-                <div class="p-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Calculator Inputs -->
-                    <div class="lg:col-span-2 space-y-6">
-                        <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 class="font-bold text-blue-900">Insumos de la Receta</h3>
-                                <span class="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">Autoguardado activado</span>
-                            </div>
-                            <div id="ingredients-list" class="space-y-3">
-                                <!-- Dynamic Rows -->
-                            </div>
-                            <button onclick="addIngredientRow()" class="mt-4 text-sm flex items-center text-blue-700 font-bold hover:underline">
-                                <i class="fas fa-plus-circle mr-1"></i> Agregar ingrediente
-                            </button>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Unidades que rinde</label>
-                                <input type="number" id="yield-units" value="10" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none font-bold text-lg" oninput="calculateTotal()">
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Margen Deseado (%)</label>
-                                <input type="number" id="profit-margin" value="40" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none font-bold text-lg" oninput="calculateTotal()">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Results Panel -->
-                    <div class="bg-gray-900 rounded-2xl p-6 text-white flex flex-col justify-center space-y-6 shadow-lg relative overflow-hidden">
-                        <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fas fa-coins text-9xl"></i></div>
-                        <div class="relative z-10">
-                            <div class="text-gray-400 text-sm mb-1">Costo Total Producción</div>
-                            <div class="text-2xl font-mono" id="display-total-cost">0.00</div>
-                        </div>
-                        <div class="relative z-10 border-t border-gray-700 pt-4">
-                            <div class="text-gray-400 text-sm mb-1">Costo por Unidad</div>
-                            <div class="text-2xl font-mono text-yellow-400" id="display-unit-cost">0.00</div>
-                        </div>
-                        <div class="relative z-10 border-t border-gray-700 pt-4 bg-gray-800 -mx-6 px-6 pb-6 -mb-6 mt-2">
-                            <div class="text-green-400 text-sm font-bold uppercase mb-1 mt-4">Precio Sugerido</div>
-                            <div class="text-5xl font-bold font-mono text-white" id="display-sell-price">0.00</div>
-                            <div class="text-xs text-gray-500 mt-2 flex justify-between">
-                                <span>Ganancia neta: <span id="display-profit" class="text-green-400">0.00</span></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. MARKETING GENERATOR (AI ENHANCED) -->
-        <section id="marketing" class="scroll-mt-24">
-            <div class="text-center mb-10">
-                <span class="bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-2 inline-block">POWERED BY GEMINI AI ✨</span>
-                <h2 class="text-3xl font-bold text-gray-900"><i class="fas fa-bullhorn text-pink-500 mr-2"></i> Generador de Marketing IA</h2>
-                <p class="text-gray-600 mt-2">Crea textos únicos y persuasivos para tus redes sociales al instante.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Caption Generator -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-                    <h3 class="font-bold text-gray-800 mb-4">📝 Creador de Contenido Inteligente</h3>
-                    
-                    <div class="space-y-4 mb-4">
-                        <div>
-                            <label class="text-xs font-bold text-gray-500">Producto</label>
-                            <input type="text" id="mkt-product" placeholder="Ej. Cheesecake de Oreo" class="w-full p-2 border rounded">
-                        </div>
-                        <div>
-                            <label class="text-xs font-bold text-gray-500">Precio</label>
-                            <div class="relative">
-                                <input type="number" id="mkt-price" placeholder="5000" class="w-full p-2 border rounded pl-16">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500 text-sm currency-display">COP $</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="text-xs font-bold text-gray-500">Objetivo del Post (Vibe)</label>
-                            <select id="mkt-vibe" class="w-full p-2 border rounded">
-                                <option value="urgencia">🚨 Crear Urgencia (Pocas unidades)</option>
-                                <option value="antojo">🤤 Despertar Antojo (Sensorial)</option>
-                                <option value="elegante">✨ Elegante / Gourmet</option>
-                                <option value="divertido">🤪 Divertido / Meme</option>
-                                <option value="promocion">🏷️ Oferta de Descuento</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="flex gap-2 mb-4">
-                        <button onclick="generateStaticCaption()" class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg font-bold hover:bg-gray-300 text-sm">
-                            Básico (Plantilla)
-                        </button>
-                        <button onclick="generateAICaption()" class="flex-1 bg-gradient-to-r from-pink-600 to-purple-600 text-white py-2 rounded-lg font-bold hover:opacity-90 shadow-lg text-sm flex items-center justify-center">
-                            <i class="fas fa-magic mr-2"></i> Crear con IA
-                        </button>
-                    </div>
-                    
-                    <!-- AI Output Area -->
-                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 relative group min-h-[150px]">
-                        <div id="ai-loading" class="hidden absolute inset-0 bg-gray-50/90 flex flex-col items-center justify-center z-10 rounded-lg">
-                            <div class="typing-indicator mb-2"><span></span><span></span><span></span></div>
-                            <span class="text-xs text-pink-500 font-bold animate-pulse">La IA está escribiendo...</span>
-                        </div>
-                        
-                        <div id="mkt-output" class="text-sm text-gray-700 italic whitespace-pre-line">
-                            Tu copy generado por inteligencia artificial aparecerá aquí...
-                        </div>
-                        
-                        <button onclick="copyToClipboard('mkt-output')" class="absolute top-2 right-2 bg-white p-1 rounded border shadow text-xs text-gray-500 hover:text-pink-600" title="Copiar">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Visual Templates Preview -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-                    <h3 class="font-bold text-gray-800 mb-4">🎨 Ideas Visuales (Canva Style)</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="aspect-square bg-pink-100 rounded-lg flex flex-col items-center justify-center p-2 text-center border-2 border-pink-200 border-dashed relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1563729768647-d3c1a7a4a2b1?auto=format&fit=crop&w=400&q=80" class="absolute inset-0 w-full h-full object-cover opacity-20">
-                            <div class="relative z-10">
-                                <span class="text-2xl mb-1">🤤</span>
-                                <span class="font-brand-font text-pink-600 text-xl block">Menú</span>
-                                <span class="text-xs text-gray-600 font-bold bg-white/80 px-2 rounded">Cheesecake $5k</span>
-                            </div>
-                        </div>
-                        <div class="aspect-square bg-yellow-50 rounded-lg flex flex-col items-center justify-center p-2 text-center border-2 border-yellow-200 border-dashed relative overflow-hidden">
-                            <div class="absolute inset-0 bg-yellow-400 opacity-10"></div>
-                            <span class="text-2xl mb-1">⚡</span>
-                            <span class="font-bold text-yellow-600 text-lg">PROMO</span>
-                            <span class="text-xs text-gray-600">2x1 HOY</span>
-                        </div>
-                    </div>
-                    <div class="mt-4 p-4 bg-purple-50 rounded-lg border border-purple-100">
-                        <p class="text-xs text-purple-800">
-                            <strong>Tip Pro:</strong> Usa el texto generado por la IA en la descripción y una de estas ideas visuales para tus Historias.
+<body class="bg-base-cream font-sans text-text-main overflow-x-hidden antialiased parallax-bg relative">
+<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+<div class="floating-element top-[10%] left-[5%] animate-float" style="animation-delay: 0s;">
+<span class="material-symbols-outlined text-6xl text-accent-gold">cake</span>
+</div>
+<div class="floating-element top-[30%] right-[10%] animate-float" style="animation-delay: 1s;">
+<span class="material-symbols-outlined text-5xl text-cta-pink">cookie</span>
+</div>
+<div class="floating-element bottom-[20%] left-[15%] animate-float" style="animation-delay: 2s;">
+<span class="material-symbols-outlined text-6xl text-accent-gold">bakery_dining</span>
+</div>
+<div class="floating-element top-[60%] right-[5%] animate-float" style="animation-delay: 3s;">
+<span class="material-symbols-outlined text-5xl text-cta-pink">icecream</span>
+</div>
+<div class="floating-element top-[15%] right-[25%] animate-float" style="animation-delay: 4s;">
+<span class="material-symbols-outlined text-4xl text-accent-gold">egg</span>
+</div>
+</div>
+<div class="sticky top-0 z-50 bg-text-main text-white py-2 px-4 shadow-md">
+<div class="max-w-7xl mx-auto flex justify-center items-center gap-2 text-xs md:text-sm font-medium text-center">
+<span>🔥 Oferta Flash de Lanzamiento: 50% de Descuento solo por hoy</span>
+<span class="bg-cta-pink px-2 py-0.5 rounded text-white font-bold ml-2">04:59 min</span>
+</div>
+</div>
+<header class="relative w-full py-16 md:py-24 overflow-hidden bg-gradient-to-b from-white/90 to-base-cream/90 backdrop-blur-sm z-10">
+<div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-accent-gold/10 rounded-full blur-3xl"></div>
+<div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-cta-pink/10 rounded-full blur-3xl"></div>
+<div class="px-4 md:px-10 mx-auto max-w-7xl relative z-10">
+<div class="flex flex-col md:flex-row items-center gap-12 lg:gap-16">
+<div class="flex-1 text-center md:text-left space-y-6">
+<h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-text-main">
+                        Convierte tu Pasión por los Postres en un <span class="text-accent-gold italic">Negocio Rentable</span> desde tu Propia Cocina
+                    </h1>
+<p class="text-text-body text-lg md:text-xl font-medium leading-relaxed max-w-xl mx-auto md:mx-0">
+                        La guía paso a paso para iniciar sin grandes inversiones, conseguir clientes por redes sociales y generar ingresos diarios.
+                    </p>
+<div class="pt-6 flex flex-col items-center md:items-start gap-3">
+<a class="bg-cta-pink hover:bg-cta-pink-dark text-white text-lg md:text-xl font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-glow transform hover:-translate-y-1 transition-all duration-300 w-full md:w-auto text-center" href="#checkout">
+                            SÍ, QUIERO EMPRENDER POR $9.99 USD
+                        </a>
+<p class="text-xs text-text-body/80 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-green-600">lock</span>
+                            Acceso inmediato al correo + Garantía de Satisfacción
                         </p>
+</div>
+</div>
+<div class="flex-1 w-full max-w-[500px] relative flex justify-center">
+<div class="relative w-full aspect-[4/5]">
+<div class="absolute inset-0 z-0">
+<img alt="Mujer latina decorando pastel casero con pasión" class="w-full h-full object-cover rounded-2xl shadow-2xl transform rotate-3 border-4 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDroSaWUavroiQFAH9TgjODlqWWhhd-YgCUxt1EMANXMSv4U6fUHbLPXOcy7eK3qEhYG9y-P2JEj5BALihNp-HCdKOXvCQ_dNfoNswfRSZRzUFkC0HFpmJZ_B9mk8Lv4NwcUSl7PJlh6NfAfjfSownnR8Ar3iMqa0fJk4Z8JM73Lq9RGW44vMr0Q2kewztzroVO5t5yKkX07neuxQsq2ONeDDhPBc3xuwMmJE3QlAYUVXi5PFkqxNDma_68mDQhqJhG2Jbopm4w2YI"/>
+</div>
+<div class="absolute -bottom-6 -right-6 w-24 h-24 bg-white rounded-full shadow-lg p-2 z-10 hidden md:block animate-bounce-slight">
+<img alt="Detail of handmade cupcake" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY4ujpO35L0-Pgy0loBcGcR7MmrH2Ssu7gQgsQvAV2IrSeKspuHl0T25QEOPs4n6yaRUK2Z4GlFyPjJIx5uW7k8k404DsEJ607cKg-Uj9LO-OHiUD71ybMLa7wvBeikKjmkxNbPWhBHtKBwKCK6DF6PdR9ZZ9TttMpBaOJpCAeIxHLgqP_s8yOsbgx4f1dRoVoVLeEUEBrpzWx8FVcyzMUHNWnjlPzEtL-otMTiFWRCZ4LVSudq_ey8DOHyAvF72IAsBfDoatS94w"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<section class="py-20 bg-white/80 backdrop-blur-sm relative z-10">
+<div class="max-w-7xl mx-auto px-4 md:px-10">
+<div class="text-center mb-12">
+<h2 class="font-serif text-3xl md:text-4xl font-bold text-text-main">¿Te suena familiar?</h2>
+<div class="w-24 h-1 bg-accent-gold mx-auto mt-4 rounded-full"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-base-cream/50 p-8 rounded-2xl border border-accent-gold/20 text-center hover:shadow-soft transition-all duration-300 backdrop-blur-sm">
+<div class="w-16 h-16 bg-cta-pink/10 rounded-full flex items-center justify-center mx-auto mb-6 text-cta-pink">
+<span class="material-symbols-outlined text-3xl">child_friendly</span>
+</div>
+<p class="text-lg font-medium text-text-main">"¿Quieres ingresos extra pero no puedes descuidar a tus hijos?"</p>
+</div>
+<div class="bg-base-cream/50 p-8 rounded-2xl border border-accent-gold/20 text-center hover:shadow-soft transition-all duration-300 backdrop-blur-sm">
+<div class="w-16 h-16 bg-cta-pink/10 rounded-full flex items-center justify-center mx-auto mb-6 text-cta-pink">
+<span class="material-symbols-outlined text-3xl">attach_money</span>
+</div>
+<p class="text-lg font-medium text-text-main">"¿Te da miedo cobrar y que te digan que 'está muy caro'?"</p>
+</div>
+<div class="bg-base-cream/50 p-8 rounded-2xl border border-accent-gold/20 text-center hover:shadow-soft transition-all duration-300 backdrop-blur-sm">
+<div class="w-16 h-16 bg-cta-pink/10 rounded-full flex items-center justify-center mx-auto mb-6 text-cta-pink">
+<span class="material-symbols-outlined text-3xl">soup_kitchen</span>
+</div>
+<p class="text-lg font-medium text-text-main">"¿Sientes que no tienes dinero para comprar equipos costosos?"</p>
+</div>
+</div>
+<div class="mt-16 text-center">
+<p class="font-serif text-2xl md:text-3xl text-accent-gold font-bold italic">
+                    "No necesitas una pastelería industrial. <br class="hidden md:block"/> Solo necesitas una estrategia."
+                </p>
+</div>
+</div>
+</section>
+<section class="py-20 bg-base-cream/60 relative overflow-hidden z-10 backdrop-blur-sm">
+<div class="absolute -left-20 top-20 w-64 h-64 bg-white/40 rounded-full blur-2xl"></div>
+<div class="max-w-7xl mx-auto px-4 md:px-10 relative z-10">
+<div class="flex flex-col md:flex-row items-center gap-12">
+<div class="flex-1 order-2 md:order-1">
+<div class="grid grid-cols-2 gap-4">
+<img alt="Mujer horneando en cocina casera" class="rounded-xl shadow-md w-full h-40 object-cover transform translate-y-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCXxXUosr19ZrPJnQ01ScNWsZ0Ssg34xN1zTTzHk1AO0vtj4jJRgO6lONc4l6pqk9pVMve0fdJyetjWgiIUwidmzKbpa-NfdePgOYc5AJJfUljp7SUZczEhBMc55R_OWoEvzKl7_C1O7GP_vXId-1xDTh2d8q8EEvetg2wAMq4-RMLubvxpUYhlbRdb_8_5QcYRF0WvlYt4xBO0IteOcytPIc_aoAXo2JAZPXqUehfmUfdKlTH6k4_RWEgOxLLhZlP0dOV71REkSQ"/>
+<img alt="Postres deliciosos en mesa" class="rounded-xl shadow-md w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrfOKaFPYYwcBhw72leF5paBRWML8oGaN5lbHRGVDQ9Ohuk_5bQY9cbiJmdCN-16_7HaLb7kTfl6cTU6ro2tJNdJyDKuBVJtf8HHhJ2emgcJ2PCw8H_MHS0OaMzMiKgTXgmodoKfBtS41xgl3Re2lhDECzF6BYDL1hLlN34ffTkPQeHgS2cKU_mmrIrgeSRur9afai2gPHgP3PJfdMJ_WBHvf2VTq1zwABjh9hB35RvBwjsr5WDyPjq8hlfUYhp0RHcMZmP0iOQAY"/>
+<img alt="Ingredientes de repostería frescos" class="rounded-xl shadow-md w-full h-40 object-cover transform translate-y-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4aeE5vIH1ro-eN3cy7RTOdVCVgrLqJi32AJtp2vLl6umr01LgfovXaG36UqLFoi5JqceutxfwcZPbuac9AKNFOF7h_SO1szGgUNyQvAHEOMsJ725tl6RgaNAXLf2mWdPuadsISKlqAERDSLl66n3o_kQpbo246Ebifc3hHj01RHqVsI65xc90q5WADRn8hcvE3EjpeCzr4PqS7jhMvDAzbW1WNzNGqFdI_x9Bx8BbTlJClvmvwpiXShmjmTP9ykNPrLIjuk-8MYo"/>
+<img alt="Empaque de postres artesanal" class="rounded-xl shadow-md w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4gzKQNV0c-J_t3fz6bLSefdUd9lpcYxlxh0NOdxFiuBpyr2UQ4pnHRgrWNjqzIQOdlAGFkTNB1sKgH420BL8MQeI9zwBhY1mv4RTEq3T2szIJ4Was2zJtrAwiCXvUoz4h9vBgSd1hE3IFAjN-dKTK99tadyIs_TgNLhlhAhYNa2gR7wQ0cbfnzUM3QO03FBgzf-SYR_AWSQS4XygWPVwImZQxa87zNiQUespcmq46k4hX5Ob_EHskMehcxJ8sMCZ3JP03je2xEbw"/>
+</div>
+</div>
+<div class="flex-1 order-1 md:order-2 space-y-8">
+<h2 class="font-serif text-3xl md:text-4xl font-bold text-text-main">
+                        Descubre el método probado para <span class="text-cta-pink">vender sin perseguir</span>
+</h2>
+<p class="text-text-body text-lg">
+                        Esta guía no es solo un recetario. Es un manual de negocios condensado para que logres resultados reales.
+                    </p>
+<div class="space-y-6">
+<div class="flex gap-4 items-start">
+<div class="bg-white p-2 rounded-lg shadow-sm text-accent-gold">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<div>
+<h3 class="font-bold text-lg text-text-main">Recetas Rentables</h3>
+<p class="text-sm text-text-body">Postres diseñados para maximizar tu ganancia, no solo para saber bien.</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="bg-white p-2 rounded-lg shadow-sm text-accent-gold">
+<span class="material-symbols-outlined">photo_camera</span>
+</div>
+<div>
+<h3 class="font-bold text-lg text-text-main">Fotografía con Celular</h3>
+<p class="text-sm text-text-body">Trucos sencillos para que tus fotos se vean profesionales y provoquen antojo.</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="bg-white p-2 rounded-lg shadow-sm text-accent-gold">
+<span class="material-symbols-outlined">chat</span>
+</div>
+<div>
+<h3 class="font-bold text-lg text-text-main">Ventas por WhatsApp</h3>
+<p class="text-sm text-text-body">Guiones exactos para cerrar ventas sin sentirte incómoda.</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="bg-white p-2 rounded-lg shadow-sm text-accent-gold">
+<span class="material-symbols-outlined">favorite</span>
+</div>
+<div>
+<h3 class="font-bold text-lg text-text-main">Empaques que Enamoran</h3>
+<p class="text-sm text-text-body">Ideas económicas para presentar tus postres como regalos de lujo.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 bg-white/90 backdrop-blur-sm relative z-10" id="oferta">
+<div class="max-w-4xl mx-auto px-4 md:px-10">
+<h2 class="font-serif text-3xl md:text-4xl font-bold text-text-main text-center mb-10">Todo lo que recibes hoy</h2>
+<div class="bg-white rounded-3xl shadow-2xl border-2 border-accent-gold overflow-hidden">
+<div class="bg-accent-gold py-4 text-center">
+<p class="text-white font-bold tracking-widest uppercase">Oferta Exclusiva</p>
+</div>
+<div class="p-8 md:p-12">
+<ul class="space-y-4 mb-8">
+<li class="flex items-center justify-between border-b border-gray-100 pb-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<span class="font-medium text-text-main">Guía 'Negocio de Postres Exitoso'</span>
+</div>
+<span class="text-gray-400 font-semibold text-sm">Valor: $47 USD</span>
+</li>
+<li class="flex items-center justify-between border-b border-gray-100 pb-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<span class="font-medium text-text-main">Bonus 1: Lista de Proveedores Económicos</span>
+</div>
+<span class="text-gray-400 font-semibold text-sm">Valor: $15 USD</span>
+</li>
+<li class="flex items-center justify-between border-b border-gray-100 pb-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<span class="font-medium text-text-main">Bonus 2: Plantilla de Menú para Instagram</span>
+</div>
+<span class="text-gray-400 font-semibold text-sm">Valor: $10 USD</span>
+</li>
+</ul>
+<div class="text-center space-y-2 mb-8">
+<p class="text-gray-400 text-lg">Precio Normal: <span class="line-through decoration-red-500 decoration-2">$72 USD</span></p>
+<div class="flex items-center justify-center gap-2">
+<span class="text-xl">🔥</span>
+<p class="text-4xl md:text-5xl font-serif font-bold text-text-main">TU PRECIO HOY: <span class="text-cta-pink">$9.99 USD</span></p>
+</div>
+</div>
+<div class="text-center">
+<a class="inline-block bg-cta-pink hover:bg-cta-pink-dark text-white text-xl font-bold py-4 px-12 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 w-full md:w-auto animate-pulse-slow" href="#checkout">
+                            OBTENER ACCESO AHORA
+                        </a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 bg-base-cream/50 backdrop-blur-sm relative z-10">
+<div class="max-w-7xl mx-auto px-4 md:px-10">
+<h2 class="font-serif text-3xl md:text-4xl font-bold text-text-main text-center mb-12">Historias Reales de Mujeres como Tú</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBRxKEca8KUSZNFLcQL_dKzC78XHErReBPUtDNcSe8iJnDm_rk4Goy_wpOztXuQEmJUNNZ98T55TlMHzug1NJ6f9e3Y3MkVJMyP0_BinXtB5l9qN_8d-OYIoIQDh9YrhNUGPgTKq80cTJe8IBtLpsqcaQAcdgTVcYNW3xBArmkc_rieXVzBTuSZEDOYV1B496jSBSNIMfGjswT1C8AJXbCeszfdWKH1qL7GjHsXBzFOcIQDNCmQaXbAGAPnP9Icdz8RvIAk5DfM7lI');"></div>
+<div>
+<p class="font-bold text-text-main">Carolina M.</p>
+<div class="flex text-accent-gold text-sm">
+<span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span>
+</div>
+</div>
+</div>
+<p class="text-text-body text-sm italic">"Seguí la guía al pie de la letra y gané mis primeros $100 la primera semana vendiendo brownies. ¡Nunca creí que fuera tan fácil!"</p>
+</div>
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCcOBzxRu7fvk1N6ZrEbR0a1a2k2MohmQe1lQnhdeySkPqjyhpZwUKEhBrpk12KFMVO1sJ7hKOr3Il0YY-PkpCKUhhhTPU6EVboXmITHnKndv0h7yePEue9YhKigxHqFIUQFE9mqt_3Znjz0NIVpl47DXbQzZyP2Ykkg2e4TiR4OwXQagQWr3fGJaP3f0n1dKb_umdxbTjjTm-LLLdanaafBhgpAugimCc1yJvFFQm-wZIB6mGI1_dLhQK-XuIHwRlxDj_ABNXKORw');"></div>
+<div>
+<p class="font-bold text-text-main">Valeria S.</p>
+<div class="flex text-accent-gold text-sm">
+<span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span>
+</div>
+</div>
+</div>
+<p class="text-text-body text-sm italic">"La plantilla de costos me salvó. Antes perdía dinero sin saberlo. Ahora tengo un margen de ganancia real y puedo reinvertir."</p>
+</div>
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6aS4QLrvIi8FzqrQmR09HzgR6dxT-l1Rq0tCEKeYHaizlHu0JH7tJ8q7yWPqOMyD6HsWekkUiKgv2f1OMGc14kox8r6kugjs1FrEyP3PBTSRZtWHl2vLUDj8NaGKqGS_8Jg93BOnqhwbIDmU-FmO1LJj6_FtQVbkPRxOG3yCUz6IQrubvqsdDAFw0pZlCEGKP_e_K2pF1gpxlWgKYByMpxM1_EiL2Ul697prnco2ku-z3oJLNoa0n9pYOMShycoA8GMIEtUpH9_Q');"></div>
+<div>
+<p class="font-bold text-text-main">Andrea R.</p>
+<div class="flex text-accent-gold text-sm">
+<span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span>
+</div>
+</div>
+</div>
+<p class="text-text-body text-sm italic">"Empecé en mi cocina pequeña y ahora surto a dos cafeterías locales. Esta guía me dio la mentalidad correcta."</p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 bg-white/90 backdrop-blur-sm relative z-10" id="checkout">
+<div class="max-w-2xl mx-auto px-4 md:px-10">
+<div class="bg-gray-50 p-6 md:p-10 rounded-xl border border-gray-200 shadow-inner">
+<h3 class="font-serif text-2xl font-bold text-text-main mb-6 border-b border-gray-200 pb-4">Finaliza tu compra</h3>
+<div class="flex justify-between items-center mb-8">
+<div class="flex items-center gap-4">
+<div class="w-16 h-20 bg-gray-200 rounded md:block hidden bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBmUMAegDTyE2-p5F8Ap7s0CLtKwpiBexELsOjtn3KmC-USe4VFqwArYVAFLyS5gm9XsG2mwhd8b0Kk-uy5KY2NLbRhs_jUE7PhZexOd4uQ11yKfbXHZRDqruPPKv9O3BCfQO66b1-VC9RA8hPT6bt3DWXWYtfwjid7CVTdirqKCRLk_62Luh5j8cOeR8urJORblYY_Zpyy03BrLbmQtQVkSPJkiMv9vSO3LyqleAaM-eZe2QeoKJ89eva8OObbCe2731ZcVafDWcY');"></div>
+<div>
+<p class="font-bold text-text-main">Guía Negocio de Postres + Bonos</p>
+<p class="text-xs text-green-600 font-bold">Oferta Flash Aplicada</p>
+</div>
+</div>
+<p class="font-bold text-xl text-text-main">$9.99</p>
+</div>
+<div class="bg-yellow-50 border-2 border-dashed border-red-400 p-4 rounded-lg mb-8 relative">
+<div class="absolute -top-3 left-4 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded animate-pulse">¡OFERTA ÚNICA! No disponible después.</div>
+<div class="flex gap-4 mt-2">
+<div class="pt-1">
+<input class="w-5 h-5 text-cta-pink border-gray-300 rounded focus:ring-cta-pink cursor-pointer" type="checkbox"/>
+</div>
+<div>
+<p class="font-bold text-sm text-text-main mb-1">Sí, agregar Calculadora de Costos en Excel</p>
+<p class="text-xs text-text-body leading-tight mb-2">Evita pérdidas. Calcula el precio exacto de tus postres y asegura tu ganancia con esta plantilla automática por solo <span class="font-bold text-red-500">$4.99 USD adicionales</span>.</p>
+</div>
+</div>
+</div>
+<button class="w-full bg-green-600 hover:bg-green-700 text-white text-xl font-bold py-4 rounded-lg shadow-md transition-colors flex justify-center items-center gap-2">
+<span class="material-symbols-outlined">lock</span> PAGAR AHORA
+                </button>
+<div class="flex justify-center gap-4 mt-6 opacity-60 grayscale hover:grayscale-0 transition-all">
+<img alt="Visa" class="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYhZFIclyO74k_2EqwlrhDj1dGirsCJ1oj3lUbSV-1LHjOUX8eLee4NXMF3ZoRUlV1BOXVyDsPuEr-QXfZsztR2oxLWCdbtVT8gFJqCWfRRxks51z4dLLF-KN_Ifzx0BDAKL3rPJ5Xn73MIsiL-VkyAc8h2CtRpZPoI79bVkwRjZ0wJNjdCJrJXMex4vJfqaJ2-YNGjBIqIa4ItXkVFOp-3qkY2yhGe1xqYhY7o9D5y_7DJMQICxcYKJjBqhLVtQa9waZioGshVEE"/>
+<img alt="Mastercard" class="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeY6UTrAa2KL9MUYtGuC56FODS0ZyxWoZ74yAlkOyP2zBQivNH7lb4Knr5hzAH3mI0xemQ6lG_Nuj1n5_LjxHFrBn55K-veHAnthsKqXoFxT2nEJbjtEvsuINxdLrjIYKt5JhwmIwzsX9VgsOoa3dBBT6ZaTZ_gFbdDBf9P3tYIrW9WRc8ZJu4OkXPSASrC5CHK0ji9p7X56iW1YTcnE9Y_WuXCMnRagsPi6wqEOEwI1bHODhV3YAPhdQT5qS-IGRbstgNADHOE_c"/>
+<img alt="Paypal" class="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx9hwnOAeaJbRiLjIp4baWXRv70Kw7djyPhqFx81e_k2hkIiRiEetHPsX5SVL0L11mt3g5ZzS5kxb0ul5Eqhl2VmwCnZ2npD3Yq9Ot8ds7y_VBE4xyww5Cp5UXh5NLq2Bs8Xc5Pz8ZiE-Dy4335V9BWXAjzDDea1bdKARNJdqdqk7Br-sSAnZUg2iNBgkVSUyDCPNIjdkPt8-7aifrtD1UbvaoWc_b1iKML3ndQy5Md5nJztxYCH8UTN68Yp74seMG43kYqX2BiBU"/>
+</div>
+</div>
+</div>
+</section>
+<footer class="bg-text-main text-white py-16 relative z-10">
+<div class="max-w-7xl mx-auto px-4 md:px-10">
+<div class="flex flex-col md:flex-row justify-between items-center gap-10 mb-12 border-b border-white/10 pb-12">
+<div class="flex items-center gap-6 max-w-md">
+<div class="w-24 h-24 flex-shrink-0 bg-accent-gold rounded-full flex items-center justify-center text-text-main font-bold text-center text-xs p-2 border-4 border-white/20">
+                        7 DÍAS<br/>GARANTÍA<br/>DEVOLUCIÓN
                     </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="bg-gray-900 text-white py-12 mt-12 border-t-4 border-pink-500">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h2 class="brand-font text-3xl text-pink-400 mb-4">Tu Negocio de Postres</h2>
-            <div class="flex justify-center space-x-4 mb-8">
-                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-whatsapp text-2xl"></i></a>
-            </div>
-            <p class="text-gray-500 text-sm">
-                &copy; 2023 Kit Emprendedor PRO. Todos los derechos reservados.<br>
-                Configurado para: <span class="currency-display font-bold">COP $</span>
-            </p>
-        </div>
-    </footer>
-
-    <!-- RECIPE MODAL -->
-    <div id="recipe-modal" class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl flex flex-col">
-            <button onclick="closeRecipeModal()" class="absolute top-4 right-4 bg-white/80 p-2 rounded-full hover:bg-white transition z-10 shadow-md text-gray-800">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <div id="modal-content" class="animate-fade-in overflow-y-auto flex-grow">
-                <!-- Content injected via JS -->
-            </div>
-            
-            <!-- AI Chef Chat Section (Fixed at bottom of modal) -->
-            <div class="border-t border-gray-200 bg-gray-50 p-4 rounded-b-2xl">
-                <div class="flex items-center mb-2">
-                    <span class="bg-purple-100 text-purple-700 p-1 rounded-full mr-2"><i class="fas fa-robot"></i></span>
-                    <h5 class="text-sm font-bold text-gray-700">Chef IA: Consultas & Personalización</h5>
-                </div>
-                
-                <div id="chef-chat-response" class="text-sm text-gray-600 bg-white p-3 rounded-lg border border-gray-200 mb-3 hidden max-h-32 overflow-y-auto"></div>
-                
-                <div class="flex gap-2">
-                    <input type="text" id="chef-chat-input" placeholder="Pregunta: ¿Cómo hacerlo vegano? ¿Sustitutos?" class="flex-1 p-2 text-sm border rounded-lg focus:outline-none focus:border-pink-500">
-                    <button onclick="askAIChef()" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-purple-700 transition">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-                <div id="chef-loading" class="hidden mt-2 text-xs text-purple-600 font-bold flex items-center">
-                    <div class="typing-indicator mr-2"><span></span><span></span><span></span></div>
-                    El Chef está pensando...
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // --- API & AI CONFIGURATION ---
-        const apiKey = ""; // System provides key automatically
-
-        async function callGemini(prompt, systemInstruction = "") {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            
-            const payload = {
-                contents: [{ parts: [{ text: prompt }] }],
-                systemInstruction: { parts: [{ text: systemInstruction }] }
-            };
-
-            let delay = 1000;
-            for (let i = 0; i < 3; i++) { // Retry up to 3 times
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    
-                    const data = await response.json();
-                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "Lo siento, no pude generar una respuesta en este momento.";
-                } catch (e) {
-                    await new Promise(r => setTimeout(r, delay));
-                    delay *= 2;
-                }
-            }
-            return "Error de conexión con la IA. Por favor intenta de nuevo.";
-        }
-
-        // --- GLOBAL SETTINGS ---
-        let currentCurrency = localStorage.getItem('userCurrency') || 'COP $';
-        let currentRecipeContext = ""; // Stores title of opened recipe for AI context
-
-        function updateCurrency(val) {
-            currentCurrency = val;
-            localStorage.setItem('userCurrency', val);
-            document.querySelectorAll('.currency-display').forEach(el => el.innerText = currentCurrency);
-            document.getElementById('currency-input').value = currentCurrency;
-            calculateTotal();
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            updateCurrency(currentCurrency);
-            generateRecipes();
-            initCalculator();
-        });
-
-
-        // --- AI FEATURES LOGIC ---
-
-        // 1. Marketing AI
-        async function generateAICaption() {
-            const product = document.getElementById('mkt-product').value || 'Postre Delicioso';
-            const price = document.getElementById('mkt-price').value || '0';
-            const vibe = document.getElementById('mkt-vibe').value;
-            const currency = currentCurrency;
-
-            const loading = document.getElementById('ai-loading');
-            const output = document.getElementById('mkt-output');
-            
-            loading.classList.remove('hidden');
-            output.innerText = "";
-
-            const prompt = `Escribe un caption para Instagram/WhatsApp vendiendo el siguiente producto: "${product}". 
-            Precio: ${currency} ${price}.
-            Estilo/Vibe: ${vibe}.
-            Incluye emojis, saltos de línea y hashtags relevantes. Hazlo atractivo para clientes de repostería casera.`;
-
-            const system = "Eres un experto en marketing digital para pequeños negocios de comida. Escribes textos persuasivos, cortos y visualmente atractivos.";
-
-            const result = await callGemini(prompt, system);
-            
-            loading.classList.add('hidden');
-            output.innerText = result;
-            output.classList.remove('italic', 'text-gray-700');
-            output.classList.add('text-gray-900');
-        }
-
-        function generateStaticCaption() {
-            // Fallback for non-AI generation
-            const product = document.getElementById('mkt-product').value || '[Producto]';
-            const price = `${currentCurrency} ${document.getElementById('mkt-price').value || '0'}`;
-            const type = document.getElementById('mkt-vibe').value;
-            
-            let text = "";
-            if(type === 'urgencia') text = `🚨 ¡ÚLTIMAS UNIDADES! 🚨\n\nNo te quedes sin probar nuestro delicioso ${product}. Solo nos quedan unos pocos disponibles.\n\n👉 Precio: ${price}\n🛵 ¡Pide antes de que vuelen!`;
-            else if (type === 'antojo') text = `✨ El antojo perfecto sí existe ✨\n\nImagínate esto: Una tarde relax y nuestro ${product} en tu mano. Cremoso, delicioso y hecho con amor.\n\nDate el gusto por solo ${price}.`;
-            else text = `🔥 ¡OFERTA ESPECIAL! 🔥\n\nHoy tenemos ${product} a un precio increíble. La mejor calidad al mejor precio.\n\n💰 Lévatelo por: ${price}`;
-
-            const output = document.getElementById('mkt-output');
-            output.innerText = text;
-            output.classList.remove('italic', 'text-gray-700');
-            output.classList.add('text-gray-900');
-        }
-
-        // 2. Chef AI
-        async function askAIChef() {
-            const input = document.getElementById('chef-chat-input');
-            const question = input.value;
-            if (!question.trim()) return;
-
-            const responseBox = document.getElementById('chef-chat-response');
-            const loading = document.getElementById('chef-loading');
-            
-            loading.classList.remove('hidden');
-            responseBox.classList.add('hidden');
-
-            const prompt = `El usuario tiene una duda sobre la receta "${currentRecipeContext}". Pregunta: "${question}". Responde brevemente como un chef profesional y amable. Da soluciones prácticas.`;
-            
-            const answer = await callGemini(prompt, "Eres un Chef Pastelero experto ayudando a emprendedores principiantes.");
-            
-            loading.classList.add('hidden');
-            responseBox.innerHTML = `<strong>Tú:</strong> ${question}<br><br><strong>👨‍🍳 Chef IA:</strong> ${marked.parse(answer)}`;
-            responseBox.classList.remove('hidden');
-            input.value = "";
-        }
-
-
-        // --- CORE APP LOGIC (Recipies, Calc, etc) ---
-        // (Similar to previous version but integrated with new UI)
-
-        const categoryImages = {
-            'Cheesecake': 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80',
-            'Tres Leches': 'https://images.unsplash.com/photo-1563729768647-d3c1a7a4a2b1?auto=format&fit=crop&w=800&q=80',
-            'Carlota': 'https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=800&q=80',
-            'Mousse': 'https://images.unsplash.com/photo-1541783245831-57d6fb98f440?auto=format&fit=crop&w=800&q=80',
-            'Trufas': 'https://images.unsplash.com/photo-1599599810769-bcde5a823097?auto=format&fit=crop&w=800&q=80',
-            'Gelatina': 'https://images.unsplash.com/photo-1562688647-3b2d1804f5b7?auto=format&fit=crop&w=800&q=80',
-            'Especial': 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&fit=crop&w=800&q=80'
-        };
-
-        const flavorImages = {
-            'Oreo': 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80',
-            'Fresa': 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80',
-            'Limón': 'https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=800&q=80',
-            'Chocolate': 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80',
-            'Café': 'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&fit=crop&w=800&q=80',
-            'Frutos Rojos': 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80',
-            'Mango': 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=800&q=80',
-            'Maracuyá': 'https://images.unsplash.com/photo-1517427294546-5aa121638908?auto=format&fit=crop&w=800&q=80',
-        };
-
-        function getRecipeImage(category, flavor) {
-            if(flavorImages[flavor] && (category === 'Cheesecake' || category === 'Mousse' || flavor === 'Frutos Rojos')) {
-                return flavorImages[flavor];
-            }
-            return categoryImages[category] || categoryImages['Cheesecake'];
-        }
-
-        const baseRecipes = {
-            'Cheesecake': {
-                desc: 'Cremoso, sin horno y fácil de vender en vasitos.',
-                baseIngredients: ['Galletas molidas', 'Mantequilla', 'Queso crema', 'Leche condensada', 'Grenetina (opcional)'],
-                baseSteps: ['Mezcla galleta con mantequilla para la base.', 'Bate queso crema con leche condensada.', 'Añade el saborizante específico.', 'Sirve en vasitos y refrigera 4 horas.']
-            },
-            'Tres Leches': {
-                desc: 'El clásico favorito, muy húmedo y rentable.',
-                baseIngredients: ['Bizcocho vainilla', 'Leche evaporada', 'Leche condensada', 'Media crema', 'Chantilly'],
-                baseSteps: ['Corta el bizcocho en cubos.', 'Mezcla las tres leches con el saborizante.', 'Intercala capas de pan mojado y chantilly.', 'Decora al gusto.']
-            },
-            'Carlota': {
-                desc: 'Postre de galletas marías y crema de limón.',
-                baseIngredients: ['Galletas Marías', 'Leche evaporada', 'Leche condensada', 'Jugo de limón', 'Queso crema'],
-                baseSteps: ['Licúa las leches con el limón y el sabor extra.', 'Pon una base de galletas.', 'Cubre con mezcla.', 'Repite capas hasta llenar.']
-            },
-            'Mousse': {
-                desc: 'Textura aireada y ligera, ideal para verano.',
-                baseIngredients: ['Crema para batir', 'Azúcar glass', 'Claras de huevo (pasteurizadas) o Grenetina'],
-                baseSteps: ['Monta la crema a punto de nieve.', 'Incorpora el saborizante con movimientos envolventes.', 'Sirve y refrigera.']
-            },
-            'Trufas': {
-                desc: 'Pequeños bocados de ganache, margen muy alto.',
-                baseIngredients: ['Chocolate cobertura', 'Crema de leche', 'Mantequilla'],
-                baseSteps: ['Calienta la crema y viértela sobre el chocolate.', 'Mezcla hasta fundir (ganache).', 'Refrigera hasta endurecer.', 'Forma bolitas y revuelca en el topping.']
-            },
-            'Gelatina': {
-                desc: 'Gourmet, encapsulada o cremosa.',
-                baseIngredients: ['Agua/Leche', 'Grenetina', 'Azúcar'],
-                baseSteps: ['Hidrata la grenetina.', 'Calienta el líquido base y disuelve azúcar.', 'Añade sabor y grenetina.', 'Cuaja en moldes.']
-            }
-        };
-
-        const flavors = [
-            { name: 'Oreo', addIng: 'Galletas Oreo troceadas', addStep: 'Incorpora trozos de galleta a la mezcla.' },
-            { name: 'Fresa', addIng: 'Mermelada de fresa, Fresas frescas', addStep: 'Añade la mermelada a la mezcla y decora con fresa.' },
-            { name: 'Limón', addIng: 'Jugo de limón extra, Ralladura', addStep: 'Intensifica con ralladura fresca.' },
-            { name: 'Maracuyá', addIng: 'Pulpa de maracuyá', addStep: 'Usa pulpa concentrada para la mezcla y semillas para decorar.' },
-            { name: 'Chocolate', addIng: 'Cocoa en polvo, Chocolate derretido', addStep: 'Mezcla chocolate fundido tibio.' },
-            { name: 'Café', addIng: 'Café soluble disuelto', addStep: 'Disuelve café en un poco de agua caliente y añade.' },
-            { name: 'Dulce de Leche', addIng: 'Dulce de leche / Cajeta', addStep: 'Sustituye parte del azúcar por dulce de leche.' },
-            { name: 'Mango', addIng: 'Pulpa de mango', addStep: 'Licúa mango fresco con la mezcla base.' },
-            { name: 'Coco', addIng: 'Crema de coco, Coco rallado', addStep: 'Añade coco rallado para textura.' },
-            { name: 'Nutella', addIng: 'Crema de avellanas', addStep: 'Mezcla generosamente la crema de avellanas.' },
-            { name: 'Frutos Rojos', addIng: 'Mix de berries congelados', addStep: 'Haz una reducción de frutos rojos para vetear.' },
-            { name: 'Baileys', addIng: 'Crema irlandesa', addStep: 'Añade un chorrito de licor al final.' },
-        ];
-
-        let allRecipes = [];
-
-        function generateRecipes() {
-            let idCounter = 1;
-            for (const [baseName, baseData] of Object.entries(baseRecipes)) {
-                flavors.forEach(flavor => {
-                    const img = getRecipeImage(baseName, flavor.name);
-                    allRecipes.push({
-                        id: idCounter++,
-                        category: baseName,
-                        title: `${baseName} de ${flavor.name}`,
-                        flavor: flavor.name,
-                        tags: [baseName, flavor.name],
-                        desc: baseData.desc,
-                        ingredients: [...baseData.baseIngredients, flavor.addIng],
-                        steps: [...baseData.baseSteps, flavor.addStep],
-                        image: img
-                    });
-                });
-            }
-            
-            allRecipes.push({
-                id: idCounter++,
-                category: 'Especial',
-                title: 'Tiramisú Económico',
-                flavor: 'Café',
-                tags: ['Clásico', 'Especial'],
-                desc: 'La versión rentable del clásico italiano.',
-                ingredients: ['Queso crema', 'Crema para batir', 'Soletas/Vainillas', 'Café fuerte', 'Cocoa'],
-                steps: ['Bate queso con crema.', 'Moja soletas en café.', 'Arma capas.', 'Espolvorea cocoa.'],
-                image: categoryImages['Especial']
-            });
-
-            document.getElementById('recipe-count').innerText = allRecipes.length;
-            renderRecipes(allRecipes.slice(0, 12));
-        }
-
-        function renderRecipes(recipes) {
-            const grid = document.getElementById('recipe-grid');
-            grid.innerHTML = recipes.map(r => `
-                <div class="recipe-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden cursor-pointer flex flex-col h-full fade-in group" onclick="openRecipeModal(${r.id})">
-                    <div class="h-48 relative overflow-hidden">
-                        <img src="${r.image}" class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-110" alt="${r.title}">
-                        <div class="absolute inset-0 image-overlay opacity-50 group-hover:opacity-30 transition"></div>
-                        <span class="absolute top-2 right-2 bg-white/90 text-gray-800 text-xs px-2 py-1 rounded-full font-bold shadow-sm backdrop-blur-sm">
-                            <i class="fas fa-dollar-sign text-green-600"></i> Rentable
-                        </span>
-                    </div>
-                    <div class="p-4 flex flex-col flex-grow justify-between relative">
-                        <div class="absolute -top-4 left-4 bg-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                            ${r.category}
-                        </div>
-                        <div class="mt-2">
-                            <h3 class="font-bold text-lg leading-tight text-gray-900 mb-1">${r.title}</h3>
-                            <p class="text-xs text-gray-500 line-clamp-2">${r.desc}</p>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-gray-100 flex justify-between items-center">
-                            <span class="text-xs text-pink-600 font-bold hover:underline">Ver receta completa</span>
-                            <i class="fas fa-arrow-right text-pink-400 text-xs group-hover:translate-x-1 transition"></i>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-
-            const btn = document.getElementById('load-more-btn');
-            if(recipes.length < allRecipes.length && document.getElementById('search-input').value === '' && document.getElementById('category-filter').value === 'all') {
-                btn.classList.remove('hidden');
-            } else {
-                btn.classList.add('hidden');
-            }
-        }
-
-        function filterRecipes() {
-            const search = document.getElementById('search-input').value.toLowerCase();
-            const cat = document.getElementById('category-filter').value;
-            
-            const filtered = allRecipes.filter(r => {
-                const matchesSearch = r.title.toLowerCase().includes(search) || r.flavor.toLowerCase().includes(search);
-                const matchesCat = cat === 'all' || r.category === cat;
-                return matchesSearch && matchesCat;
-            });
-
-            if(search || cat !== 'all') {
-                renderRecipes(filtered);
-            } else {
-                renderRecipes(allRecipes.slice(0, 12));
-            }
-        }
-
-        function loadMoreRecipes() {
-            renderRecipes(allRecipes);
-            document.getElementById('load-more-btn').classList.add('hidden');
-        }
-
-        function openRecipeModal(id) {
-            const recipe = allRecipes.find(r => r.id === id);
-            if(!recipe) return;
-
-            currentRecipeContext = recipe.title; // Set context for AI Chef
-            
-            // Clear previous AI chat
-            document.getElementById('chef-chat-response').classList.add('hidden');
-            document.getElementById('chef-chat-input').value = "";
-
-            const modal = document.getElementById('recipe-modal');
-            const content = document.getElementById('modal-content');
-
-            content.innerHTML = `
-                <div class="relative h-64 sm:h-80">
-                    <img src="${recipe.image}" class="w-full h-full object-cover" alt="${recipe.title}">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end">
-                        <div class="p-6 text-white w-full">
-                            <span class="bg-pink-600 text-white text-xs font-bold px-2 py-1 rounded mb-2 inline-block">${recipe.category}</span>
-                            <h2 class="text-3xl sm:text-4xl font-brand-font drop-shadow-lg">${recipe.title}</h2>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="p-6 sm:p-8">
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="flex items-center text-pink-600 font-bold mb-4 border-b pb-2">
-                                <i class="fas fa-shopping-basket mr-2"></i> Ingredientes
-                            </h4>
-                            <ul class="space-y-3 text-gray-700 text-sm">
-                                ${recipe.ingredients.map(i => `<li class="flex items-start bg-gray-50 p-2 rounded"><i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i> ${i}</li>`).join('')}
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="flex items-center text-pink-600 font-bold mb-4 border-b pb-2">
-                                <i class="fas fa-list-ol mr-2"></i> Procedimiento
-                            </h4>
-                            <ol class="space-y-4 text-gray-700 text-sm list-decimal pl-4">
-                                ${recipe.steps.map(s => `<li>${s}</li>`).join('')}
-                            </ol>
-                        </div>
-                    </div>
-                    <div class="mt-8 p-4 bg-yellow-50 rounded-xl border border-yellow-200 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4">
-                        <div class="bg-yellow-100 p-3 rounded-full text-yellow-600"><i class="fas fa-lightbulb text-xl"></i></div>
-                        <div>
-                            <h5 class="font-bold text-yellow-800 text-sm">Tip de Venta</h5>
-                            <p class="text-sm text-yellow-800 italic mt-1">Este postre se vende mejor en paquetes de 2 o 4 unidades.</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-            modal.classList.remove('hidden');
-        }
-
-        function closeRecipeModal() {
-            document.getElementById('recipe-modal').classList.add('hidden');
-        }
-
-        function initCalculator() {
-            const savedData = localStorage.getItem('dessertCalcData');
-            if(savedData) {
-                const data = JSON.parse(savedData);
-                document.getElementById('ingredients-list').innerHTML = data.html;
-                document.getElementById('yield-units').value = data.yield;
-                document.getElementById('profit-margin').value = data.margin;
-                calculateTotal();
-            } else {
-                addIngredientRow('Leche', 2500);
-                addIngredientRow('Galletas', 4000);
-            }
-        }
-
-        function addIngredientRow(name = '', price = '') {
-            const container = document.getElementById('ingredients-list');
-            const div = document.createElement('div');
-            div.className = 'flex space-x-2 items-center ingredient-row fade-in';
-            div.innerHTML = `
-                <input type="text" value="${name}" placeholder="Ingrediente" class="flex-1 p-2 border rounded-lg text-sm bg-white focus:ring-2 focus:ring-pink-500 outline-none" oninput="calculateTotal()">
-                <div class="relative w-28">
-                    <span class="absolute left-2 top-2 text-gray-400 text-xs currency-display">${currentCurrency}</span>
-                    <input type="number" value="${price}" placeholder="0" class="w-full pl-8 p-2 border rounded-lg text-sm ingredient-cost focus:ring-2 focus:ring-pink-500 outline-none" oninput="calculateTotal()">
-                </div>
-                <button onclick="removeRow(this)" class="text-gray-300 hover:text-red-500 transition px-2"><i class="fas fa-times"></i></button>
-            `;
-            container.appendChild(div);
-            calculateTotal();
-        }
-
-        function removeRow(btn) {
-            btn.parentElement.remove();
-            calculateTotal();
-        }
-
-        function calculateTotal() {
-            const rows = document.querySelectorAll('.ingredient-row');
-            let totalCost = 0;
-            
-            rows.forEach(row => {
-                const price = parseFloat(row.querySelector('.ingredient-cost').value) || 0;
-                totalCost += price;
-                row.querySelector('.currency-display').innerText = currentCurrency;
-            });
-
-            const yieldUnits = parseFloat(document.getElementById('yield-units').value) || 1;
-            const margin = parseFloat(document.getElementById('profit-margin').value) || 0;
-
-            const unitCost = totalCost / yieldUnits;
-            const sellPrice = unitCost * (1 + (margin / 100));
-            const profit = sellPrice - unitCost;
-
-            document.getElementById('display-total-cost').innerText = `${currentCurrency} ${totalCost.toLocaleString('es-CO', {maximumFractionDigits: 2})}`;
-            document.getElementById('display-unit-cost').innerText = `${currentCurrency} ${unitCost.toLocaleString('es-CO', {maximumFractionDigits: 2})}`;
-            document.getElementById('display-sell-price').innerText = `${currentCurrency} ${sellPrice.toLocaleString('es-CO', {maximumFractionDigits: 2})}`;
-            document.getElementById('display-profit').innerText = `${currentCurrency} ${profit.toLocaleString('es-CO', {maximumFractionDigits: 2})}`;
-
-            localStorage.setItem('dessertCalcData', JSON.stringify({
-                html: document.getElementById('ingredients-list').innerHTML,
-                yield: yieldUnits,
-                margin: margin
-            }));
-        }
-
-        function clearCalculator() {
-            localStorage.removeItem('dessertCalcData');
-            document.getElementById('ingredients-list').innerHTML = '';
-            addIngredientRow();
-            calculateTotal();
-        }
-
-        function copyToClipboard(elementId) {
-            const text = document.getElementById(elementId).innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                alert('¡Texto copiado! Listo para pegar en Instagram/WhatsApp.');
-            });
-        }
-
-    </script>
-</body>
-</html>
+<div>
+<h4 class="font-serif text-xl font-bold mb-2">Compra sin Riesgos</h4>
+<p class="text-sm text-gray-300">Si sientes que esta guía no aporta valor a tu emprendimiento, te devolvemos el 100% de tu dinero. Sin preguntas.</p>
+</div>
+</div>
+<div class="text-center md:text-right">
+<h3 class="font-serif text-2xl font-bold mb-2">Dulce Emprendimiento</h3>
+<p class="text-sm text-gray-400">Empoderando mujeres desde la cocina.</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4">
+<p>© 2024 SweetBiz Academy. Todos los derechos reservados.</p>
+<div class="flex gap-4">
+<a class="hover:text-white transition-colors" href="#">Privacidad</a>
+<a class="hover:text-white transition-colors" href="#">Términos y Condiciones</a>
+<a class="hover:text-white transition-colors" href="#">Contacto</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
