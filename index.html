@@ -1,234 +1,338 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Postres Que Facturan | Emprende desde tu Cocina</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --cream: #fdf6f0;
-      --rose: #e9c4cc;
-      --gold: #d4b483;
-      --brown: #5e454b;
-      --text: #333;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, var(--cream) 0%, var(--rose) 100%);
-      color: var(--text);
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 20px;
-    }
-    header {
-      text-align: center;
-      padding: 60px 20px 40px;
-    }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.8rem;
-      color: var(--brown);
-      margin-bottom: 20px;
-      line-height: 1.2;
-    }
-    .subtitle {
-      font-size: 1.3rem;
-      color: #5a4a42;
-      max-width: 700px;
-      margin: 0 auto 40px;
-    }
-    .hero-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 30px;
-      justify-content: center;
-      margin: 40px 0;
-    }
-    .hero-image {
-      width: 100%;
-      max-width: 400px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-      aspect-ratio: 4/5;
-      background: #e0d5c9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #777;
-      font-style: italic;
-    }
-    .content-section {
-      background: white;
-      border-radius: 24px;
-      padding: 40px;
-      margin: 40px 0;
-      box-shadow: 0 8px 25px rgba(94, 69, 75, 0.08);
-    }
-    h2 {
-      font-family: 'Playfair Display', serif;
-      color: var(--brown);
-      margin-bottom: 20px;
-      font-size: 2.1rem;
-    }
-    ul {
-      padding-left: 20px;
-      margin: 20px 0;
-    }
-    li {
-      margin-bottom: 12px;
-    }
-    .price-box {
-      text-align: center;
-      padding: 25px;
-      background: var(--cream);
-      border-radius: 20px;
-      margin: 30px 0;
-    }
-    .old-price {
-      text-decoration: line-through;
-      color: #888;
-      font-size: 1.2rem;
-    }
-    .new-price {
-      font-size: 2.4rem;
-      font-weight: 700;
-      color: var(--brown);
-      margin: 15px 0;
-    }
-    .btn {
-      display: inline-block;
-      background: var(--brown);
-      color: white;
-      padding: 16px 48px;
-      font-size: 1.25rem;
-      font-weight: 600;
-      text-decoration: none;
-      border-radius: 50px;
-      margin: 20px 0;
-      box-shadow: 0 6px 20px rgba(94, 69, 75, 0.3);
-      transition: all 0.3s ease;
-      font-family: 'Poppins', sans-serif;
-    }
-    .btn:hover {
-      background: #4a363a;
-      transform: translateY(-3px);
-    }
-    .testimonials {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-      margin: 40px 0;
-    }
-    .testimonial {
-      background: white;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      font-style: italic;
-    }
-    .guarantee {
-      text-align: center;
-      padding: 25px;
-      background: #f0ebe6;
-      border-radius: 20px;
-      margin: 40px 0;
-      border-left: 4px solid var(--gold);
-    }
-    footer {
-      text-align: center;
-      padding: 30px;
-      color: #666;
-      font-size: 0.95rem;
-    }
-    @media (max-width: 768px) {
-      h1 { font-size: 2.2rem; }
-      .hero-grid { flex-direction: column; align-items: center; }
-      .btn { width: 90%; margin: 25px auto; display: block; }
-      .content-section { padding: 25px; }
-    }
-  </style>
+<html class="scroll-smooth" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Negocio de Postres - Guía para Mujeres Emprendedoras</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "base-cream": "#FFFDD0",
+                        "accent-gold": "#D4AF37",
+                        "cta-pink": "#F88379",
+                        "cta-pink-dark": "#E0655B",
+                        "text-main": "#4A3B32", // Deep warm brown
+                        "text-body": "#6D5E56",
+                        "surface": "#FFFFFF",
+                    },
+                    fontFamily: {
+                        "serif": ["Playfair Display", "serif"],
+                        "sans": ["Montserrat", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(212, 175, 55, 0.15)',
+                        'glow': '0 0 20px rgba(248, 131, 121, 0.4)'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slight': 'bounce 2s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'bg-pan': 'bg-pan 15s ease infinite',
+                    },
+                    keyframes: {
+                        float: {
+                          '0%, 100%': { transform: 'translateY(0)' },
+                          '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'bg-pan': {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .parallax-bg {
+            background-image: radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 20%),
+                              radial-gradient(circle at 80% 80%, rgba(248, 131, 121, 0.05) 0%, transparent 20%);
+            background-size: 50% 50%;
+            background-repeat: repeat;
+            animation: bg-pan 30s ease infinite alternate;
+        }
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
 </head>
-<body>
-  <div class="container">
-    <header>
-      <h1>Convierte tu pasión por los postres en un negocio que genera ingresos reales</h1>
-      <p class="subtitle">Guía práctica para mujeres emprendedoras que quieren vender desde casa, sin experiencia, sin equipo costoso y con resultados en menos de 72 horas.</p>
-      
-      <div class="hero-grid">
-        <!-- Imagen real de mujer con postre -->
-        <div class="hero-image" style="background: url('https://images.unsplash.com/photo-1513114442331-75574f0e859f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=750&q=80') center/cover no-repeat;"></div>
-        <!-- Imagen de postres deliciosos -->
-        <div class="hero-image" style="background: url('https://images.unsplash.com/photo-1551024417-d441e0a461d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=750&q=80') center/cover no-repeat;"></div>
-      </div>
-    </header>
+<body class="bg-base-cream font-sans text-text-main overflow-x-hidden antialiased parallax-bg relative">
+<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+<div class="floating-element top-[10%] left-[5%] animate-float" style="animation-delay: 0s;">
+<span class="material-symbols-outlined text-6xl text-accent-gold">cake</span>
+</div>
+<div class="floating-element top-[30%] right-[10%] animate-float" style="animation-delay: 1s;">
+<span class="material-symbols-outlined text-5xl text-cta-pink">cookie</span>
+</div>
+<div class="floating-element bottom-[20%] left-[15%] animate-float" style="animation-delay: 2s;">
+<span class="material-symbols-outlined text-6xl text-accent-gold">bakery_dining</span>
+</div>
+<div class="floating-element top-[60%] right-[5%] animate-float" style="animation-delay: 3s;">
+<span class="material-symbols-outlined text-5xl text-cta-pink">icecream</span>
+</div>
+<div class="floating-element top-[15%] right-[25%] animate-float" style="animation-delay: 4s;">
+<span class="material-symbols-outlined text-4xl text-accent-gold">egg</span>
+</div>
+</div>
+<div class="sticky top-0 z-50 bg-text-main text-white py-2 px-4 shadow-md">
+<div class="max-w-7xl mx-auto flex justify-center items-center gap-2 text-xs md:text-sm font-medium text-center">
+<span>🔥 Oferta Flash de Lanzamiento: 50% de Descuento solo por hoy</span>
+</div>
+</div>
+<header class="relative w-full py-16 md:py-24 overflow-hidden bg-gradient-to-b from-white/90 to-base-cream/90 backdrop-blur-sm z-10">
+<div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-accent-gold/10 rounded-full blur-3xl"></div>
+<div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-cta-pink/10 rounded-full blur-3xl"></div>
+<div class="px-4 md:px-10 mx-auto max-w-7xl relative z-10">
+<div class="flex flex-col md:flex-row items-center gap-12 lg:gap-16">
+<div class="flex-1 text-center md:text-left space-y-6">
+<h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-text-main">
+                        Descubre Cómo Construir un Ingreso Extra Dulce y Seguro sin Salir de Casa (Ni Dejar Solos a tus Hijos) 🏡💰
+                    </h1>
+<p class="text-text-body text-lg md:text-xl font-medium leading-relaxed max-w-xl mx-auto md:mx-0">
+                        Deja de preocuparte por la experiencia. Con nuestra guía, incluso si nunca has vendido un postre, tendrás tu negocio operando y <strong class="text-cta-pink-dark">generando ingresos en menos de 7 días</strong>, ¡garantizado! 🎉
+                    </p>
+<div class="pt-6 flex flex-col items-center md:items-start gap-3">
+<a class="bg-cta-pink hover:bg-cta-pink-dark text-white text-lg md:text-xl font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-glow transform hover:-translate-y-1 transition-all duration-300 w-full md:w-auto text-center uppercase" href="https://pay.hotmart.com/K103388134D">
+                            ¡Mi Futuro Dulce Empieza Hoy! 🚀
+                        </a>
+<p class="text-xs text-text-body/80 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-green-600">lock</span>
+                            Acceso inmediato al correo + Garantía de Satisfacción
+                        </p>
+</div>
+</div>
+<div class="flex-1 w-full max-w-[500px] relative flex justify-center">
+<div class="relative w-full aspect-[4/5]">
+<div class="absolute inset-0 z-0">
+<img alt="Mujer latina decorando pastel casero con pasión" class="w-full h-full object-cover rounded-2xl shadow-2xl transform rotate-3 border-4 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDroSaWUavroiQFAH9TgjODlqWWhhd-YgCUxt1EMANXMSv4U6fUHbLPXOcy7eK3qEhYG9y-P2JEj5BALihNp-HCdKOXvCQ_dNfoNswfRSZRzUFkC0HFpmJZ_B9mk8Lv4NwcUSl7PJlh6NfAfjfSownnR8Ar3iMqa0fJk4Z8JM73Lq9RGW44vMr0Q2kewztzroVO5t5yKkX07neuxQsq2ONeDDhPBc3xuwMmJE3QlAYUVXi5PFkqxNDma_68mDQhqJhG2Jbopm4w2YI"/>
+</div>
+<div class="absolute -bottom-6 -right-6 w-24 h-24 bg-white rounded-full shadow-lg p-2 z-10 hidden md:block animate-bounce-slight">
+<img alt="Detail of handmade cupcake" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY4ujpO35L0-Pgy0loBcGcR7MmrH2Ssu7gQgsQvAV2IrSeKspuHl0T25QEOPs4n6yaRUK2Z4GlFyPjJIx5uW7k8k404DsEJ607cKg-Uj9LO-OHiUD71ybMLa7wvBeikKjmkxNbPWhBHtKBwKCK6DF6PdR9ZZ9TttMpBaOJpCAeIxHLgqP_s8yOsbgx4f1dRoVoVLeEUEBrpzWx8FVcyzMUHNWnjlPzEtL-otMTiFWRCZ4LVSudq_ey8DOHyAvF72IAsBfDoatS94w"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<section class="py-20 bg-white/80 backdrop-blur-sm relative z-10">
+<div class="max-w-7xl mx-auto px-4 md:px-10">
+<div class="text-center mb-12">
+<h2 class="font-serif text-3xl md:text-4xl font-bold text-text-main">¿Te suena familiar? El camino al éxito dulce no tiene por qué ser amargo... 💔</h2>
+<div class="w-24 h-1 bg-accent-gold mx-auto mt-4 rounded-full"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-base-cream/50 p-8 rounded-2xl border border-accent-gold/20 text-center hover:shadow-soft transition-all duration-300 backdrop-blur-sm">
+<div class="w-16 h-16 bg-cta-pink/10 rounded-full flex items-center justify-center mx-auto mb-6 text-cta-pink">
+<span class="material-symbols-outlined text-3xl">sentiment_dissatisfied</span>
+</div>
+<p class="text-lg font-medium text-text-main">Te acuestas pensando en las cuentas y te despiertas sintiendo que tu esfuerzo no es suficiente. ¿Cansada de la <strong>angustia de depender</strong> o de que el dinero apenas alcance a fin de mes? 😩</p>
+</div>
+<div class="bg-base-cream/50 p-8 rounded-2xl border border-accent-gold/20 text-center hover:shadow-soft transition-all duration-300 backdrop-blur-sm">
+<div class="w-16 h-16 bg-cta-pink/10 rounded-full flex items-center justify-center mx-auto mb-6 text-cta-pink">
+<span class="material-symbols-outlined text-3xl">psychology_alt</span>
+</div>
+<p class="text-lg font-medium text-text-main">Tienes esa idea brillante, pero una voz interna te susurra: '¿Y si fracaso? ¿Qué dirán de mí?'. El <strong>miedo al juicio</strong> y a que tus sueños se queden en el aire te paraliza. 😱</p>
+</div>
+<div class="bg-base-cream/50 p-8 rounded-2xl border border-accent-gold/20 text-center hover:shadow-soft transition-all duration-300 backdrop-blur-sm">
+<div class="w-16 h-16 bg-cta-pink/10 rounded-full flex items-center justify-center mx-auto mb-6 text-cta-pink">
+<span class="material-symbols-outlined text-3xl">savings</span>
+</div>
+<p class="text-lg font-medium text-text-main">¿Crees que necesitas un horno industrial, una vitrina y una montaña de capital para empezar? Sientes que tus <strong>recursos son limitados</strong> y que no hay forma de competir. 💸</p>
+</div>
+</div>
+<div class="mt-16 text-center">
+<p class="font-serif text-2xl md:text-3xl text-accent-gold font-bold italic">
+                    "No necesitas una pastelería industrial. Solo necesitas una estrategia... ¡y la receta perfecta para el éxito!"
+                </p>
+</div>
+</div>
+</section>
+<section class="py-20 bg-base-cream/60 relative overflow-hidden z-10 backdrop-blur-sm">
+<div class="absolute -left-20 top-20 w-64 h-64 bg-white/40 rounded-full blur-2xl"></div>
+<div class="max-w-7xl mx-auto px-4 md:px-10 relative z-10">
+<div class="flex flex-col md:flex-row items-center gap-12">
+<div class="flex-1 order-2 md:order-1">
+<div class="grid grid-cols-2 gap-4">
+<img alt="Mujer horneando en cocina casera" class="rounded-xl shadow-md w-full h-40 object-cover transform translate-y-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCXxXUosr19ZrPJnQ01ScNWsZ0Ssg34xN1zTTzHk1AO0vtj4jJRgO6lONc4l6pqk9pVMve0fdJyetjWgiIUwidmzKbpa-NfdePgOYc5AJJfUljp7SUZczEhBMc55R_OWoEvzKl7_C1O7GP_vXId-1xDTh2d8q8EEvetg2wAMq4-RMLubvxpUYhlbRdb_8_5QcYRF0WvlYt4xBO0IteOcytPIc_aoAXo2JAZPXqUehfmUfdKlTH6k4_RWEgOxLLhZlP0dOV71REkSQ"/>
+<img alt="Postres deliciosos en mesa" class="rounded-xl shadow-md w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrfOKaFPYYwcBhw72leF5paBRWML8oGaN5lbHRGVDQ9Ohuk_5bQY9cbiJmdCN-16_7HaLb7kTfl6cTU6ro2tJNdJyDKuBVJtf8HHhJ2emgcJ2PCw8H_MHS0OaMzMiKgTXgmodoKfBtS41xgl3Re2lhDECzF6BYDL1hLlN34ffTkPQeHgS2cKU_mmrIrgeSRur9afai2gPHgP3PJfdMJ_WBHvf2VTq1zwABjh9hB35RvBwjsr5WDyPjq8hlfUYhp0RHcMZmP0iOQAY"/>
+<img alt="Ingredientes de repostería frescos" class="rounded-xl shadow-md w-full h-40 object-cover transform translate-y-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4aeE5vIH1ro-eN3cy7RTOdVCVgrLqJi32AJtp2vLl6umr01LgfovXaG36UqLFoi5JqceutxfwcZPbuac9AKNFOF7h_SO1szGgUNyQvAHEOMsJ725tl6RgaNAXLf2mWdPuadsISKlqAERDSLl66n3o_kQpbo246Ebifc3hHj01RHqVsI65xc90q5WADRn8hcvE3EjpeCzr4PqS7jhMvDAzbW1WNzNGqFdI_x9Bx8BbTlJClvmvwpiXShmjmTP9ykNPrLIjuk-8MYo"/>
+<img alt="Empaque de postres artesanal" class="rounded-xl shadow-md w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4gzKQNV0c-J_t3fz6bLSefdUd9lpcYxlxh0NOdxFiuBpyr2UQ4pnHRgrWNjqzIQOdlAGFkTNB1sKgH420BL8MQeI9zwBhY1mv4RTEq3T2szIJ4Was2zJtrAwiCXvUoz4h9vBgSd1hE3IFAjN-dKTK99tadyIs_TgNLhlhAhYNa2gR7wQ0cbfnzUM3QO03FBgzf-SYR_AWSQS4XygWPVwImZQxa87zNiQUespcmq46k4hX5Ob_EHskMehcxJ8sMCZ3JP03je2xEbw"/>
+</div>
+</div>
+<div class="flex-1 order-1 md:order-2 space-y-8">
+<h2 class="font-serif text-3xl md:text-4xl font-bold text-text-main">
+                        El Método Infalible que Transforma Tu Pasión en GANANCIAS Reales 🌟
+                    </h2>
+<div class="space-y-6">
+<div class="flex gap-4 items-start">
+<div class="bg-white p-2 rounded-lg shadow-sm text-accent-gold">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<div>
+<h3 class="font-bold text-lg text-text-main">Recetas Rentables</h3>
+<p class="text-sm text-text-body">El <strong>secreto de las recetas mágicas</strong> que tus clientes amarán y que te dejarán el mayor margen de ganancia. ¡Deja de regalar tu trabajo! 🍰</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="bg-white p-2 rounded-lg shadow-sm text-accent-gold">
+<span class="material-symbols-outlined">photo_camera</span>
+</div>
+<div>
+<h3 class="font-bold text-lg text-text-main">Fotografía con Celular</h3>
+<p class="text-sm text-text-body">El <strong>truco para tomar fotos con tu celular</strong> que hacen que los clientes se les haga agua la boca y compren sin pensarlo dos veces. 📸🤤</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="bg-white p-2 rounded-lg shadow-sm text-accent-gold">
+<span class="material-symbols-outlined">chat</span>
+</div>
+<div>
+<h3 class="font-bold text-lg text-text-main">Ventas por WhatsApp</h3>
+<p class="text-sm text-text-body">Descubre <strong>cómo llenar tu agenda de pedidos</strong> con estrategias sencillas por WhatsApp e Instagram, sin invertir un solo centavo en publicidad. 📱💬</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="bg-white p-2 rounded-lg shadow-sm text-accent-gold">
+<span class="material-symbols-outlined">favorite</span>
+</div>
+<div>
+<h3 class="font-bold text-lg text-text-main">Empaques que Enamoran</h3>
+<p class="text-sm text-text-body">Aprende a crear <strong>empaques irresistibles</strong> que no solo protegen tus postres, sino que los convierten en un regalo inolvidable. ¡El 'efecto WOW' garantizado! 🎁</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 bg-white/90 backdrop-blur-sm relative z-10" id="oferta">
+<div class="max-w-4xl mx-auto px-4 md:px-10">
+<h2 class="font-serif text-3xl md:text-4xl font-bold text-text-main text-center mb-10">¡Hoy es tu Día! La Oferta que Te Impulsará al Éxito sin Riesgos 🚀</h2>
+<div class="bg-white rounded-3xl shadow-2xl border-2 border-accent-gold overflow-hidden">
+<div class="bg-accent-gold py-4 text-center">
+<p class="text-white font-bold tracking-widest uppercase">Oferta Exclusiva</p>
+</div>
+<div class="p-8 md:p-12">
+<ul class="space-y-4 mb-8">
+<li class="flex items-start md:items-center justify-between border-b border-gray-100 pb-4 gap-4">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-green-500 mt-1">check_circle</span>
+<span class="font-medium text-text-main text-left">✅ <strong>Guía Maestra "Negocio de Postres Exitoso":</strong> Tu manual completo para dominar cada paso.</span>
+</div>
+<span class="text-gray-400 font-semibold text-sm whitespace-nowrap hidden md:block">(Valor Real: <strong>$47 USD</strong>)</span>
+</li>
+<li class="flex items-start md:items-center justify-between border-b border-gray-100 pb-4 gap-4">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-green-500 mt-1">check_circle</span>
+<span class="font-medium text-text-main text-left">✅ <strong>BONO SECRETO #1: "Mapa de Proveedores Diamante":</strong> ¡No más búsquedas! La lista exclusiva de los mejores proveedores con precios de mayorista que nadie más conoce.</span>
+</div>
+<span class="text-gray-400 font-semibold text-sm whitespace-nowrap hidden md:block">(Valor Real: <strong>$15 USD</strong>)</span>
+</li>
+<li class="flex items-start md:items-center justify-between border-b border-gray-100 pb-4 gap-4">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-green-500 mt-1">check_circle</span>
+<span class="font-medium text-text-main text-left">✅ <strong>BONO SECRETO #2: "Plantilla Instagram ¡Vende Ya!":</strong> Diseños listos para usar que harán que tu perfil explote en ventas y te conecte con tus primeros clientes.</span>
+</div>
+<span class="text-gray-400 font-semibold text-sm whitespace-nowrap hidden md:block">(Valor Real: <strong>$10 USD</strong>)</span>
+</li>
+</ul>
+<div class="text-center space-y-4 mb-8">
+<p class="text-gray-400 text-lg">❌ Precio Normal de todo este arsenal: <span class="line-through decoration-red-500 decoration-2">~~$72 USD~~</span></p>
+<div class="flex flex-col items-center justify-center gap-2">
+<span class="text-3xl">🔥</span>
+<p class="text-3xl md:text-5xl font-serif font-bold text-text-main">TU PRECIO HOY: <span class="text-cta-pink">¡SOLO $9.99 USD!</span></p>
+<p class="text-sm font-semibold text-accent-gold uppercase tracking-wide">(Por Apoyo a Mujeres Emprendedoras)</p>
+</div>
+</div>
+<div class="text-center">
+<a class="inline-block bg-cta-pink hover:bg-cta-pink-dark text-white text-xl font-bold py-4 px-12 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 w-full md:w-auto animate-pulse-slow uppercase" href="https://pay.hotmart.com/K103388134D">
+                            ¡Mi Futuro Dulce Empieza Hoy! 🚀
+                        </a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 bg-base-cream/50 backdrop-blur-sm relative z-10">
+<div class="max-w-7xl mx-auto px-4 md:px-10">
+<h2 class="font-serif text-3xl md:text-4xl font-bold text-text-main text-center mb-12">Historias Reales de Mujeres como Tú</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBRxKEca8KUSZNFLcQL_dKzC78XHErReBPUtDNcSe8iJnDm_rk4Goy_wpOztXuQEmJUNNZ98T55TlMHzug1NJ6f9e3Y3MkVJMyP0_BinXtB5l9qN_8d-OYIoIQDh9YrhNUGPgTKq80cTJe8IBtLpsqcaQAcdgTVcYNW3xBArmkc_rieXVzBTuSZEDOYV1B496jSBSNIMfGjswT1C8AJXbCeszfdWKH1qL7GjHsXBzFOcIQDNCmQaXbAGAPnP9Icdz8RvIAk5DfM7lI');"></div>
+<div>
+<p class="font-bold text-text-main">Carolina M.</p>
+<div class="flex text-accent-gold text-sm">
+<span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span>
+</div>
+</div>
+</div>
+<p class="text-text-body text-sm italic">"Seguí la guía al pie de la letra y gané mis primeros $100 la primera semana vendiendo brownies. ¡Nunca creí que fuera tan fácil!"</p>
+</div>
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCcOBzxRu7fvk1N6ZrEbR0a1a2k2MohmQe1lQnhdeySkPqjyhpZwUKEhBrpk12KFMVO1sJ7hKOr3Il0YY-PkpCKUhhhTPU6EVboXmITHnKndv0h7yePEue9YhKigxHqFIUQFE9mqt_3Znjz0NIVpl47DXbQzZyP2Ykkg2e4TiR4OwXQagQWr3fGJaP3f0n1dKb_umdxbTjjTm-LLLdanaafBhgpAugimCc1yJvFFQm-wZIB6mGI1_dLhQK-XuIHwRlxDj_ABNXKORw');"></div>
+<div>
+<p class="font-bold text-text-main">Valeria S.</p>
+<div class="flex text-accent-gold text-sm">
+<span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span>
+</div>
+</div>
+</div>
+<p class="text-text-body text-sm italic">"La plantilla de costos me salvó. Antes perdía dinero sin saberlo. Ahora tengo un margen de ganancia real y puedo reinvertir."</p>
+</div>
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6aS4QLrvIi8FzqrQmR09HzgR6dxT-l1Rq0tCEKeYHaizlHu0JH7tJ8q7yWPqOMyD6HsWekkUiKgv2f1OMGc14kox8r6kugjs1FrEyP3PBTSRZtWHl2vLUDj8NaGKqGS_8Jg93BOnqhwbIDmU-FmO1LJj6_FtQVbkPRxOG3yCUz6IQrubvqsdDAFw0pZlCEGKP_e_K2pF1gpxlWgKYByMpxM1_EiL2Ul697prnco2ku-z3oJLNoa0n9pYOMShycoA8GMIEtUpH9_Q');"></div>
+<div>
+<p class="font-bold text-text-main">Andrea R.</p>
+<div class="flex text-accent-gold text-sm">
+<span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span>
+</div>
+</div>
+</div>
+<p class="text-text-body text-sm italic">"Empecé en mi cocina pequeña y ahora surto a dos cafeterías locales. Esta guía me dio la mentalidad correcta."</p>
+</div>
+</div>
+</div>
+</section>
+<footer class="bg-text-main text-white py-16 relative z-10">
+<div class="max-w-7xl mx-auto px-4 md:px-10">
+<div class="flex flex-col md:flex-row justify-between items-center gap-10 mb-12 border-b border-white/10 pb-12">
+<div class="flex items-center gap-6 max-w-md">
+<div class="w-24 h-24 flex-shrink-0 bg-accent-gold rounded-full flex items-center justify-center text-text-main font-bold text-center text-xs p-2 border-4 border-white/20">
+                        7 DÍAS<br/>GARANTÍA<br/>DEVOLUCIÓN
+                    </div>
+<div>
+<h4 class="font-serif text-xl font-bold mb-2">Tu Éxito es Nuestra Única Opción: ¡Garantía Total Cero Riesgos! ✅</h4>
+<p class="text-sm text-gray-300 leading-relaxed">
+                            Estamos tan seguras de que esta guía transformará tu vida que la presión está sobre nosotras. Si en <strong>7 días</strong> no sientes que tienes todas las herramientas para empezar a ganar dinero con tus postres, o simplemente no es para ti, te <strong>devolvemos el 100% de tu dinero</strong>. Sin preguntas, sin excusas. ¡Es así de simple! Tu inversión está <strong>completamente protegida</strong>. Pruébala sin preocuparte por nada. 🛡️
+                        </p>
+</div>
+</div>
+<div class="text-center md:text-right">
+<h3 class="font-serif text-2xl font-bold mb-2">Dulce Emprendimiento</h3>
+<p class="text-sm text-gray-400">Empoderando mujeres desde la cocina.</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4">
+<p>© 2024 SweetBiz Academy. Todos los derechos reservados.</p>
+<div class="flex gap-4">
+<a class="hover:text-white transition-colors" href="#">Privacidad</a>
+<a class="hover:text-white transition-colors" href="#">Términos y Condiciones</a>
+<a class="hover:text-white transition-colors" href="#">Contacto</a>
+</div>
+</div>
+</div>
+</footer>
 
-    <div class="content-section">
-      <h2>¿Te suena esto?</h2>
-      <ul>
-        <li>“Quiero ganar dinero, pero no sé por dónde empezar…”</li>
-        <li>“Hago postres ricos, pero no sé cómo venderlos sin sentirme incómoda…”</li>
-        <li>“Tengo miedo de cobrar y que me digan que ‘está caro’…”</li>
-        <li>“No tengo horno industrial ni miles de seguidores…”</li>
-      </ul>
-      <p>Esta guía <strong>no es un recetario más</strong>. Es tu <strong>plan de acción real</strong> para emprender desde tu cocina con lo que ya tienes.</p>
-    </div>
-
-    <div class="content-section">
-      <h2>✨ Lo que obtienes al comprar hoy:</h2>
-      <ul>
-        <li><strong>14 recetas rentables</strong> (brownies, tres leches, postres en vaso, flan, cheesecake sin horno…)</li>
-        <li><strong>Paso a paso detallado</strong> con ingredientes accesibles y tiempos reales</li>
-        <li><strong>Fotografía con tu celular</strong> que provoca antojo y genera pedidos</li>
-        <li><strong>Frases exactas para WhatsApp</strong> que cierran ventas sin sonar “vendedora”</li>
-        <li><strong>Plantilla de costos</strong> para ganar sin perder dinero</li>
-        <li><strong>Estrategias para clientes recurrentes</strong> y ventas diarias</li>
-      </ul>
-    </div>
-
-    <div class="price-box">
-      <p>Precio normal: <span class="old-price">$72 USD</span></p>
-      <p class="new-price">$9.99 USD</p>
-      <p>Acceso inmediato + Garantía de 7 días</p>
-      <a href="https://pay.hotmart.com/K103388134D" target="_blank" class="btn">👉 ¡QUIERO MI GUÍA AHORA! 👈</a>
-    </div>
-
-    <div class="content-section">
-      <h2>💬 Historias reales de mujeres como tú</h2>
-      <div class="testimonials">
-        <div class="testimonial">
-          “Seguí la guía al pie de la letra y gané mis primeros $100 la primera semana vendiendo brownies. ¡Nunca creí que fuera tan fácil!”<br><strong>— Carolina M.</strong>
-        </div>
-        <div class="testimonial">
-          “La plantilla de costos me salvó. Antes perdía dinero sin saberlo. Ahora tengo margen real.”<br><strong>— Valeria S.</strong>
-        </div>
-        <div class="testimonial">
-          “Empecé en mi cocina pequeña y ahora surto a dos cafeterías locales.”<br><strong>— Andrea R.</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="guarantee">
-      <p>🔒 <strong>Garantía de 7 días:</strong> Si en una semana no has preparado al menos 1 postre vendible, te devolvemos tu dinero. Sin preguntas.</p>
-    </div>
-
-    <div style="text-align: center; margin: 40px 0;">
-      <a href="https://pay.hotmart.com/K103388134D" target="_blank" class="btn">Sí, quiero mis primeros ingresos con postres 💕</a>
-    </div>
-
-    <footer>
-      <p>© 2025 Adrian Urrutia | Todos los derechos reservados<br>
-      Esta guía es 100% original y creada para mujeres emprendedoras reales.</p>
-    </footer>
-  </div>
-</body>
-</html>
+</body></html>
