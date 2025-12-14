@@ -17,7 +17,9 @@
                         "accent-gold": "#D4AF37",
                         "cta-pink": "#F88379",
                         "cta-pink-dark": "#E0655B",
-                        "text-main": "#4A3B32", // Deep warm brown
+                        "cta-green": "#00d632", // Vibrant green requested
+                        "cta-green-dark": "#00a827",
+                        "text-main": "#4A3B32", 
                         "text-body": "#6D5E56",
                         "surface": "#FFFFFF",
                     },
@@ -27,18 +29,25 @@
                     },
                     boxShadow: {
                         'soft': '0 10px 40px -10px rgba(212, 175, 55, 0.15)',
-                        'glow': '0 0 20px rgba(248, 131, 121, 0.4)'
+                        'glow': '0 0 20px rgba(248, 131, 121, 0.4)',
+                        'green-glow': '0 0 35px rgba(0, 214, 50, 0.7)'
                     },
                     animation: {
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'bounce-slight': 'bounce 2s infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                        'bg-pan': 'bg-pan 15s ease infinite',
+                        'float': 'float 8s ease-in-out infinite',
+                        'float-reverse': 'floatReverse 9s ease-in-out infinite',
+                        'bg-pan': 'bg-pan 20s ease infinite',
+                        'spin-slow': 'spin 15s linear infinite',
                     },
                     keyframes: {
                         float: {
-                          '0%, 100%': { transform: 'translateY(0)' },
-                          '50%': { transform: 'translateY(-20px)' },
+                          '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+                          '50%': { transform: 'translateY(-35px) rotate(8deg)' },
+                        },
+                        floatReverse: {
+                          '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+                          '50%': { transform: 'translateY(35px) rotate(-8deg)' },
                         },
                         'bg-pan': {
                             '0%, 100%': { backgroundPosition: '0% 50%' },
@@ -49,38 +58,50 @@
             },
         }
     </script>
-<style type="text/tailwindcss">
-        .parallax-bg {
-            background-image: radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 20%),
-                              radial-gradient(circle at 80% 80%, rgba(248, 131, 121, 0.05) 0%, transparent 20%);
-            background-size: 50% 50%;
-            background-repeat: repeat;
-            animation: bg-pan 30s ease infinite alternate;
-        }
-        .floating-element {
-            position: absolute;
-            opacity: 0.1;
-            z-index: 0;
-            pointer-events: none;
-        }
-    </style>
+<style type="text/tailwindcss">.parallax-bg {
+    background-image: radial-gradient(circle at 15% 15%, rgba(248, 131, 121, 0.12) 0%, transparent 25%), radial-gradient(circle at 85% 85%, rgba(212, 175, 55, 0.12) 0%, transparent 25%), radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 253, 208, 0.6) 100%);
+    background-size: 100% 100%
+    }
+.pattern-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBj0p_E_eBYVV6Mwkuuf9TdwG6Iop6gcRg7IVYqTG-5sPLCE-uP8Nwu4ZXBPor00bMmOho_LpOF-UmzD9tYfRNWb7vLNEBq1QB6INzyDPRcDC0Wa0sH-6qPDcNuWJ4NuagLjp_y-u4wtn5NzTtT-P4dTMKsz_lXpwIlf-TAAajOHsyHimF803L7JutaobA5YzdCQNII4HUkYn35aJNjQJxklYBRLiBpmy2lQlwhtSF83lpulPNDM9P9UQKSkfxG-iczuV1_2DwoqFc);
+    opacity: 0.6
+    }
+.floating-element {
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.08))
+    }</style>
 </head>
 <body class="bg-base-cream font-sans text-text-main overflow-x-hidden antialiased parallax-bg relative">
-<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-<div class="floating-element top-[10%] left-[5%] animate-float" style="animation-delay: 0s;">
-<span class="material-symbols-outlined text-6xl text-accent-gold">cake</span>
+<div class="fixed inset-0 z-0 pointer-events-none pattern-overlay"></div>
+<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden select-none">
+<div class="floating-element top-[5%] -left-[2%] animate-float opacity-30 transform rotate-12" style="animation-delay: 0s;">
+<span class="material-symbols-outlined text-[9rem] text-accent-gold">cake</span>
 </div>
-<div class="floating-element top-[30%] right-[10%] animate-float" style="animation-delay: 1s;">
-<span class="material-symbols-outlined text-5xl text-cta-pink">cookie</span>
+<div class="floating-element top-[35%] left-[5%] animate-float-reverse opacity-25" style="animation-delay: 1.5s;">
+<span class="material-symbols-outlined text-[7rem] text-cta-pink">cookie</span>
 </div>
-<div class="floating-element bottom-[20%] left-[15%] animate-float" style="animation-delay: 2s;">
-<span class="material-symbols-outlined text-6xl text-accent-gold">bakery_dining</span>
+<div class="floating-element bottom-[15%] left-[2%] animate-float opacity-30" style="animation-delay: 2.5s;">
+<span class="material-symbols-outlined text-[8rem] text-accent-gold">bakery_dining</span>
 </div>
-<div class="floating-element top-[60%] right-[5%] animate-float" style="animation-delay: 3s;">
-<span class="material-symbols-outlined text-5xl text-cta-pink">icecream</span>
+<div class="floating-element top-[10%] -right-[3%] animate-float-reverse opacity-30 transform -rotate-12" style="animation-delay: 0.5s;">
+<span class="material-symbols-outlined text-[9rem] text-cta-pink">icecream</span>
 </div>
-<div class="floating-element top-[15%] right-[25%] animate-float" style="animation-delay: 4s;">
-<span class="material-symbols-outlined text-4xl text-accent-gold">egg</span>
+<div class="floating-element top-[45%] right-[8%] animate-float opacity-25" style="animation-delay: 2s;">
+<span class="material-symbols-outlined text-[6rem] text-accent-gold">egg</span>
+</div>
+<div class="floating-element bottom-[25%] -right-[2%] animate-float-reverse opacity-30" style="animation-delay: 3.5s;">
+<span class="material-symbols-outlined text-[8rem] text-cta-pink">kitchen</span>
+</div>
+<div class="floating-element top-[20%] left-[20%] animate-pulse-slow opacity-20">
+<span class="material-symbols-outlined text-5xl text-text-main">favorite</span>
+</div>
+<div class="floating-element top-[60%] right-[30%] animate-pulse-slow opacity-20" style="animation-delay: 1s;">
+<span class="material-symbols-outlined text-6xl text-accent-gold">star</span>
+</div>
+<div class="floating-element bottom-[10%] left-[40%] animate-pulse-slow opacity-20" style="animation-delay: 2s;">
+<span class="material-symbols-outlined text-7xl text-cta-pink">local_cafe</span>
 </div>
 </div>
 <div class="sticky top-0 z-50 bg-text-main text-white py-2 px-4 shadow-md">
@@ -88,20 +109,20 @@
 <span>🔥 Oferta Flash de Lanzamiento: 50% de Descuento solo por hoy</span>
 </div>
 </div>
-<header class="relative w-full py-16 md:py-24 overflow-hidden bg-gradient-to-b from-white/90 to-base-cream/90 backdrop-blur-sm z-10">
-<div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-accent-gold/10 rounded-full blur-3xl"></div>
-<div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-cta-pink/10 rounded-full blur-3xl"></div>
+<header class="relative w-full py-16 md:py-24 overflow-hidden bg-gradient-to-b from-white/80 to-base-cream/80 backdrop-blur-md z-10 border-b border-white/40">
+<div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-accent-gold/20 rounded-full blur-[80px] animate-pulse-slow"></div>
+<div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-cta-pink/20 rounded-full blur-[80px] animate-pulse-slow" style="animation-delay: 1.5s"></div>
 <div class="px-4 md:px-10 mx-auto max-w-7xl relative z-10">
 <div class="flex flex-col md:flex-row items-center gap-12 lg:gap-16">
 <div class="flex-1 text-center md:text-left space-y-6">
-<h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-text-main">
+<h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-text-main drop-shadow-sm">
                         Descubre Cómo Construir un Ingreso Extra Dulce y Seguro sin Salir de Casa (Ni Dejar Solos a tus Hijos) 🏡💰
                     </h1>
 <p class="text-text-body text-lg md:text-xl font-medium leading-relaxed max-w-xl mx-auto md:mx-0">
                         Deja de preocuparte por la experiencia. Con nuestra guía, incluso si nunca has vendido un postre, tendrás tu negocio operando y <strong class="text-cta-pink-dark">generando ingresos en menos de 7 días</strong>, ¡garantizado! 🎉
                     </p>
 <div class="pt-6 flex flex-col items-center md:items-start gap-3">
-<a class="bg-cta-pink hover:bg-cta-pink-dark text-white text-lg md:text-xl font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-glow transform hover:-translate-y-1 transition-all duration-300 w-full md:w-auto text-center uppercase" href="https://pay.hotmart.com/K103388134D">
+<a class="bg-cta-green hover:bg-cta-green-dark text-white text-lg md:text-xl font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-green-glow transform hover:-translate-y-1 transition-all duration-300 w-full md:w-auto text-center uppercase border-b-4 border-green-700 active:border-b-0 active:translate-y-1" href="https://pay.hotmart.com/K103388134D">
                             ¡Mi Futuro Dulce Empieza Hoy! 🚀
                         </a>
 <p class="text-xs text-text-body/80 flex items-center gap-1">
@@ -113,37 +134,37 @@
 <div class="flex-1 w-full max-w-[500px] relative flex justify-center">
 <div class="relative w-full aspect-[4/5]">
 <div class="absolute inset-0 z-0">
-<img alt="Mujer latina decorando pastel casero con pasión" class="w-full h-full object-cover rounded-2xl shadow-2xl transform rotate-3 border-4 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDroSaWUavroiQFAH9TgjODlqWWhhd-YgCUxt1EMANXMSv4U6fUHbLPXOcy7eK3qEhYG9y-P2JEj5BALihNp-HCdKOXvCQ_dNfoNswfRSZRzUFkC0HFpmJZ_B9mk8Lv4NwcUSl7PJlh6NfAfjfSownnR8Ar3iMqa0fJk4Z8JM73Lq9RGW44vMr0Q2kewztzroVO5t5yKkX07neuxQsq2ONeDDhPBc3xuwMmJE3QlAYUVXi5PFkqxNDma_68mDQhqJhG2Jbopm4w2YI"/>
+<img alt="Mujer latina decorando pastel casero con pasión" class="w-full h-full object-cover rounded-2xl shadow-2xl transform rotate-3 border-4 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdL1mz-17zxqQpUxCqxAJajhn0zfQ8FsNe1k95wbpSh37HdODZsLotndQsH90mCJ_102z4AxeL2mlyNzOdbWik7o1_oRvfMw5Oq8WfZJgh21KDn9EpK_Ncn1Yo4MgZMu9a2ebjmQjLCPE0ot4os6TPkU_Dm65ZCFiLzC178wFs93lXJ1A-fcpeNV81Aq0QyvLUzf1GnfJNpbkMogFIOUlgCevrBRQXaJOH2gaLaIlI_GigeImBca09jYIy7UhtZgeFutRPZJKPg98"/>
 </div>
 <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-white rounded-full shadow-lg p-2 z-10 hidden md:block animate-bounce-slight">
-<img alt="Detail of handmade cupcake" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY4ujpO35L0-Pgy0loBcGcR7MmrH2Ssu7gQgsQvAV2IrSeKspuHl0T25QEOPs4n6yaRUK2Z4GlFyPjJIx5uW7k8k404DsEJ607cKg-Uj9LO-OHiUD71ybMLa7wvBeikKjmkxNbPWhBHtKBwKCK6DF6PdR9ZZ9TttMpBaOJpCAeIxHLgqP_s8yOsbgx4f1dRoVoVLeEUEBrpzWx8FVcyzMUHNWnjlPzEtL-otMTiFWRCZ4LVSudq_ey8DOHyAvF72IAsBfDoatS94w"/>
+<img alt="Detail of handmade cupcake" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi57SG9Y3jk70B-aQYPiy20GKWzTQyqFTKL7EwSmwlpYV0UawrlOCJfzPXKjacjnYw4A8M6IiWLXUz6GCIth0q14EhOusZrNXVTYUYXulnYYq-NhXkwhXPpjLjovQrV-CwfSmR3f-agn4BXUrs0MHGmDFRoJX7HQ7ZvwBDj8-hrpAO_xq1HjShUc7ITi4q8axKiJzptozKFMFJokxSmhZdj4cfshbOaOfZ33qDi5XuudinWY_S0uJ68J7g919bQaXUp4SyjeUoF_Y"/>
 </div>
 </div>
 </div>
 </div>
 </div>
 </header>
-<section class="py-20 bg-white/80 backdrop-blur-sm relative z-10">
+<section class="py-20 bg-white/80 backdrop-blur-sm relative z-10 border-y border-accent-gold/10">
 <div class="max-w-7xl mx-auto px-4 md:px-10">
 <div class="text-center mb-12">
 <h2 class="font-serif text-3xl md:text-4xl font-bold text-text-main">¿Te suena familiar? El camino al éxito dulce no tiene por qué ser amargo... 💔</h2>
 <div class="w-24 h-1 bg-accent-gold mx-auto mt-4 rounded-full"></div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<div class="bg-base-cream/50 p-8 rounded-2xl border border-accent-gold/20 text-center hover:shadow-soft transition-all duration-300 backdrop-blur-sm">
-<div class="w-16 h-16 bg-cta-pink/10 rounded-full flex items-center justify-center mx-auto mb-6 text-cta-pink">
+<div class="bg-base-cream/50 p-8 rounded-2xl border border-accent-gold/20 text-center hover:shadow-soft transition-all duration-300 backdrop-blur-sm group hover:-translate-y-2">
+<div class="w-16 h-16 bg-cta-pink/10 rounded-full flex items-center justify-center mx-auto mb-6 text-cta-pink group-hover:bg-cta-pink group-hover:text-white transition-colors duration-300">
 <span class="material-symbols-outlined text-3xl">sentiment_dissatisfied</span>
 </div>
 <p class="text-lg font-medium text-text-main">Te acuestas pensando en las cuentas y te despiertas sintiendo que tu esfuerzo no es suficiente. ¿Cansada de la <strong>angustia de depender</strong> o de que el dinero apenas alcance a fin de mes? 😩</p>
 </div>
-<div class="bg-base-cream/50 p-8 rounded-2xl border border-accent-gold/20 text-center hover:shadow-soft transition-all duration-300 backdrop-blur-sm">
-<div class="w-16 h-16 bg-cta-pink/10 rounded-full flex items-center justify-center mx-auto mb-6 text-cta-pink">
+<div class="bg-base-cream/50 p-8 rounded-2xl border border-accent-gold/20 text-center hover:shadow-soft transition-all duration-300 backdrop-blur-sm group hover:-translate-y-2">
+<div class="w-16 h-16 bg-cta-pink/10 rounded-full flex items-center justify-center mx-auto mb-6 text-cta-pink group-hover:bg-cta-pink group-hover:text-white transition-colors duration-300">
 <span class="material-symbols-outlined text-3xl">psychology_alt</span>
 </div>
 <p class="text-lg font-medium text-text-main">Tienes esa idea brillante, pero una voz interna te susurra: '¿Y si fracaso? ¿Qué dirán de mí?'. El <strong>miedo al juicio</strong> y a que tus sueños se queden en el aire te paraliza. 😱</p>
 </div>
-<div class="bg-base-cream/50 p-8 rounded-2xl border border-accent-gold/20 text-center hover:shadow-soft transition-all duration-300 backdrop-blur-sm">
-<div class="w-16 h-16 bg-cta-pink/10 rounded-full flex items-center justify-center mx-auto mb-6 text-cta-pink">
+<div class="bg-base-cream/50 p-8 rounded-2xl border border-accent-gold/20 text-center hover:shadow-soft transition-all duration-300 backdrop-blur-sm group hover:-translate-y-2">
+<div class="w-16 h-16 bg-cta-pink/10 rounded-full flex items-center justify-center mx-auto mb-6 text-cta-pink group-hover:bg-cta-pink group-hover:text-white transition-colors duration-300">
 <span class="material-symbols-outlined text-3xl">savings</span>
 </div>
 <p class="text-lg font-medium text-text-main">¿Crees que necesitas un horno industrial, una vitrina y una montaña de capital para empezar? Sientes que tus <strong>recursos son limitados</strong> y que no hay forma de competir. 💸</p>
@@ -162,10 +183,10 @@
 <div class="flex flex-col md:flex-row items-center gap-12">
 <div class="flex-1 order-2 md:order-1">
 <div class="grid grid-cols-2 gap-4">
-<img alt="Mujer horneando en cocina casera" class="rounded-xl shadow-md w-full h-40 object-cover transform translate-y-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCXxXUosr19ZrPJnQ01ScNWsZ0Ssg34xN1zTTzHk1AO0vtj4jJRgO6lONc4l6pqk9pVMve0fdJyetjWgiIUwidmzKbpa-NfdePgOYc5AJJfUljp7SUZczEhBMc55R_OWoEvzKl7_C1O7GP_vXId-1xDTh2d8q8EEvetg2wAMq4-RMLubvxpUYhlbRdb_8_5QcYRF0WvlYt4xBO0IteOcytPIc_aoAXo2JAZPXqUehfmUfdKlTH6k4_RWEgOxLLhZlP0dOV71REkSQ"/>
-<img alt="Postres deliciosos en mesa" class="rounded-xl shadow-md w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrfOKaFPYYwcBhw72leF5paBRWML8oGaN5lbHRGVDQ9Ohuk_5bQY9cbiJmdCN-16_7HaLb7kTfl6cTU6ro2tJNdJyDKuBVJtf8HHhJ2emgcJ2PCw8H_MHS0OaMzMiKgTXgmodoKfBtS41xgl3Re2lhDECzF6BYDL1hLlN34ffTkPQeHgS2cKU_mmrIrgeSRur9afai2gPHgP3PJfdMJ_WBHvf2VTq1zwABjh9hB35RvBwjsr5WDyPjq8hlfUYhp0RHcMZmP0iOQAY"/>
-<img alt="Ingredientes de repostería frescos" class="rounded-xl shadow-md w-full h-40 object-cover transform translate-y-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4aeE5vIH1ro-eN3cy7RTOdVCVgrLqJi32AJtp2vLl6umr01LgfovXaG36UqLFoi5JqceutxfwcZPbuac9AKNFOF7h_SO1szGgUNyQvAHEOMsJ725tl6RgaNAXLf2mWdPuadsISKlqAERDSLl66n3o_kQpbo246Ebifc3hHj01RHqVsI65xc90q5WADRn8hcvE3EjpeCzr4PqS7jhMvDAzbW1WNzNGqFdI_x9Bx8BbTlJClvmvwpiXShmjmTP9ykNPrLIjuk-8MYo"/>
-<img alt="Empaque de postres artesanal" class="rounded-xl shadow-md w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4gzKQNV0c-J_t3fz6bLSefdUd9lpcYxlxh0NOdxFiuBpyr2UQ4pnHRgrWNjqzIQOdlAGFkTNB1sKgH420BL8MQeI9zwBhY1mv4RTEq3T2szIJ4Was2zJtrAwiCXvUoz4h9vBgSd1hE3IFAjN-dKTK99tadyIs_TgNLhlhAhYNa2gR7wQ0cbfnzUM3QO03FBgzf-SYR_AWSQS4XygWPVwImZQxa87zNiQUespcmq46k4hX5Ob_EHskMehcxJ8sMCZ3JP03je2xEbw"/>
+<img alt="Mujer horneando en cocina casera" class="rounded-xl shadow-md w-full h-40 object-cover transform translate-y-4 hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4U_TUSyoE6pM31-nTQRquatImF-8x1_q5GdiQeisGJGCyvPpqhF2tkwDbO93792v5AV5h1LZPKrn6okUNtZEdpXi37gx3VFVYDLbp9Z8zTELummDJ6kbPTKc3zsT--Y6ohxtUxc1wKpCB8XeaoNH46_koybc229uaOrZdkKZe4CorTV2DIwgK41WVd3nw2D1s00s4Y8VuyZ00FKalaGndbyZDb9cCQAx7d6-8XsWByqY6L3O2tJkcuvyu0c52FgIJK4ghFr0_dMc"/>
+<img alt="Postres deliciosos en mesa" class="rounded-xl shadow-md w-full h-40 object-cover hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYKmTKa7atBrgupDJUunIA08mmJ2jCJq9pB8VB0_mVOkiiTnPj-H1HuW0LrmRiHypC65gQtkJr9RNnTs7gmzHJt04-1EcdKAeXiqP8RuyPfAHvg7V63RoWBpuumuEpG5coQNYKrLkK2btcZySG8ki20vynJ3xS2Pfl5bSXGz_ZRAGJdGoQ0cVPxt080Zdt8yFEcOfvT8jaEtjd47WjDufFp4JwTKE6p-EVX8klq7kmM8_rqIwwwKRS0k5RpD6S5W-tyFGe_JKOWsc"/>
+<img alt="Ingredientes de repostería frescos" class="rounded-xl shadow-md w-full h-40 object-cover transform translate-y-4 hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcVFA7z-L2H2-KbD0xEkkUW9dBuy_wjVUasOADtAw4pZt98mocK1CHKQZvwi0EIzShkz6daaU6nUA3VAHBvvTg60g--wUdDVja1zjuJa1-RKjSQ0vEvzXLMeibcPcA-CpclnXXqDySWjmikKiUu1Psa__zNBPL7z27xtI0mwIDQHdztTpejtfaK4ZhsA9V0mqjye4xdNIzFx9jirdu9lUKzwQfV0UjwGR6N67u7W46BvR_0F9IfbNLOlzizlp2iViV66H2AkhaakU"/>
+<img alt="Empaque de postres artesanal" class="rounded-xl shadow-md w-full h-40 object-cover hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4CnB0fb-RC5tIJCy3YPKzcqWnGbeHJZSdGixE6_8Rd3H74r8CxSW7ypinPKvXQFJBh25ionK643n_WB3HURu1T2XHEXZtwNoEPhrxcQQps23WTxMkhxZ6YGsV3AbGrW6ZH9SJrBMsSNBddsCP7cdcFKy7xHNuVJXZoJr53RZQ4yO4AlZ9WoOVrXFqh6VzS4MpHWACW-q6HQErPVUP6HIDXJ6DX6e0B2xsLHpf87tYDfYNeek_T-MuXaPoRUN3vSjN1nrfCSrwb2M"/>
 </div>
 </div>
 <div class="flex-1 order-1 md:order-2 space-y-8">
@@ -173,7 +194,7 @@
                         El Método Infalible que Transforma Tu Pasión en GANANCIAS Reales 🌟
                     </h2>
 <div class="space-y-6">
-<div class="flex gap-4 items-start">
+<div class="flex gap-4 items-start p-4 rounded-xl hover:bg-white/60 transition-colors">
 <div class="bg-white p-2 rounded-lg shadow-sm text-accent-gold">
 <span class="material-symbols-outlined">menu_book</span>
 </div>
@@ -182,7 +203,7 @@
 <p class="text-sm text-text-body">El <strong>secreto de las recetas mágicas</strong> que tus clientes amarán y que te dejarán el mayor margen de ganancia. ¡Deja de regalar tu trabajo! 🍰</p>
 </div>
 </div>
-<div class="flex gap-4 items-start">
+<div class="flex gap-4 items-start p-4 rounded-xl hover:bg-white/60 transition-colors">
 <div class="bg-white p-2 rounded-lg shadow-sm text-accent-gold">
 <span class="material-symbols-outlined">photo_camera</span>
 </div>
@@ -191,7 +212,7 @@
 <p class="text-sm text-text-body">El <strong>truco para tomar fotos con tu celular</strong> que hacen que los clientes se les haga agua la boca y compren sin pensarlo dos veces. 📸🤤</p>
 </div>
 </div>
-<div class="flex gap-4 items-start">
+<div class="flex gap-4 items-start p-4 rounded-xl hover:bg-white/60 transition-colors">
 <div class="bg-white p-2 rounded-lg shadow-sm text-accent-gold">
 <span class="material-symbols-outlined">chat</span>
 </div>
@@ -200,7 +221,7 @@
 <p class="text-sm text-text-body">Descubre <strong>cómo llenar tu agenda de pedidos</strong> con estrategias sencillas por WhatsApp e Instagram, sin invertir un solo centavo en publicidad. 📱💬</p>
 </div>
 </div>
-<div class="flex gap-4 items-start">
+<div class="flex gap-4 items-start p-4 rounded-xl hover:bg-white/60 transition-colors">
 <div class="bg-white p-2 rounded-lg shadow-sm text-accent-gold">
 <span class="material-symbols-outlined">favorite</span>
 </div>
@@ -217,12 +238,15 @@
 <section class="py-20 bg-white/90 backdrop-blur-sm relative z-10" id="oferta">
 <div class="max-w-4xl mx-auto px-4 md:px-10">
 <h2 class="font-serif text-3xl md:text-4xl font-bold text-text-main text-center mb-10">¡Hoy es tu Día! La Oferta que Te Impulsará al Éxito sin Riesgos 🚀</h2>
-<div class="bg-white rounded-3xl shadow-2xl border-2 border-accent-gold overflow-hidden">
-<div class="bg-accent-gold py-4 text-center">
-<p class="text-white font-bold tracking-widest uppercase">Oferta Exclusiva</p>
+<div class="bg-white rounded-3xl shadow-2xl border-4 border-accent-gold/50 overflow-hidden transform hover:scale-[1.01] transition-transform duration-500">
+<div class="bg-gradient-to-r from-accent-gold to-yellow-600 py-4 text-center shadow-md">
+<p class="text-white font-bold tracking-widest uppercase text-lg">Oferta Exclusiva</p>
 </div>
-<div class="p-8 md:p-12">
-<ul class="space-y-4 mb-8">
+<div class="p-8 md:p-12 relative">
+<div class="absolute top-4 right-4 text-accent-gold opacity-10">
+<span class="material-symbols-outlined text-[10rem]">verified</span>
+</div>
+<ul class="space-y-4 mb-8 relative z-10">
 <li class="flex items-start md:items-center justify-between border-b border-gray-100 pb-4 gap-4">
 <div class="flex items-start gap-3">
 <span class="material-symbols-outlined text-green-500 mt-1">check_circle</span>
@@ -245,17 +269,17 @@
 <span class="text-gray-400 font-semibold text-sm whitespace-nowrap hidden md:block">(Valor Real: <strong>$10 USD</strong>)</span>
 </li>
 </ul>
-<div class="text-center space-y-4 mb-8">
+<div class="text-center space-y-4 mb-8 relative z-10">
 <p class="text-gray-400 text-lg">❌ Precio Normal de todo este arsenal: <span class="line-through decoration-red-500 decoration-2">~~$72 USD~~</span></p>
 <div class="flex flex-col items-center justify-center gap-2">
-<span class="text-3xl">🔥</span>
-<p class="text-3xl md:text-5xl font-serif font-bold text-text-main">TU PRECIO HOY: <span class="text-cta-pink">¡SOLO $9.99 USD!</span></p>
+<span class="text-3xl animate-bounce">🔥</span>
+<p class="text-3xl md:text-5xl font-serif font-bold text-text-main">TU PRECIO HOY: <span class="text-cta-pink drop-shadow-sm">¡SOLO $9.99 USD!</span></p>
 <p class="text-sm font-semibold text-accent-gold uppercase tracking-wide">(Por Apoyo a Mujeres Emprendedoras)</p>
 </div>
 </div>
-<div class="text-center">
-<a class="inline-block bg-cta-pink hover:bg-cta-pink-dark text-white text-xl font-bold py-4 px-12 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 w-full md:w-auto animate-pulse-slow uppercase" href="https://pay.hotmart.com/K103388134D">
-                            ¡Mi Futuro Dulce Empieza Hoy! 🚀
+<div class="text-center relative z-10">
+<a class="inline-block bg-cta-green hover:bg-cta-green-dark text-white text-xl font-bold py-5 px-12 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 w-full md:w-auto animate-pulse-slow uppercase border-b-4 border-green-700 active:border-b-0 active:translate-y-1" href="https://pay.hotmart.com/K103388134D">
+                            ¡SÍ, deseo adquirir la guía ya! 🚀
                         </a>
 </div>
 </div>
@@ -268,7 +292,9 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
 <div class="flex items-center gap-4 mb-4">
-<div class="w-12 h-12 rounded-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBRxKEca8KUSZNFLcQL_dKzC78XHErReBPUtDNcSe8iJnDm_rk4Goy_wpOztXuQEmJUNNZ98T55TlMHzug1NJ6f9e3Y3MkVJMyP0_BinXtB5l9qN_8d-OYIoIQDh9YrhNUGPgTKq80cTJe8IBtLpsqcaQAcdgTVcYNW3xBArmkc_rieXVzBTuSZEDOYV1B496jSBSNIMfGjswT1C8AJXbCeszfdWKH1qL7GjHsXBzFOcIQDNCmQaXbAGAPnP9Icdz8RvIAk5DfM7lI');"></div>
+<div class="w-12 h-12 rounded-full bg-cta-pink/20 flex items-center justify-center text-cta-pink-dark flex-shrink-0">
+<span class="material-symbols-outlined text-2xl">face_3</span>
+</div>
 <div>
 <p class="font-bold text-text-main">Carolina M.</p>
 <div class="flex text-accent-gold text-sm">
@@ -280,7 +306,9 @@
 </div>
 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
 <div class="flex items-center gap-4 mb-4">
-<div class="w-12 h-12 rounded-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCcOBzxRu7fvk1N6ZrEbR0a1a2k2MohmQe1lQnhdeySkPqjyhpZwUKEhBrpk12KFMVO1sJ7hKOr3Il0YY-PkpCKUhhhTPU6EVboXmITHnKndv0h7yePEue9YhKigxHqFIUQFE9mqt_3Znjz0NIVpl47DXbQzZyP2Ykkg2e4TiR4OwXQagQWr3fGJaP3f0n1dKb_umdxbTjjTm-LLLdanaafBhgpAugimCc1yJvFFQm-wZIB6mGI1_dLhQK-XuIHwRlxDj_ABNXKORw');"></div>
+<div class="w-12 h-12 rounded-full bg-accent-gold/20 flex items-center justify-center text-yellow-700 flex-shrink-0">
+<span class="material-symbols-outlined text-2xl">face_6</span>
+</div>
 <div>
 <p class="font-bold text-text-main">Valeria S.</p>
 <div class="flex text-accent-gold text-sm">
@@ -292,7 +320,9 @@
 </div>
 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
 <div class="flex items-center gap-4 mb-4">
-<div class="w-12 h-12 rounded-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6aS4QLrvIi8FzqrQmR09HzgR6dxT-l1Rq0tCEKeYHaizlHu0JH7tJ8q7yWPqOMyD6HsWekkUiKgv2f1OMGc14kox8r6kugjs1FrEyP3PBTSRZtWHl2vLUDj8NaGKqGS_8Jg93BOnqhwbIDmU-FmO1LJj6_FtQVbkPRxOG3yCUz6IQrubvqsdDAFw0pZlCEGKP_e_K2pF1gpxlWgKYByMpxM1_EiL2Ul697prnco2ku-z3oJLNoa0n9pYOMShycoA8GMIEtUpH9_Q');"></div>
+<div class="w-12 h-12 rounded-full bg-cta-green/20 flex items-center justify-center text-cta-green-dark flex-shrink-0">
+<span class="material-symbols-outlined text-2xl">face_4</span>
+</div>
 <div>
 <p class="font-bold text-text-main">Andrea R.</p>
 <div class="flex text-accent-gold text-sm">
@@ -334,5 +364,4 @@
 </div>
 </div>
 </footer>
-
 </body></html>
