@@ -13,14 +13,14 @@
             theme: {
                 extend: {
                     colors: {
-                        "base-cream": "#FFFDD0",
-                        "accent-gold": "#D4AF37",
-                        "cta-pink": "#F88379",
-                        "cta-pink-dark": "#E0655B",
+                        "base-cream": "#FFF0F5", // Shifted to Lavender Blush for a feminine base
+                        "accent-gold": "#D63384", // Replaced Gold with Vibrant Magenta/Fuchsia
+                        "cta-pink": "#FF4081", // More vibrant pink
+                        "cta-pink-dark": "#C2185B", // Deep vibrant pink
                         "cta-green": "#00d632", // Vibrant green requested
                         "cta-green-dark": "#00a827",
-                        "text-main": "#4A3B32", 
-                        "text-body": "#6D5E56",
+                        "text-main": "#4A0420", // Deep plum/cherry for text
+                        "text-body": "#701A3C", // Softer plum
                         "surface": "#FFFFFF",
                     },
                     fontFamily: {
@@ -28,8 +28,8 @@
                         "sans": ["Montserrat", "sans-serif"]
                     },
                     boxShadow: {
-                        'soft': '0 10px 40px -10px rgba(212, 175, 55, 0.15)',
-                        'glow': '0 0 20px rgba(248, 131, 121, 0.4)',
+                        'soft': '0 10px 40px -10px rgba(214, 51, 132, 0.15)',
+                        'glow': '0 0 20px rgba(255, 64, 129, 0.4)',
                         'green-glow': '0 0 35px rgba(0, 214, 50, 0.7)'
                     },
                     animation: {
@@ -59,7 +59,7 @@
         }
     </script>
 <style type="text/tailwindcss">.parallax-bg {
-    background-image: radial-gradient(circle at 15% 15%, rgba(248, 131, 121, 0.12) 0%, transparent 25%), radial-gradient(circle at 85% 85%, rgba(212, 175, 55, 0.12) 0%, transparent 25%), radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 253, 208, 0.6) 100%);
+    background-image: radial-gradient(circle at 15% 15%, rgba(255, 64, 129, 0.12) 0%, transparent 25%), radial-gradient(circle at 85% 85%, rgba(214, 51, 132, 0.12) 0%, transparent 25%), radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 240, 245, 0.6) 100%);
     background-size: 100% 100%
     }
 .pattern-overlay {
@@ -183,10 +183,10 @@
 <div class="flex flex-col md:flex-row items-center gap-12">
 <div class="flex-1 order-2 md:order-1">
 <div class="grid grid-cols-2 gap-4">
-<img alt="Mujer horneando en cocina casera" class="rounded-xl shadow-md w-full h-40 object-cover transform translate-y-4 hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4U_TUSyoE6pM31-nTQRquatImF-8x1_q5GdiQeisGJGCyvPpqhF2tkwDbO93792v5AV5h1LZPKrn6okUNtZEdpXi37gx3VFVYDLbp9Z8zTELummDJ6kbPTKc3zsT--Y6ohxtUxc1wKpCB8XeaoNH46_koybc229uaOrZdkKZe4CorTV2DIwgK41WVd3nw2D1s00s4Y8VuyZ00FKalaGndbyZDb9cCQAx7d6-8XsWByqY6L3O2tJkcuvyu0c52FgIJK4ghFr0_dMc"/>
-<img alt="Postres deliciosos en mesa" class="rounded-xl shadow-md w-full h-40 object-cover hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYKmTKa7atBrgupDJUunIA08mmJ2jCJq9pB8VB0_mVOkiiTnPj-H1HuW0LrmRiHypC65gQtkJr9RNnTs7gmzHJt04-1EcdKAeXiqP8RuyPfAHvg7V63RoWBpuumuEpG5coQNYKrLkK2btcZySG8ki20vynJ3xS2Pfl5bSXGz_ZRAGJdGoQ0cVPxt080Zdt8yFEcOfvT8jaEtjd47WjDufFp4JwTKE6p-EVX8klq7kmM8_rqIwwwKRS0k5RpD6S5W-tyFGe_JKOWsc"/>
-<img alt="Ingredientes de repostería frescos" class="rounded-xl shadow-md w-full h-40 object-cover transform translate-y-4 hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcVFA7z-L2H2-KbD0xEkkUW9dBuy_wjVUasOADtAw4pZt98mocK1CHKQZvwi0EIzShkz6daaU6nUA3VAHBvvTg60g--wUdDVja1zjuJa1-RKjSQ0vEvzXLMeibcPcA-CpclnXXqDySWjmikKiUu1Psa__zNBPL7z27xtI0mwIDQHdztTpejtfaK4ZhsA9V0mqjye4xdNIzFx9jirdu9lUKzwQfV0UjwGR6N67u7W46BvR_0F9IfbNLOlzizlp2iViV66H2AkhaakU"/>
-<img alt="Empaque de postres artesanal" class="rounded-xl shadow-md w-full h-40 object-cover hover:scale-105 transition-transform duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4CnB0fb-RC5tIJCy3YPKzcqWnGbeHJZSdGixE6_8Rd3H74r8CxSW7ypinPKvXQFJBh25ionK643n_WB3HURu1T2XHEXZtwNoEPhrxcQQps23WTxMkhxZ6YGsV3AbGrW6ZH9SJrBMsSNBddsCP7cdcFKy7xHNuVJXZoJr53RZQ4yO4AlZ9WoOVrXFqh6VzS4MpHWACW-q6HQErPVUP6HIDXJ6DX6e0B2xsLHpf87tYDfYNeek_T-MuXaPoRUN3vSjN1nrfCSrwb2M"/>
+<img alt="Delicioso arroz con leche cremoso en vaso de vidrio" class="rounded-2xl shadow-lg w-full h-56 object-cover transform translate-y-4 hover:scale-105 hover:shadow-2xl transition-all duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7TILEUH5DtnXVzDDr962KT3UfBv1pCe4Npcu5wWgJEmkBdaa1UzBq7bIJPI7G9ePTvG3l1bjzuMYzikEEzwr_bAHEDMXUrYqE1RsCsntcdSFabxgqaHdOzgOP_lCo3VzaLw5tVTSKm42mLufBJ2sAjVOTfHgp_ePXu8IczxktO9w8wa0fbVkqm-m8J380I2IX0Dig_OR7AmgxcM3OJg4ymtnvd58SZoM0Rh15oxwDgt8mQVzovos28M-mV7jsEfQ2tHKbrW8QO5Y"/>
+<img alt="Brownies húmedos y oscuros apilados" class="rounded-2xl shadow-lg w-full h-56 object-cover hover:scale-105 hover:shadow-2xl transition-all duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZkVBX6YQWROomz1fc83pOZNVBbGI_YeihsdoXsaa2bKcLbVeatuKws9pgDArk0_CqaxZDIm8LXJC69CPeEG3fcQh7u2Mk8fPnAnojpnGqNnpa1ALO7OticJGdHLV85UTrrjnkyExonB-mp_doHbY1eWvLQCRt-yUMg725P2YXaEPwOL7XtiVnM5Y8UIU4fBnbvpxc9siXi5k2QTeXvobD2CrpF8OKjB9KPZZ67_H9PneZBFDfTpeWFRUyG3o-7bN4AtWlOEMBDEQ"/>
+<img alt="Vaso gourmet con fresas y crema" class="rounded-2xl shadow-lg w-full h-56 object-cover transform translate-y-4 hover:scale-105 hover:shadow-2xl transition-all duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFZA3s-byAULw8WzbTrAlhquaukCQ0qUBpzeV7dn9N58cKOmPI48WP1ifj2WxMMXtmB5G6FQzWYwKgtX5lav7613lMZGzAe9tCcV8khTEsLHJNGkoxJbn8KULRAj9TUZJiY3RFQELnGFp88o3fpsBs0Od9zCrbZBaZz6qulitfOvPZMOJu9NbsQoWcixx1PKr1jn8gPoR826xPhn9Gho58wx9yIY3X1wc5Kj-NriiwAqnylZ8-kqLL_bGyA2HD3prlp2YoTVTkLEg"/>
+<img alt="Vaso con postre de maracuyá cremoso" class="rounded-2xl shadow-lg w-full h-56 object-cover hover:scale-105 hover:shadow-2xl transition-all duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHCXhVo7GwfwtUu0jfDYjzY3nflmNl3WX9T0l4kQ-5MP6z6LdWbKLoVWrPDrS3CM9DlhIKdNwZKLvd18Bsc_ibbWM_uzxOlKowYqx3I-mr8LeZP8uZRDLb7nG16RntNjbAS_cDdFUY_z8Btc6vzjdA5FizptJjL-U_99TRXX8mrXGxKTv18cPgdXYgL39TjurjgEWBCkSxxnkeATUx8YGQ3Conb-vyN2xulzHwukj0xQ7rLWoYcC2Ig26qYFpLpw0_iNW6XBVphXA"/>
 </div>
 </div>
 <div class="flex-1 order-1 md:order-2 space-y-8">
@@ -239,7 +239,7 @@
 <div class="max-w-4xl mx-auto px-4 md:px-10">
 <h2 class="font-serif text-3xl md:text-4xl font-bold text-text-main text-center mb-10">¡Hoy es tu Día! La Oferta que Te Impulsará al Éxito sin Riesgos 🚀</h2>
 <div class="bg-white rounded-3xl shadow-2xl border-4 border-accent-gold/50 overflow-hidden transform hover:scale-[1.01] transition-transform duration-500">
-<div class="bg-gradient-to-r from-accent-gold to-yellow-600 py-4 text-center shadow-md">
+<div class="bg-gradient-to-r from-accent-gold to-cta-pink-dark py-4 text-center shadow-md">
 <p class="text-white font-bold tracking-widest uppercase text-lg">Oferta Exclusiva</p>
 </div>
 <div class="p-8 md:p-12 relative">
@@ -292,16 +292,16 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
 <div class="flex items-center gap-4 mb-4">
-<div class="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-sm p-2">
-<svg class="w-full h-full" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" fill="#FFC107"></path>
-<path d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" fill="#FF3D00"></path>
-<path d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" fill="#4CAF50"></path>
-<path d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" fill="#1976D2"></path>
+<div class="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-sm p-2 overflow-hidden">
+<svg class="w-full h-full" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
 </svg>
 </div>
 <div>
-<p class="font-bold text-text-main">Carolina M.</p>
+<p class="font-bold text-text-main">Carolina Gutiérrez</p>
 <div class="flex text-accent-gold text-sm">
 <span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span>
 </div>
@@ -311,16 +311,16 @@
 </div>
 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
 <div class="flex items-center gap-4 mb-4">
-<div class="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-sm p-2">
-<svg class="w-full h-full" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" fill="#FFC107"></path>
-<path d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" fill="#FF3D00"></path>
-<path d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" fill="#4CAF50"></path>
-<path d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" fill="#1976D2"></path>
+<div class="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-sm p-2 overflow-hidden">
+<svg class="w-full h-full" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
 </svg>
 </div>
 <div>
-<p class="font-bold text-text-main">Valeria S.</p>
+<p class="font-bold text-text-main">Valeria Méndez</p>
 <div class="flex text-accent-gold text-sm">
 <span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span>
 </div>
@@ -330,16 +330,16 @@
 </div>
 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
 <div class="flex items-center gap-4 mb-4">
-<div class="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-sm p-2">
-<svg class="w-full h-full" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" fill="#FFC107"></path>
-<path d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" fill="#FF3D00"></path>
-<path d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" fill="#4CAF50"></path>
-<path d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" fill="#1976D2"></path>
+<div class="w-12 h-12 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-sm p-2 overflow-hidden">
+<svg class="w-full h-full" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
 </svg>
 </div>
 <div>
-<p class="font-bold text-text-main">Andrea R.</p>
+<p class="font-bold text-text-main">Andrea Vargas</p>
 <div class="flex text-accent-gold text-sm">
 <span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span><span class="material-symbols-outlined text-lg">star</span>
 </div>
@@ -354,7 +354,7 @@
 <div class="max-w-7xl mx-auto px-4 md:px-10">
 <div class="flex flex-col md:flex-row justify-between items-center gap-10 mb-12 border-b border-white/10 pb-12">
 <div class="flex items-center gap-6 max-w-md">
-<div class="w-24 h-24 flex-shrink-0 bg-accent-gold rounded-full flex items-center justify-center text-text-main font-bold text-center text-xs p-2 border-4 border-white/20">
+<div class="w-24 h-24 flex-shrink-0 bg-accent-gold rounded-full flex items-center justify-center text-white font-bold text-center text-xs p-2 border-4 border-white/20">
                         7 DÍAS<br/>GARANTÍA<br/>DEVOLUCIÓN
                     </div>
 <div>
